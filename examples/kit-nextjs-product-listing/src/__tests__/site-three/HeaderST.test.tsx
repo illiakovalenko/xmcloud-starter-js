@@ -17,7 +17,7 @@ import {
 // Mock FontAwesome icon
 jest.mock('@fortawesome/react-fontawesome', () => ({
   FontAwesomeIcon: ({ icon, width, height, ...props }: any) => (
-    <svg 
+    <svg
       data-testid="fontawesome-icon"
       width={width}
       height={height}
@@ -60,7 +60,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     />
   ),
   Placeholder: ({ name, rendering, ...props }: any) => (
-    <div 
+    <div
       data-testid="sitecore-placeholder"
       data-name={name}
       data-rendering={rendering?.componentName}
@@ -74,7 +74,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
 // Mock Next.js Link
 jest.mock('next/link', () => {
   return ({ children, href, className, prefetch, ...props }: any) => (
-    <a 
+    <a
       href={href}
       className={className}
       data-prefetch={prefetch}
@@ -112,7 +112,8 @@ jest.mock('../../components/site-three/non-sitecore/SearchBox', () => ({
 }));
 
 // Import the hook mock to control its behavior
-const mockUseToggleWithClickOutside = require('../../hooks/useToggleWithClickOutside').useToggleWithClickOutside as jest.Mock;
+const mockUseToggleWithClickOutside = require('../../hooks/useToggleWithClickOutside')
+  .useToggleWithClickOutside as jest.Mock;
 
 describe('HeaderST Component', () => {
   beforeEach(() => {
@@ -129,11 +130,11 @@ describe('HeaderST Component', () => {
 
       // Check main section
       expect(screen.getByRole('navigation')).toBeInTheDocument();
-      
+
       // Check logo link
       expect(screen.getByTestId('next-link')).toBeInTheDocument();
       expect(screen.getByTestId('next-link')).toHaveAttribute('href', '/');
-      
+
       // Check logo image
       expect(screen.getByTestId('sitecore-image')).toBeInTheDocument();
       expect(screen.getByTestId('sitecore-image')).toHaveAttribute('src', '/images/sync-logo.svg');
@@ -161,12 +162,12 @@ describe('HeaderST Component', () => {
       render(<HeaderSTDefault {...defaultHeaderSTProps} />);
 
       const supportLinks = screen.getAllByTestId('sitecore-link');
-      const supportLinkElements = supportLinks.filter(link => 
-        link.getAttribute('href') === '/support'
+      const supportLinkElements = supportLinks.filter(
+        (link) => link.getAttribute('href') === '/support'
       );
-      
+
       expect(supportLinkElements.length).toBeGreaterThan(0);
-      supportLinkElements.forEach(link => {
+      supportLinkElements.forEach((link) => {
         expect(link).toHaveAttribute('data-prefetch', 'false');
       });
     });
@@ -174,32 +175,30 @@ describe('HeaderST Component', () => {
     it('handles search link correctly based on showSearchBox param', () => {
       // With search box enabled
       render(<HeaderSTDefault {...headerSTPropsSearchBoxOnly} />);
-      
+
       expect(screen.getByTestId('search-box')).toBeInTheDocument();
       expect(screen.getByTestId('search-box')).toHaveAttribute('data-search-link', '/search');
 
       // With search box disabled, should show link instead
       const { rerender } = render(<HeaderSTDefault {...headerSTPropsSearchBoxOnly} />);
       rerender(<HeaderSTDefault {...headerSTPropsBasic} />);
-      
+
       const searchLinks = screen.getAllByTestId('sitecore-link');
-      const searchLink = searchLinks.find(link => 
-        link.getAttribute('href') === '/search'
-      );
+      const searchLink = searchLinks.find((link) => link.getAttribute('href') === '/search');
       expect(searchLink).toBeInTheDocument();
     });
 
     it('handles cart link correctly based on showMiniCart param', () => {
       // With mini cart enabled
       render(<HeaderSTDefault {...headerSTPropsMiniCartOnly} />);
-      
+
       expect(screen.getByTestId('mini-cart')).toBeInTheDocument();
       expect(screen.getByTestId('mini-cart')).toHaveAttribute('data-cart-link', '/cart');
     });
 
     it('renders FontAwesome cart icon when mini cart is disabled', () => {
       render(<HeaderSTDefault {...headerSTPropsBasic} />);
-      
+
       const cartIcon = screen.getByTestId('fontawesome-icon');
       expect(cartIcon).toBeInTheDocument();
       expect(cartIcon).toHaveAttribute('data-icon', 'shopping-cart');
@@ -305,7 +304,7 @@ describe('HeaderST Component', () => {
 
       // Links should have empty hrefs
       const sitecoreLinks = screen.getAllByTestId('sitecore-link');
-      sitecoreLinks.forEach(link => {
+      sitecoreLinks.forEach((link) => {
         expect(link).toHaveAttribute('href', '');
       });
 
@@ -318,7 +317,7 @@ describe('HeaderST Component', () => {
       render(<HeaderSTDefault {...headerSTPropsLongText} />);
 
       expect(screen.getByRole('navigation')).toBeInTheDocument();
-      
+
       // Check that long alt text is properly set
       const image = screen.getByTestId('sitecore-image');
       expect(image).toHaveAttribute('alt', 'SYNC Audio Professional Equipment Company Logo');
@@ -329,9 +328,9 @@ describe('HeaderST Component', () => {
 
       const image = screen.getByTestId('sitecore-image');
       expect(image).toHaveAttribute('alt', 'Logó with Àccents');
-      
+
       const links = screen.getAllByTestId('sitecore-link');
-      const supportLink = links.find(link => link.textContent?.includes('Suppört'));
+      const supportLink = links.find((link) => link.textContent?.includes('Suppört'));
       expect(supportLink).toBeInTheDocument();
     });
   });
@@ -405,7 +404,7 @@ describe('HeaderST Component', () => {
       render(<HeaderSTDefault {...defaultHeaderSTProps} />);
 
       const sitecoreLinks = screen.getAllByTestId('sitecore-link');
-      sitecoreLinks.forEach(link => {
+      sitecoreLinks.forEach((link) => {
         expect(link).toHaveAttribute('data-prefetch', 'false');
       });
 
@@ -434,7 +433,7 @@ describe('HeaderST Component', () => {
 
     it('manages mobile menu state without performance issues', () => {
       const mockSetIsVisible = jest.fn();
-      
+
       mockUseToggleWithClickOutside.mockReturnValue({
         isVisible: false,
         setIsVisible: mockSetIsVisible,
@@ -443,7 +442,7 @@ describe('HeaderST Component', () => {
       render(<HeaderSTDefault {...defaultHeaderSTProps} />);
 
       const mobileToggle = document.querySelector('.cursor-pointer');
-      
+
       if (mobileToggle) {
         // Multiple rapid clicks should be handled gracefully
         fireEvent.click(mobileToggle as Element);

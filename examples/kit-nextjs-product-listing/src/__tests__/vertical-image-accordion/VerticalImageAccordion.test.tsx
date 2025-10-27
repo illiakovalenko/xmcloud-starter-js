@@ -28,7 +28,12 @@ const mockUseSitecore = jest.fn();
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   useSitecore: () => mockUseSitecore(),
   Text: ({ field, tag: Tag = 'div', className, id, children }: any) => (
-    <Tag data-testid="sitecore-text" className={className} id={id} data-field-value={field?.value || ''}>
+    <Tag
+      data-testid="sitecore-text"
+      className={className}
+      id={id}
+      data-field-value={field?.value || ''}
+    >
       {field?.value || children || 'Sitecore Text'}
     </Tag>
   ),
@@ -37,18 +42,20 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: React.forwardRef(({ children, className, onClick, onKeyDown, initial, ...props }: any, ref: any) => (
-      <div
-        ref={ref}
-        className={className}
-        onClick={onClick}
-        onKeyDown={onKeyDown}
-        data-testid="motion-div"
-        {...props}
-      >
-        {children}
-      </div>
-    )),
+    div: React.forwardRef(
+      ({ children, className, onClick, onKeyDown, initial, ...props }: any, ref: any) => (
+        <div
+          ref={ref}
+          className={className}
+          onClick={onClick}
+          onKeyDown={onKeyDown}
+          data-testid="motion-div"
+          {...props}
+        >
+          {children}
+        </div>
+      )
+    ),
   },
   AnimatePresence: ({ children }: any) => <div data-testid="animate-presence">{children}</div>,
 }));
@@ -94,7 +101,10 @@ jest.mock('../../utils/NoDataFallback', () => ({
 // Mock utils
 jest.mock('../../lib/utils', () => ({
   cn: (...classes: any[]) => {
-    return classes.filter(Boolean).filter(c => typeof c === 'string' || typeof c === 'number').join(' ');
+    return classes
+      .filter(Boolean)
+      .filter((c) => typeof c === 'string' || typeof c === 'number')
+      .join(' ');
   },
 }));
 
@@ -126,9 +136,7 @@ describe('VerticalImageAccordion Component', () => {
 
       const motionDivs = screen.getAllByTestId('motion-div');
       // Filter for actual accordion items (excluding AnimatePresence containers)
-      const accordionItems = motionDivs.filter(div => 
-        div.getAttribute('role') === 'tab'
-      );
+      const accordionItems = motionDivs.filter((div) => div.getAttribute('role') === 'tab');
       expect(accordionItems).toHaveLength(3);
     });
 
@@ -151,7 +159,9 @@ describe('VerticalImageAccordion Component', () => {
     });
 
     it('applies correct ARIA attributes', () => {
-      const { container } = render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
+      const { container } = render(
+        <VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />
+      );
 
       const tablist = container.querySelector('[role="tablist"]');
       expect(tablist).toHaveAttribute('aria-orientation', 'vertical');
@@ -166,7 +176,7 @@ describe('VerticalImageAccordion Component', () => {
       render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
 
       const accordionItems = screen.getAllByRole('tab');
-      
+
       fireEvent.click(accordionItems[0]);
 
       await waitFor(() => {
@@ -178,7 +188,7 @@ describe('VerticalImageAccordion Component', () => {
       render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
 
       const accordionItems = screen.getAllByRole('tab');
-      
+
       fireEvent.keyDown(accordionItems[2], { key: 'Enter' });
 
       await waitFor(() => {
@@ -190,7 +200,7 @@ describe('VerticalImageAccordion Component', () => {
       render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
 
       const accordionItems = screen.getAllByRole('tab');
-      
+
       fireEvent.keyDown(accordionItems[0], { key: ' ' });
 
       await waitFor(() => {
@@ -202,10 +212,10 @@ describe('VerticalImageAccordion Component', () => {
       render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
 
       const accordionItems = screen.getAllByRole('tab');
-      
+
       // Simulate space key press
       fireEvent.keyDown(accordionItems[0], { key: ' ', code: 'Space' });
-      
+
       // Component should handle space key interaction
       expect(accordionItems[0]).toBeInTheDocument();
     });
@@ -214,7 +224,7 @@ describe('VerticalImageAccordion Component', () => {
       render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
 
       const accordionItems = screen.getAllByRole('tab');
-      
+
       fireEvent.click(accordionItems[0]);
 
       // Fast-forward through the timeout
@@ -230,13 +240,13 @@ describe('VerticalImageAccordion Component', () => {
       render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
 
       const accordionItems = screen.getAllByRole('tab');
-      
+
       // Initially, index 1 should be active
       expect(accordionItems[1]).toHaveAttribute('aria-selected', 'true');
-      
+
       // Click on index 0
       fireEvent.click(accordionItems[0]);
-      
+
       await waitFor(() => {
         expect(accordionItems[0]).toHaveAttribute('aria-selected', 'true');
         expect(accordionItems[1]).toHaveAttribute('aria-selected', 'false');
@@ -251,7 +261,7 @@ describe('VerticalImageAccordion Component', () => {
       // Main title should not be rendered when undefined, but accordion items' titles should still render
       const h2Elements = screen.queryAllByRole('heading', { level: 2 });
       expect(h2Elements.length).toBe(0); // No main title
-      
+
       // But accordion items should still render
       expect(screen.getAllByRole('tab')).toHaveLength(1);
     });
@@ -286,7 +296,7 @@ describe('VerticalImageAccordion Component', () => {
 
       const titles = screen.getAllByTestId('sitecore-text');
       expect(titles[0]).toHaveTextContent(/Comprehensive Audio Solutions/);
-      
+
       // Should render accordion items with long descriptions
       expect(screen.getAllByRole('tab')).toHaveLength(2);
     });
@@ -311,7 +321,7 @@ describe('VerticalImageAccordion Component', () => {
 
       const accordionItems = screen.getAllByRole('tab');
       expect(accordionItems).toHaveLength(2);
-      
+
       // Items with empty fields should still render accordion structure
       expect(accordionItems[0]).toBeInTheDocument();
       expect(accordionItems[1]).toBeInTheDocument();
@@ -322,7 +332,7 @@ describe('VerticalImageAccordion Component', () => {
 
       const accordionItems = screen.getAllByRole('tab');
       expect(accordionItems).toHaveLength(6);
-      
+
       // Index 1 should be active by default
       expect(accordionItems[1]).toHaveAttribute('aria-selected', 'true');
     });
@@ -351,7 +361,7 @@ describe('VerticalImageAccordion Component', () => {
 
       // Check for aria-label on buttons
       const buttons = screen.getAllByTestId('button-base');
-      buttons.forEach(button => {
+      buttons.forEach((button) => {
         expect(button).toBeInTheDocument();
       });
     });
@@ -359,7 +369,9 @@ describe('VerticalImageAccordion Component', () => {
 
   describe('Responsive Design', () => {
     it('applies responsive classes for mobile and desktop', () => {
-      const { container } = render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
+      const { container } = render(
+        <VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />
+      );
 
       const flexibleContainer = container.querySelector('.flex.flex-col');
       // Check that it has the responsive flex-row class
@@ -368,21 +380,28 @@ describe('VerticalImageAccordion Component', () => {
     });
 
     it('handles container queries', () => {
-      const { container } = render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
+      const { container } = render(
+        <VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />
+      );
 
       const mainContainerElements = container.querySelectorAll('*');
-      const mainContainer = Array.from(mainContainerElements).find(el => 
+      const mainContainer = Array.from(mainContainerElements).find((el) =>
         el.className.includes('@container')
       );
       expect(mainContainer).toBeInTheDocument();
     });
 
     it('applies responsive spacing classes', () => {
-      const { container } = render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
+      const { container } = render(
+        <VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />
+      );
 
       const allElements = container.querySelectorAll('*');
-      const spacingContainer = Array.from(allElements).find(el => 
-        el.className.includes('px-4') && el.className.includes('sm:px-6') && el.className.includes('lg:px-8')
+      const spacingContainer = Array.from(allElements).find(
+        (el) =>
+          el.className.includes('px-4') &&
+          el.className.includes('sm:px-6') &&
+          el.className.includes('lg:px-8')
       );
       expect(spacingContainer).toBeInTheDocument();
     });
@@ -406,9 +425,9 @@ describe('VerticalImageAccordion Component', () => {
       render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
 
       const accordionItems = screen.getAllByRole('tab');
-      
+
       fireEvent.click(accordionItems[0]);
-      
+
       // Animation state should update
       await waitFor(() => {
         expect(accordionItems[0]).toHaveAttribute('aria-selected', 'true');
@@ -418,7 +437,9 @@ describe('VerticalImageAccordion Component', () => {
 
   describe('Accessibility', () => {
     it('provides proper ARIA roles and attributes', () => {
-      const { container } = render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
+      const { container } = render(
+        <VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />
+      );
 
       const tablist = container.querySelector('[role="tablist"]');
       expect(tablist).toHaveAttribute('aria-orientation', 'vertical');
@@ -435,7 +456,7 @@ describe('VerticalImageAccordion Component', () => {
       tabpanels.forEach((panel) => {
         expect(panel).toHaveAttribute('id');
         expect(panel).toHaveAttribute('aria-labelledby');
-        
+
         const id = panel.getAttribute('id');
         const labelledBy = panel.getAttribute('aria-labelledby');
         if (id && labelledBy) {
@@ -450,18 +471,20 @@ describe('VerticalImageAccordion Component', () => {
       render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
 
       const tabs = screen.getAllByRole('tab');
-      tabs.forEach(tab => {
+      tabs.forEach((tab) => {
         expect(tab).toHaveAttribute('tabIndex', '0');
       });
     });
 
     it('provides semantic image roles', () => {
-      const { container } = render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
+      const { container } = render(
+        <VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />
+      );
 
       const imageContainers = container.querySelectorAll('[role="img"]');
       expect(imageContainers.length).toBeGreaterThan(0);
-      
-      imageContainers.forEach(container => {
+
+      imageContainers.forEach((container) => {
         expect(container).toHaveAttribute('aria-label');
       });
     });
@@ -470,15 +493,15 @@ describe('VerticalImageAccordion Component', () => {
       render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
 
       const tabs = screen.getAllByRole('tab');
-      
+
       // Test Enter key
       fireEvent.keyDown(tabs[0], { key: 'Enter' });
       expect(tabs[0]).toHaveAttribute('aria-selected', 'true');
-      
+
       // Test Space key
       fireEvent.keyDown(tabs[2], { key: ' ' });
       expect(tabs[2]).toHaveAttribute('aria-selected', 'true');
-      
+
       // Other keys should not activate
       fireEvent.keyDown(tabs[1], { key: 'a' });
       expect(tabs[1]).toHaveAttribute('aria-selected', 'false');
@@ -490,9 +513,9 @@ describe('VerticalImageAccordion Component', () => {
       const allTitles = screen.getAllByTestId('sitecore-text');
       const mainTitle = allTitles[0]; // First one should be the main title
       expect(mainTitle.tagName.toLowerCase()).toBe('h2');
-      
+
       // Look for h3 elements specifically (accordion item titles)
-      const h3Elements = allTitles.filter(el => el.tagName.toLowerCase() === 'h3');
+      const h3Elements = allTitles.filter((el) => el.tagName.toLowerCase() === 'h3');
       expect(h3Elements.length).toBeGreaterThan(0);
     });
   });
@@ -569,10 +592,12 @@ describe('VerticalImageAccordion Component', () => {
 
   describe('Performance', () => {
     it('handles re-renders efficiently', () => {
-      const { rerender } = render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
-      
+      const { rerender } = render(
+        <VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />
+      );
+
       rerender(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
-      
+
       const titles = screen.getAllByTestId('sitecore-text');
       expect(titles[0]).toBeInTheDocument();
       expect(screen.getAllByRole('tab')).toHaveLength(3);
@@ -582,7 +607,7 @@ describe('VerticalImageAccordion Component', () => {
       render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
 
       const accordionItems = screen.getAllByRole('tab');
-      
+
       // Rapidly change active items
       for (let i = 0; i < accordionItems.length; i++) {
         fireEvent.click(accordionItems[i]);
@@ -602,19 +627,21 @@ describe('VerticalImageAccordion Component', () => {
     });
 
     it('cleans up timers properly', () => {
-      const { unmount } = render(<VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />);
-      
+      const { unmount } = render(
+        <VerticalImageAccordionDefault {...defaultVerticalImageAccordionProps} />
+      );
+
       const accordionItems = screen.getAllByRole('tab');
       fireEvent.click(accordionItems[0]);
-      
+
       // Unmount before timeout completes
       unmount();
-      
+
       // Fast-forward timers to ensure no memory leaks
       act(() => {
         jest.advanceTimersByTime(1000);
       });
-      
+
       // No assertions needed - just ensuring no errors are thrown
     });
   });

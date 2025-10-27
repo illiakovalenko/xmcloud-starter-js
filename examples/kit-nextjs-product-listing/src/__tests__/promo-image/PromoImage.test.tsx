@@ -36,9 +36,9 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     </Tag>
   ),
   RichText: ({ children, field, className, ...props }: any) => (
-    <div 
-      className={className} 
-      data-testid="sitecore-richtext" 
+    <div
+      className={className}
+      data-testid="sitecore-richtext"
       dangerouslySetInnerHTML={{ __html: field?.value || children }}
       {...props}
     />
@@ -47,7 +47,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
 
 jest.mock('../../components/button-component/ButtonComponent', () => ({
   ButtonBase: ({ children, buttonLink, isPageEditing, ...props }: any) => (
-    <button 
+    <button
       data-testid="promo-button"
       data-href={buttonLink?.value?.href}
       data-editing={isPageEditing}
@@ -61,8 +61,8 @@ jest.mock('../../components/button-component/ButtonComponent', () => ({
 jest.mock('../../components/image/ImageWrapper.dev', () => ({
   Default: ({ image, className, wrapperClass, priority, ...props }: any) => (
     <div className={wrapperClass} data-testid="image-wrapper">
-      <img 
-        src={image?.value?.src} 
+      <img
+        src={image?.value?.src}
         alt={image?.value?.alt}
         className={className}
         data-priority={priority}
@@ -74,18 +74,18 @@ jest.mock('../../components/image/ImageWrapper.dev', () => ({
 }));
 
 jest.mock('../../components/animated-section/AnimatedSection.dev', () => ({
-  Default: ({ 
-    children, 
-    className, 
-    direction, 
-    delay, 
-    reducedMotion, 
+  Default: ({
+    children,
+    className,
+    direction,
+    delay,
+    reducedMotion,
     isPageEditing,
-    ...props 
+    ...props
   }: any) => (
-    <div 
+    <div
       className={className}
-      data-testid="animated-section" 
+      data-testid="animated-section"
       data-direction={direction}
       data-delay={delay}
       data-reduced-motion={reducedMotion}
@@ -110,7 +110,7 @@ jest.mock('../../utils/NoDataFallback', () => ({
 describe('PromoImage Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    
+
     // Mock matchMedia for reduced motion
     mockMatchMedia.mockImplementation((query: string) => ({
       matches: query.includes('prefers-reduced-motion'),
@@ -261,7 +261,9 @@ describe('PromoImage Component', () => {
     it('handles long content without layout issues', () => {
       render(<PromoImageDefault {...promoImagePropsLongContent} />);
 
-      expect(screen.getByText('Revolutionary Audio Experience for Modern Professionals and Audiophiles')).toBeInTheDocument();
+      expect(
+        screen.getByText('Revolutionary Audio Experience for Modern Professionals and Audiophiles')
+      ).toBeInTheDocument();
       expect(screen.getByTestId('sitecore-richtext')).toBeInTheDocument();
       expect(screen.getByTestId('promo-bg-image')).toBeInTheDocument();
     });
@@ -273,12 +275,12 @@ describe('PromoImage Component', () => {
 
       await waitFor(() => {
         const animatedSections = screen.getAllByTestId('animated-section');
-        
+
         // Should have multiple animated sections for different content
         expect(animatedSections.length).toBeGreaterThan(0);
-        
+
         // Check that sections have proper direction
-        animatedSections.forEach(section => {
+        animatedSections.forEach((section) => {
           expect(section).toHaveAttribute('data-direction', 'right');
           expect(section).toHaveAttribute('data-reduced-motion', 'true');
         });
@@ -290,19 +292,19 @@ describe('PromoImage Component', () => {
 
       await waitFor(() => {
         const animatedSections = screen.getAllByTestId('animated-section');
-        
+
         // Look for sections with delays
-        const sectionsWithDelay = animatedSections.filter(section => 
+        const sectionsWithDelay = animatedSections.filter((section) =>
           section.getAttribute('data-delay')
         );
-        
+
         expect(sectionsWithDelay.length).toBeGreaterThan(0);
-        
+
         // Check for specific delay values
-        const delayValues = sectionsWithDelay.map(section => 
+        const delayValues = sectionsWithDelay.map((section) =>
           parseInt(section.getAttribute('data-delay') || '0')
         );
-        
+
         expect(delayValues).toContain(600); // Description delay
         expect(delayValues).toContain(1200); // Button delay
       });
@@ -315,8 +317,8 @@ describe('PromoImage Component', () => {
 
       await waitFor(() => {
         const animatedSections = screen.getAllByTestId('animated-section');
-        
-        animatedSections.forEach(section => {
+
+        animatedSections.forEach((section) => {
           expect(section).toHaveAttribute('data-reduced-motion', 'true');
         });
       });
@@ -333,9 +335,9 @@ describe('PromoImage Component', () => {
 
       colorSchemeVariants.forEach((props) => {
         const { unmount } = render(<PromoImageDefault {...props} />);
-        
+
         expect(screen.getByText('Experience Premium Audio')).toBeInTheDocument();
-        
+
         unmount();
       });
     });
@@ -352,7 +354,7 @@ describe('PromoImage Component', () => {
       render(<PromoImageDefault {...promoImagePropsEditing} />);
 
       const animatedSections = screen.getAllByTestId('animated-section');
-      animatedSections.forEach(section => {
+      animatedSections.forEach((section) => {
         expect(section).toHaveAttribute('data-editing', 'true');
       });
 
@@ -428,7 +430,7 @@ describe('PromoImage Component', () => {
 
       const heading = screen.getByRole('heading', { level: 2 });
       const button = screen.getByRole('button');
-      
+
       expect(heading).toBeInTheDocument();
       expect(button).toBeInTheDocument();
     });

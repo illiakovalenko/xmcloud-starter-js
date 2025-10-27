@@ -41,7 +41,7 @@ jest.mock('../../components/ui/carousel', () => ({
         const mockRootNode = document.createElement('div');
         mockRootNode.addEventListener = jest.fn();
         mockRootNode.removeEventListener = jest.fn();
-        
+
         const mockApi = {
           scrollTo: jest.fn(),
           canScrollNext: jest.fn(() => true),
@@ -55,7 +55,7 @@ jest.mock('../../components/ui/carousel', () => ({
         setApi(mockApi);
       }
     }, [setApi]);
-    
+
     return (
       <div ref={ref} className={className} data-testid="multi-promo-carousel">
         {children}
@@ -80,17 +80,14 @@ jest.mock('../../components/multi-promo/MultiPromoItem.dev', () => ({
     <div data-testid="multi-promo-item">
       <h3 data-testid="promo-heading">{heading?.jsonValue?.value}</h3>
       {image?.jsonValue?.value?.src && (
-        <img 
-          src={image.jsonValue.value.src} 
+        <img
+          src={image.jsonValue.value.src}
           alt={image.jsonValue.value.alt}
           data-testid="promo-image"
         />
       )}
       {link?.jsonValue?.value?.href && (
-        <a 
-          href={link.jsonValue.value.href}
-          data-testid="promo-link"
-        >
+        <a href={link.jsonValue.value.href} data-testid="promo-link">
           {link.jsonValue.value.text}
         </a>
       )}
@@ -101,7 +98,10 @@ jest.mock('../../components/multi-promo/MultiPromoItem.dev', () => ({
 // Mock cn utility
 jest.mock('../../lib/utils', () => ({
   cn: (...classes: any[]) => {
-    return classes.filter(Boolean).filter(c => typeof c === 'string' || typeof c === 'number').join(' ');
+    return classes
+      .filter(Boolean)
+      .filter((c) => typeof c === 'string' || typeof c === 'number')
+      .join(' ');
   },
 }));
 
@@ -126,7 +126,9 @@ describe('MultiPromo Component', () => {
 
       // Check title and description
       expect(screen.getByText('Featured Promotions')).toBeInTheDocument();
-      expect(screen.getByText('Discover our latest offers and exclusive deals')).toBeInTheDocument();
+      expect(
+        screen.getByText('Discover our latest offers and exclusive deals')
+      ).toBeInTheDocument();
 
       // Check carousel content
       expect(screen.getByTestId('carousel-content')).toBeInTheDocument();
@@ -150,7 +152,7 @@ describe('MultiPromo Component', () => {
 
       const carouselItems = screen.getAllByTestId('carousel-item');
       // Check that at least the base classes are applied
-      carouselItems.forEach(item => {
+      carouselItems.forEach((item) => {
         expect(item).toHaveClass('min-w-[238px]', 'max-w-[416px]', 'basis-3/4');
       });
     });
@@ -160,7 +162,7 @@ describe('MultiPromo Component', () => {
 
       const carouselItems = screen.getAllByTestId('carousel-item');
       // Check that at least the base classes are applied
-      carouselItems.forEach(item => {
+      carouselItems.forEach((item) => {
         expect(item).toHaveClass('min-w-[238px]', 'max-w-[416px]', 'basis-3/4');
       });
     });
@@ -213,7 +215,7 @@ describe('MultiPromo Component', () => {
       render(<MultiPromoDefault {...defaultMultiPromoProps} />);
 
       const carouselItems = screen.getAllByTestId('carousel-item');
-      carouselItems.forEach(item => {
+      carouselItems.forEach((item) => {
         expect(item).toHaveClass(
           'min-w-[238px]',
           'max-w-[416px]',
@@ -276,7 +278,7 @@ describe('MultiPromo Component', () => {
 
       // Should have proper heading hierarchy
       const headings = screen.getAllByTestId('promo-heading');
-      headings.forEach(heading => {
+      headings.forEach((heading) => {
         expect(heading.tagName.toLowerCase()).toBe('h3');
       });
     });
@@ -287,7 +289,7 @@ describe('MultiPromo Component', () => {
       render(<MultiPromoDefault {...multiPromoPropsThreeColumns} />);
 
       const carouselItems = screen.getAllByTestId('carousel-item');
-      carouselItems.forEach(item => {
+      carouselItems.forEach((item) => {
         // Check for base responsive classes
         expect(item).toHaveClass('sm:basis-[45%]', 'md:basis-[31%]');
       });
@@ -297,7 +299,7 @@ describe('MultiPromo Component', () => {
       render(<MultiPromoDefault {...multiPromoPropsMinimal} />);
 
       const carouselItems = screen.getAllByTestId('carousel-item');
-      carouselItems.forEach(item => {
+      carouselItems.forEach((item) => {
         // Check for base responsive classes
         expect(item).toHaveClass('sm:basis-[45%]', 'md:basis-[31%]');
       });
@@ -307,7 +309,7 @@ describe('MultiPromo Component', () => {
       render(<MultiPromoDefault {...defaultMultiPromoProps} />);
 
       const carouselItems = screen.getAllByTestId('carousel-item');
-      carouselItems.forEach(item => {
+      carouselItems.forEach((item) => {
         expect(item).toHaveClass('sm:basis-[45%]', 'md:basis-[31%]');
       });
     });
@@ -363,7 +365,7 @@ describe('MultiPromo Component', () => {
       const items = screen.getAllByTestId('carousel-item');
 
       expect(carousel).toContainElement(content);
-      items.forEach(item => {
+      items.forEach((item) => {
         expect(content).toContainElement(item);
       });
     });
@@ -389,7 +391,7 @@ describe('MultiPromo Component', () => {
       render(<MultiPromoDefault {...defaultMultiPromoProps} />);
 
       const carouselItems = screen.getAllByTestId('carousel-item');
-      carouselItems.forEach(item => {
+      carouselItems.forEach((item) => {
         expect(item).toHaveClass('transition-opacity', 'duration-300');
       });
     });

@@ -93,10 +93,22 @@ export const headerSTPropsLongText = {
     DynamicPlaceholderId: 'main-navigation-placeholder',
   },
   fields: {
-    Logo: createMockImageField('/images/sync-audio-professional-equipment-logo-v2.svg', 'SYNC Audio Professional Equipment Company Logo'),
-    SupportLink: createMockLinkField('/customer-support-help-center', 'Customer Support & Help Center'),
-    SearchLink: createMockLinkField('/advanced-product-search-and-filtering', 'Advanced Product Search & Filtering'),
-    CartLink: createMockLinkField('/shopping-cart-checkout-review', 'Shopping Cart & Checkout Review'),
+    Logo: createMockImageField(
+      '/images/sync-audio-professional-equipment-logo-v2.svg',
+      'SYNC Audio Professional Equipment Company Logo'
+    ),
+    SupportLink: createMockLinkField(
+      '/customer-support-help-center',
+      'Customer Support & Help Center'
+    ),
+    SearchLink: createMockLinkField(
+      '/advanced-product-search-and-filtering',
+      'Advanced Product Search & Filtering'
+    ),
+    CartLink: createMockLinkField(
+      '/shopping-cart-checkout-review',
+      'Shopping Cart & Checkout Review'
+    ),
   },
 };
 

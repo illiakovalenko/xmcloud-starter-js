@@ -86,9 +86,7 @@ jest.mock('../../components/ui/select', () => ({
       {children}
     </div>
   ),
-  SelectValue: ({ placeholder }: any) => (
-    <span data-testid="select-value">{placeholder}</span>
-  ),
+  SelectValue: ({ placeholder }: any) => <span data-testid="select-value">{placeholder}</span>,
 }));
 
 // Mock MultiPromoTab component
@@ -97,32 +95,26 @@ jest.mock('../../components/multi-promo-tabs/MultiPromoTab.dev', () => ({
     <div data-testid="multi-promo-tab" data-edit-mode={isEditMode}>
       <h3 data-testid="tab-title">{title?.jsonValue?.value}</h3>
       {image1?.jsonValue?.value?.src && (
-        <img 
-          src={image1.jsonValue.value.src} 
+        <img
+          src={image1.jsonValue.value.src}
           alt={image1.jsonValue.value.alt}
           data-testid="tab-image-1"
         />
       )}
       {image2?.jsonValue?.value?.src && (
-        <img 
-          src={image2.jsonValue.value.src} 
+        <img
+          src={image2.jsonValue.value.src}
           alt={image2.jsonValue.value.alt}
           data-testid="tab-image-2"
         />
       )}
       {link1?.jsonValue?.value?.href && (
-        <a 
-          href={link1.jsonValue.value.href}
-          data-testid="tab-link-1"
-        >
+        <a href={link1.jsonValue.value.href} data-testid="tab-link-1">
           {link1.jsonValue.value.text}
         </a>
       )}
       {link2?.jsonValue?.value?.href && (
-        <a 
-          href={link2.jsonValue.value.href}
-          data-testid="tab-link-2"
-        >
+        <a href={link2.jsonValue.value.href} data-testid="tab-link-2">
           {link2.jsonValue.value.text}
         </a>
       )}
@@ -255,7 +247,7 @@ describe('MultiPromoTabs Component', () => {
       render(<MultiPromoTabsDefault {...defaultMultiPromoTabsProps} />);
 
       const promoTabs = screen.getAllByTestId('multi-promo-tab');
-      promoTabs.forEach(tab => {
+      promoTabs.forEach((tab) => {
         expect(tab).toHaveAttribute('data-edit-mode', 'true');
       });
     });
@@ -265,7 +257,7 @@ describe('MultiPromoTabs Component', () => {
       render(<MultiPromoTabsDefault {...defaultMultiPromoTabsProps} />);
 
       const promoTabs = screen.getAllByTestId('multi-promo-tab');
-      promoTabs.forEach(tab => {
+      promoTabs.forEach((tab) => {
         expect(tab).toHaveAttribute('data-edit-mode', 'false');
       });
     });
@@ -278,7 +270,7 @@ describe('MultiPromoTabs Component', () => {
       // Check first tab content (Audio)
       const images1 = screen.getAllByTestId('tab-image-1');
       const images2 = screen.getAllByTestId('tab-image-2');
-      
+
       expect(images1.length).toBeGreaterThan(0);
       expect(images2.length).toBeGreaterThan(0);
 
@@ -345,8 +337,8 @@ describe('MultiPromoTabs Component', () => {
 
       const tabTriggers = screen.getAllByRole('tab');
       expect(tabTriggers).toHaveLength(3);
-      
-      tabTriggers.forEach(trigger => {
+
+      tabTriggers.forEach((trigger) => {
         expect(trigger).toHaveAttribute('aria-selected');
       });
     });
@@ -379,8 +371,8 @@ describe('MultiPromoTabs Component', () => {
 
       const animatePresence = screen.getByTestId('animate-presence');
       const tabContents = screen.getAllByTestId(/^tab-content-/);
-      
-      tabContents.forEach(content => {
+
+      tabContents.forEach((content) => {
         expect(animatePresence).toContainElement(content);
       });
     });

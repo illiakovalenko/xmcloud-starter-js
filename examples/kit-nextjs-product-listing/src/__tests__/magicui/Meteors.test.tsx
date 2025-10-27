@@ -1,20 +1,8 @@
 /* eslint-disable */
 import React from 'react';
-import { render, screen, act, fireEvent } from '@testing-library/react';
+import { render, act, fireEvent } from '@testing-library/react';
 import { Meteors } from '../../components/magicui/meteors';
 
-// Define MeteorsProps interface inline since it's not exported from the component
-interface MeteorsProps {
-  number?: number;
-  minDelay?: number;
-  maxDelay?: number;
-  minDuration?: number;
-  maxDuration?: number;
-  angle?: number;
-  className?: string;
-  color?: string;
-  size?: string;
-}
 import {
   defaultMeteorsProps,
   meteorsPropsMinimal,
@@ -66,7 +54,7 @@ describe('Meteors Component', () => {
       // Should render container div
       const container = document.querySelector('div');
       expect(container).toBeInTheDocument();
-      
+
       // Should render meteors (spans)
       const meteors = document.querySelectorAll('span');
       expect(meteors.length).toBe(20); // default number of meteors
@@ -164,7 +152,7 @@ describe('Meteors Component', () => {
   describe('Responsive Behavior', () => {
     it('handles window resize events', () => {
       const { container } = render(<Meteors {...defaultMeteorsProps} />);
-      
+
       // Initial meteors count
       let meteors = container.querySelectorAll('span');
       expect(meteors.length).toBe(20);
@@ -226,8 +214,9 @@ describe('Meteors Component', () => {
 
       const meteorTails = document.querySelectorAll('span > div');
       meteorTails.forEach((tail) => {
-        expect(tail.style.width).toBe('100px');
-        expect(tail.style.backgroundImage).toContain('linear-gradient');
+        const tailElement = tail as HTMLElement;
+        expect(tailElement.style.width).toBe('100px');
+        expect(tailElement.style.backgroundImage).toContain('linear-gradient');
       });
     });
   });

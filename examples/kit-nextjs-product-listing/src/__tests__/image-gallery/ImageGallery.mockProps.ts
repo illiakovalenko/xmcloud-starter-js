@@ -9,7 +9,9 @@ const createMockImageField = (src: string, alt: string): ImageField =>
   }) as unknown as ImageField;
 
 const mockTitleField = createMockField('Gallery Showcase');
-const mockDescriptionField = createMockField('Explore our stunning collection of professional photography.');
+const mockDescriptionField = createMockField(
+  'Explore our stunning collection of professional photography.'
+);
 
 const mockImage1 = createMockImageField('/gallery/image1.jpg', 'Professional Portrait');
 const mockImage2 = createMockImageField('/gallery/image2.jpg', 'Landscape Photography');

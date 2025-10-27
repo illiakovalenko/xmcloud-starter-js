@@ -105,9 +105,18 @@ describe('LogoTabs Component', () => {
       render(<LogoTabsDefault {...defaultLogoTabsProps} />);
 
       // Check logo images
-      expect(screen.getByTestId('logo-image-tab-0')).toHaveAttribute('src', '/logos/brand-alpha.svg');
-      expect(screen.getByTestId('logo-image-tab-1')).toHaveAttribute('src', '/logos/brand-beta.svg');
-      expect(screen.getByTestId('logo-image-tab-2')).toHaveAttribute('src', '/logos/brand-gamma.svg');
+      expect(screen.getByTestId('logo-image-tab-0')).toHaveAttribute(
+        'src',
+        '/logos/brand-alpha.svg'
+      );
+      expect(screen.getByTestId('logo-image-tab-1')).toHaveAttribute(
+        'src',
+        '/logos/brand-beta.svg'
+      );
+      expect(screen.getByTestId('logo-image-tab-2')).toHaveAttribute(
+        'src',
+        '/logos/brand-gamma.svg'
+      );
     });
 
     it('renders tab panels with content', () => {
@@ -115,7 +124,7 @@ describe('LogoTabs Component', () => {
 
       // Check first tab panel content is visible
       expect(screen.getByText('Brand Alpha Partnership')).toBeInTheDocument();
-      
+
       // Find the visible CTA button (there are multiple but only one is visible)
       const ctaButtons = screen.getAllByTestId('cta-button');
       expect(ctaButtons.length).toBeGreaterThan(0);
@@ -149,7 +158,7 @@ describe('LogoTabs Component', () => {
 
       // Should show second tab content
       expect(screen.getByText('Brand Beta Collaboration')).toBeInTheDocument();
-      
+
       // Verify CTA buttons exist (multiple in DOM but different ones are visible)
       const ctaButtons = screen.getAllByTestId('cta-button');
       expect(ctaButtons.length).toBeGreaterThan(0);
@@ -289,7 +298,9 @@ describe('LogoTabs Component', () => {
       render(<LogoTabsDefault {...defaultLogoTabsProps} />);
 
       // Check for tabpanel role (in the content area)
-      const contentElements = screen.getAllByText(/Brand.*Partnership|Brand.*Collaboration|Brand.*Alliance/);
+      const contentElements = screen.getAllByText(
+        /Brand.*Partnership|Brand.*Collaboration|Brand.*Alliance/
+      );
       expect(contentElements.length).toBeGreaterThan(0);
     });
 
@@ -328,7 +339,7 @@ describe('LogoTabs Component', () => {
 
       expect(screen.getByRole('tablist')).toBeInTheDocument();
       expect(screen.getByText('Our Brand Partners')).toBeInTheDocument();
-      
+
       // Check for live region by aria-live attribute
       const liveElements = document.querySelectorAll('[aria-live="polite"]');
       expect(liveElements.length).toBeGreaterThan(0);

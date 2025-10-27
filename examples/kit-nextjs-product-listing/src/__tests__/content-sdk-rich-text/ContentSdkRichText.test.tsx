@@ -21,8 +21,8 @@ describe('ContentSdkRichText', () => {
   });
 
   it('renders no-value when field is empty', () => {
-  render(<ContentSdkRichText field={undefined as unknown as Record<string, unknown>} />);
+    render(<ContentSdkRichText field={undefined as unknown as Record<string, unknown>} />);
 
-  expect(screen.getByTestId('richtext')).toHaveTextContent('no-value');
+    expect(screen.getByTestId('richtext')).toHaveTextContent('no-value');
   });
 });

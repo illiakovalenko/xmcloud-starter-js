@@ -103,7 +103,9 @@ export const submissionFormPropsLongTitle: SubmissionFormProps = {
     styles: 'position-center complex-styling with-multiple-classes',
   },
   fields: {
-    title: createMockField('Experience Premium Audio Excellence with SYNC Professional Equipment - Connect with Our Expert Team for Personalized Recommendations'),
+    title: createMockField(
+      'Experience Premium Audio Excellence with SYNC Professional Equipment - Connect with Our Expert Team for Personalized Recommendations'
+    ),
   },
 };
 

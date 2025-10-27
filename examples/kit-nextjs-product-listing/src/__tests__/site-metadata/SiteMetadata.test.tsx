@@ -138,12 +138,12 @@ describe('SiteMetadata Component', () => {
 
     it('renders without performance issues with large content', () => {
       const startTime = performance.now();
-      
+
       render(<SiteMetadataDefault {...siteMetadataPropsLongContent} />);
-      
+
       const endTime = performance.now();
       const renderTime = endTime - startTime;
-      
+
       expect(renderTime).toBeLessThan(100);
     });
   });
@@ -173,7 +173,7 @@ describe('SiteMetadata Component', () => {
           title: null as any,
           metadataTitle: undefined as any,
           metadataKeywords: { value: null } as any,
-          metadataDescription: { } as any,
+          metadataDescription: {} as any,
         },
       };
 

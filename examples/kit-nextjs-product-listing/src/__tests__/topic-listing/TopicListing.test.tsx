@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Default as TopicListingDefault } from '../../components/topic-listing/TopicListing';
 import {
   defaultTopicListingProps,
@@ -65,7 +65,7 @@ jest.mock('../../components/magicui/meteors', () => ({
 jest.mock('../../components/topic-listing/TopicItem.dev', () => ({
   TopicItem: ({ link, icon }: any) => {
     if (!link?.jsonValue) return null;
-    
+
     return (
       <div
         data-testid="topic-item"
@@ -117,7 +117,7 @@ describe('TopicListing Component', () => {
 
       const mainContainer = container.querySelector('.bg-primary.relative.overflow-hidden');
       expect(mainContainer).toBeInTheDocument();
-      
+
       const innerContainer = container.querySelector('.mx-auto.max-w-7xl');
       expect(innerContainer).toBeInTheDocument();
     });
@@ -133,7 +133,9 @@ describe('TopicListing Component', () => {
     it('renders topic items in flex container', () => {
       const { container } = render(<TopicListingDefault {...defaultTopicListingProps} />);
 
-      const topicContainer = container.querySelector('.flex.flex-wrap.items-center.justify-center.gap-6');
+      const topicContainer = container.querySelector(
+        '.flex.flex-wrap.items-center.justify-center.gap-6'
+      );
       expect(topicContainer).toBeInTheDocument();
     });
   });
@@ -170,7 +172,7 @@ describe('TopicListing Component', () => {
         ...defaultTopicListingProps,
         params: { backgroundTheme: 'custom-theme' },
       };
-      
+
       render(<TopicListingDefault {...customThemeProps} />);
 
       expect(screen.queryByTestId('meteors')).not.toBeInTheDocument();
@@ -192,7 +194,7 @@ describe('TopicListing Component', () => {
       // Title should not be rendered when undefined
       const titleContainer = screen.queryByTestId('sitecore-text');
       expect(titleContainer).not.toBeInTheDocument();
-      
+
       // But topics should still render
       expect(screen.getAllByTestId('topic-item')).toHaveLength(2);
     });
@@ -217,7 +219,7 @@ describe('TopicListing Component', () => {
 
       const title = screen.getByTestId('sitecore-text');
       expect(title).toHaveTextContent(/Discover Our Comprehensive Collection/);
-      
+
       const topicItems = screen.getAllByTestId('topic-item');
       expect(topicItems[0]).toHaveTextContent(/Professional Headphones and Studio Monitors/);
     });
@@ -225,8 +227,10 @@ describe('TopicListing Component', () => {
     it('handles special characters and international text', () => {
       render(<TopicListingDefault {...topicListingPropsSpecialChars} />);
 
-      expect(screen.getByTestId('sitecore-text')).toHaveTextContent(/Explorez Nos Catégories Audio™/);
-      
+      expect(screen.getByTestId('sitecore-text')).toHaveTextContent(
+        /Explorez Nos Catégories Audio™/
+      );
+
       const topicItems = screen.getAllByTestId('topic-item');
       expect(topicItems[0]).toHaveTextContent('Casques Audio Professionnels & Hi-Fi');
     });
@@ -236,7 +240,7 @@ describe('TopicListing Component', () => {
 
       const topicItems = screen.getAllByTestId('topic-item');
       expect(topicItems).toHaveLength(8);
-      
+
       topicItems.forEach((item, index) => {
         expect(item).toHaveTextContent(`Audio Category ${index + 1}`);
         expect(item).toHaveAttribute('data-link-href', `/category-${index + 1}`);
@@ -257,7 +261,7 @@ describe('TopicListing Component', () => {
 
       const mainContainer = container.querySelector('[data-class-change]');
       expect(mainContainer).toBeInTheDocument();
-      
+
       const title = screen.getByTestId('sitecore-text');
       expect(title.tagName.toLowerCase()).toBe('h2');
     });
@@ -274,7 +278,7 @@ describe('TopicListing Component', () => {
 
       const mainContainer = container.querySelector('.py-24.md\\:pb-\\[128px\\].md\\:pt-28');
       expect(mainContainer).toBeInTheDocument();
-      
+
       const innerContainer = container.querySelector('.px-4.sm\\:px-6.lg\\:px-8');
       expect(innerContainer).toBeInTheDocument();
     });
@@ -284,7 +288,7 @@ describe('TopicListing Component', () => {
 
       const meteorLayer = container.querySelector('.z-10');
       expect(meteorLayer).toBeInTheDocument();
-      
+
       const contentLayer = container.querySelector('.z-20');
       expect(contentLayer).toBeInTheDocument();
     });
@@ -381,9 +385,9 @@ describe('TopicListing Component', () => {
   describe('Performance', () => {
     it('handles re-renders efficiently', () => {
       const { rerender } = render(<TopicListingDefault {...defaultTopicListingProps} />);
-      
+
       rerender(<TopicListingDefault {...defaultTopicListingProps} />);
-      
+
       expect(screen.getByTestId('sitecore-text')).toBeInTheDocument();
       expect(screen.getAllByTestId('topic-item')).toHaveLength(4);
     });

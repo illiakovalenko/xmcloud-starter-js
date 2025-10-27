@@ -1,4 +1,7 @@
-import type { MultiPromoTabsProps, MultiPromoTabsFields } from '../../components/multi-promo-tabs/multi-promo-tabs.props';
+import type {
+  MultiPromoTabsProps,
+  MultiPromoTabsFields,
+} from '../../components/multi-promo-tabs/multi-promo-tabs.props';
 import type { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
 
 // Inline utility functions
@@ -88,7 +91,8 @@ export const multiPromoTabsPropsNoTabs: MultiPromoTabsProps = {
 export const multiPromoTabsPropsEmpty: MultiPromoTabsProps = {
   rendering: { componentName: 'MultiPromoTabs', params: {} },
   params: {},
-  fields: {},
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fields: undefined as any,
 };
 
 // Mock useSitecore contexts

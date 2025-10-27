@@ -17,13 +17,16 @@ const createMockImageField = (src: string, alt: string): ImageField =>
 
 // Default props with complete content
 export const defaultPromoBlockProps: PromoBlockProps = {
+  rendering: { componentName: 'PromoBlock', params: {} },
   params: {
     orientation: Orientation.IMAGE_LEFT,
     variation: Variation.DEFAULT,
   },
   fields: {
     heading: createMockField('Premium Audio Experience'),
-    description: createMockField('<p>Discover our revolutionary audio technology that transforms how you experience sound. From crystal-clear highs to deep, rich bass tones.</p>'),
+    description: createMockField(
+      '<p>Discover our revolutionary audio technology that transforms how you experience sound. From crystal-clear highs to deep, rich bass tones.</p>'
+    ),
     image: createMockImageField('/images/promo-block-hero.jpg', 'Premium Audio Setup'),
     link: createMockLinkField('/products/premium', 'Explore Premium Collection'),
   },
@@ -61,13 +64,16 @@ export const promoBlockPropsNoLink: PromoBlockProps = {
   ...defaultPromoBlockProps,
   fields: {
     heading: createMockField('Information Only'),
-    description: createMockField('<p>This promo block provides information without a call-to-action link.</p>'),
+    description: createMockField(
+      '<p>This promo block provides information without a call-to-action link.</p>'
+    ),
     image: createMockImageField('/images/info-block.jpg', 'Information Block'),
   },
 };
 
 // Props with minimal content
 export const promoBlockPropsMinimal: PromoBlockProps = {
+  rendering: { componentName: 'PromoBlock', params: {} },
   params: {
     orientation: Orientation.IMAGE_LEFT,
   },
@@ -80,6 +86,7 @@ export const promoBlockPropsMinimal: PromoBlockProps = {
 
 // Props with empty content
 export const promoBlockPropsEmpty: PromoBlockProps = {
+  rendering: { componentName: 'PromoBlock', params: {} },
   params: {},
   fields: {
     heading: createMockField(''),
@@ -93,7 +100,9 @@ export const promoBlockPropsRichText: PromoBlockProps = {
   ...defaultPromoBlockProps,
   fields: {
     ...defaultPromoBlockProps.fields,
-    description: createMockField('<h4>Advanced Features</h4><p>Experience <strong>superior sound quality</strong> with our latest technology.</p><ul><li>High-fidelity drivers</li><li>Active noise cancellation</li><li>Long-lasting battery</li></ul>'),
+    description: createMockField(
+      '<h4>Advanced Features</h4><p>Experience <strong>superior sound quality</strong> with our latest technology.</p><ul><li>High-fidelity drivers</li><li>Active noise cancellation</li><li>Long-lasting battery</li></ul>'
+    ),
   },
 };
 
@@ -102,29 +111,34 @@ export const promoBlockPropsLongContent: PromoBlockProps = {
   ...defaultPromoBlockProps,
   fields: {
     heading: createMockField('Revolutionary Audio Technology for the Modern Professional'),
-    description: createMockField('<p>Our cutting-edge audio solutions are designed for professionals who demand the highest quality sound reproduction. Whether you\'re mixing in a studio, enjoying music at home, or taking calls on the go, our products deliver exceptional performance that exceeds industry standards. With years of research and development, we\'ve created a lineup that combines innovative technology with elegant design.</p><p>Each product in our collection features premium materials and advanced engineering to ensure durability and superior acoustic performance.</p>'),
+    description: createMockField(
+      "<p>Our cutting-edge audio solutions are designed for professionals who demand the highest quality sound reproduction. Whether you're mixing in a studio, enjoying music at home, or taking calls on the go, our products deliver exceptional performance that exceeds industry standards. With years of research and development, we've created a lineup that combines innovative technology with elegant design.</p><p>Each product in our collection features premium materials and advanced engineering to ensure durability and superior acoustic performance.</p>"
+    ),
     image: createMockImageField('/images/professional-audio.jpg', 'Professional Audio Equipment'),
     link: createMockLinkField('/products/professional', 'View Professional Series'),
   },
 };
 
 // Props without fields (should show NoDataFallback)
-export const promoBlockPropsNoFields: PromoBlockProps = {
+export const promoBlockPropsNoFields: Partial<PromoBlockProps> = {
   params: {},
-  fields: undefined as any,
+  fields: undefined,
 };
 
 // Props with missing image
-export const promoBlockPropsNoImage: PromoBlockProps = {
+export const promoBlockPropsNoImage: Partial<PromoBlockProps> = {
   params: {
     orientation: Orientation.IMAGE_LEFT,
     variation: Variation.DEFAULT,
   },
   fields: {
     heading: createMockField('Text Only Content'),
-    description: createMockField('<p>This promo block has text content but no image component.</p>'),
+    description: createMockField(
+      '<p>This promo block has text content but no image component.</p>'
+    ),
+    image: createMockImageField('', ''),
     link: createMockLinkField('/text-content', 'Read More'),
-  },
+  } as unknown as PromoBlockProps['fields'],
 };
 
 // Props for testing all orientations
@@ -156,7 +170,9 @@ export const textLinkPromoBlockProps: PromoBlockProps = {
   ...defaultPromoBlockProps,
   fields: {
     heading: createMockField('Text Link Variant'),
-    description: createMockField('<p>This variant uses VERSION_TWO variation with outline button type.</p>'),
+    description: createMockField(
+      '<p>This variant uses VERSION_TWO variation with outline button type.</p>'
+    ),
     image: createMockImageField('/images/text-link.jpg', 'Text Link Variant'),
     link: createMockLinkField('/text-link', 'Text Link Action'),
   },
@@ -167,7 +183,9 @@ export const buttonLinkPromoBlockProps: PromoBlockProps = {
   ...defaultPromoBlockProps,
   fields: {
     heading: createMockField('Button Link Variant'),
-    description: createMockField('<p>This is the standard button link variant (same as default).</p>'),
+    description: createMockField(
+      '<p>This is the standard button link variant (same as default).</p>'
+    ),
     image: createMockImageField('/images/button-link.jpg', 'Button Link Variant'),
     link: createMockLinkField('/button-link', 'Button Link Action'),
   },

@@ -7,13 +7,17 @@ describe('Portal Component', () => {
   describe('Basic Rendering', () => {
     it('renders null initially (before mounting)', () => {
       const { container } = render(<Portal>Test Content</Portal>);
-      
+
       // Should be empty initially (not mounted on server)
       expect(container.firstChild).toBeNull();
     });
 
     it('renders children after mounting on client', async () => {
-      render(<Portal><div data-testid="portal-content">Test Content</div></Portal>);
+      render(
+        <Portal>
+          <div data-testid="portal-content">Test Content</div>
+        </Portal>
+      );
 
       await waitFor(() => {
         expect(screen.getByTestId('portal-content')).toBeInTheDocument();
@@ -51,9 +55,15 @@ describe('Portal Component', () => {
   describe('Portal Functionality', () => {
     it('handles multiple children', async () => {
       const multipleChildren = [
-        <div key="first" data-testid="first-child">First</div>,
-        <div key="second" data-testid="second-child">Second</div>,
-        <div key="third" data-testid="third-child">Third</div>,
+        <div key="first" data-testid="first-child">
+          First
+        </div>,
+        <div key="second" data-testid="second-child">
+          Second
+        </div>,
+        <div key="third" data-testid="third-child">
+          Third
+        </div>,
       ];
 
       render(<Portal>{multipleChildren}</Portal>);
@@ -107,7 +117,11 @@ describe('Portal Component', () => {
 
   describe('Component Lifecycle', () => {
     it('handles component unmounting gracefully', async () => {
-      const { unmount } = render(<Portal><div data-testid="test-content">Test</div></Portal>);
+      const { unmount } = render(
+        <Portal>
+          <div data-testid="test-content">Test</div>
+        </Portal>
+      );
 
       await waitFor(() => {
         expect(screen.getByTestId('test-content')).toBeInTheDocument();
@@ -119,13 +133,21 @@ describe('Portal Component', () => {
     });
 
     it('updates portal content when children change', async () => {
-      const { rerender } = render(<Portal><div data-testid="initial">Initial</div></Portal>);
+      const { rerender } = render(
+        <Portal>
+          <div data-testid="initial">Initial</div>
+        </Portal>
+      );
 
       await waitFor(() => {
         expect(screen.getByTestId('initial')).toBeInTheDocument();
       });
 
-      rerender(<Portal><div data-testid="updated">Updated</div></Portal>);
+      rerender(
+        <Portal>
+          <div data-testid="updated">Updated</div>
+        </Portal>
+      );
 
       await waitFor(() => {
         expect(screen.getByTestId('updated')).toBeInTheDocument();
@@ -134,13 +156,21 @@ describe('Portal Component', () => {
     });
 
     it('maintains state across re-renders', async () => {
-      const { rerender } = render(<Portal><div data-testid="content">Content</div></Portal>);
+      const { rerender } = render(
+        <Portal>
+          <div data-testid="content">Content</div>
+        </Portal>
+      );
 
       await waitFor(() => {
         expect(screen.getByTestId('content')).toBeInTheDocument();
       });
 
-      rerender(<Portal><div data-testid="content">Content</div></Portal>);
+      rerender(
+        <Portal>
+          <div data-testid="content">Content</div>
+        </Portal>
+      );
 
       expect(screen.getByTestId('content')).toBeInTheDocument();
     });
@@ -174,7 +204,7 @@ describe('Portal Component', () => {
         const modal = screen.getByTestId('accessible-modal');
         expect(modal).toHaveAttribute('role', 'dialog');
         expect(modal).toHaveAttribute('aria-labelledby', 'modal-title');
-        
+
         const closeButton = screen.getByLabelText('Close modal');
         expect(closeButton).toBeInTheDocument();
       });
@@ -206,16 +236,32 @@ describe('Portal Component', () => {
 
   describe('Performance', () => {
     it('handles rapid re-renders efficiently', async () => {
-      const { rerender } = render(<Portal><div>Content 1</div></Portal>);
+      const { rerender } = render(
+        <Portal>
+          <div>Content 1</div>
+        </Portal>
+      );
 
       await waitFor(() => {
         expect(screen.getByText('Content 1')).toBeInTheDocument();
       });
 
       // Multiple rapid re-renders should not cause issues
-      rerender(<Portal><div>Content 2</div></Portal>);
-      rerender(<Portal><div>Content 3</div></Portal>);
-      rerender(<Portal><div>Content 4</div></Portal>);
+      rerender(
+        <Portal>
+          <div>Content 2</div>
+        </Portal>
+      );
+      rerender(
+        <Portal>
+          <div>Content 3</div>
+        </Portal>
+      );
+      rerender(
+        <Portal>
+          <div>Content 4</div>
+        </Portal>
+      );
 
       await waitFor(() => {
         expect(screen.getByText('Content 4')).toBeInTheDocument();

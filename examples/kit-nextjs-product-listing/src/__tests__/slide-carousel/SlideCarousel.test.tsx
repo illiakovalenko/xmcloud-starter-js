@@ -16,24 +16,12 @@ import {
 // Mock Lucide React icons
 jest.mock('lucide-react', () => ({
   ArrowLeft: ({ className, size, ...props }: any) => (
-    <svg 
-      data-testid="arrow-left-icon"
-      className={className}
-      width={size}
-      height={size}
-      {...props}
-    >
+    <svg data-testid="arrow-left-icon" className={className} width={size} height={size} {...props}>
       <path d="M19 12H5M12 19L5 12L12 5" />
     </svg>
   ),
   ArrowRight: ({ className, size, ...props }: any) => (
-    <svg 
-      data-testid="arrow-right-icon"
-      className={className}
-      width={size}
-      height={size}
-      {...props}
-    >
+    <svg data-testid="arrow-right-icon" className={className} width={size} height={size} {...props}>
       <path d="M5 12H19M12 5L19 12L12 19" />
     </svg>
   ),
@@ -75,7 +63,12 @@ jest.mock('../../components/ui/carousel', () => ({
     }, [setApi]);
 
     return (
-      <div ref={ref} className={className} data-testid="carousel-container" data-opts={JSON.stringify(opts)}>
+      <div
+        ref={ref}
+        className={className}
+        data-testid="carousel-container"
+        data-opts={JSON.stringify(opts)}
+      >
         {children}
       </div>
     );
@@ -95,13 +88,13 @@ jest.mock('../../components/ui/carousel', () => ({
 describe('SlideCarousel Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    
+
     // Mock window.addEventListener and removeEventListener
     Object.defineProperty(window, 'addEventListener', {
       value: jest.fn(),
       writable: true,
     });
-    
+
     Object.defineProperty(window, 'removeEventListener', {
       value: jest.fn(),
       writable: true,
@@ -128,7 +121,7 @@ describe('SlideCarousel Component', () => {
 
       const buttons = screen.getAllByTestId('carousel-button');
       expect(buttons).toHaveLength(2); // Previous and Next buttons
-      
+
       expect(screen.getByTestId('arrow-left-icon')).toBeInTheDocument();
       expect(screen.getByTestId('arrow-right-icon')).toBeInTheDocument();
     });
@@ -154,7 +147,7 @@ describe('SlideCarousel Component', () => {
 
       const section = document.querySelector('section');
       expect(section).toHaveClass('custom-carousel', 'premium-styling', 'dark-theme');
-      
+
       expect(screen.getByTestId('carousel-container')).toBeInTheDocument();
     });
 
@@ -181,7 +174,7 @@ describe('SlideCarousel Component', () => {
 
     it('handles long text content', () => {
       render(<SlideCarousel {...slideCarouselPropsLongText} />);
-      
+
       expect(screen.getByTestId('carousel-container')).toBeInTheDocument();
       expect(screen.getByTestId('slide-1')).toBeInTheDocument();
     });
@@ -200,9 +193,9 @@ describe('SlideCarousel Component', () => {
 
       const buttons = screen.getAllByTestId('carousel-button');
       expect(buttons).toHaveLength(2);
-      
+
       // Buttons should be present (disabled state is managed by carousel API)
-      buttons.forEach(button => {
+      buttons.forEach((button) => {
         expect(button).toBeInTheDocument();
       });
     });
@@ -232,8 +225,8 @@ describe('SlideCarousel Component', () => {
       render(<SlideCarousel {...defaultSlideCarouselProps} />);
 
       const buttons = screen.getAllByTestId('carousel-button');
-      
-      buttons.forEach(button => {
+
+      buttons.forEach((button) => {
         expect(button).toBeInTheDocument();
         expect(button.className).toContain(''); // Button should have styling classes
       });
@@ -253,12 +246,12 @@ describe('SlideCarousel Component', () => {
       render(<SlideCarousel {...defaultSlideCarouselProps} />);
 
       const indicators = document.querySelectorAll('button[aria-label^="Go to slide"]');
-      
+
       if (indicators.length > 1) {
         await act(async () => {
           fireEvent.click(indicators[1]);
         });
-        
+
         expect(indicators[1]).toBeInTheDocument();
       }
     });
@@ -267,9 +260,15 @@ describe('SlideCarousel Component', () => {
       render(<SlideCarousel {...defaultSlideCarouselProps} />);
 
       const indicators = document.querySelectorAll('button[aria-label^="Go to slide"]');
-      
-      indicators.forEach(indicator => {
-        expect(indicator).toHaveClass('h-2', 'min-w-2', 'rounded-full', 'transition-all', 'duration-300');
+
+      indicators.forEach((indicator) => {
+        expect(indicator).toHaveClass(
+          'h-2',
+          'min-w-2',
+          'rounded-full',
+          'transition-all',
+          'duration-300'
+        );
       });
     });
 
@@ -277,10 +276,10 @@ describe('SlideCarousel Component', () => {
       render(<SlideCarousel {...defaultSlideCarouselProps} />);
 
       const indicators = document.querySelectorAll('button[aria-label^="Go to slide"]');
-      
+
       if (indicators.length > 0) {
-        const activeIndicator = Array.from(indicators).find(indicator => 
-          indicator.getAttribute('aria-current') === 'true'
+        const activeIndicator = Array.from(indicators).find(
+          (indicator) => indicator.getAttribute('aria-current') === 'true'
         );
         expect(activeIndicator).toBeInTheDocument();
       }
@@ -300,7 +299,7 @@ describe('SlideCarousel Component', () => {
 
       const carouselContainer = screen.getByTestId('carousel-container');
       const opts = JSON.parse(carouselContainer.getAttribute('data-opts') || '{}');
-      
+
       expect(opts.align).toBe('start');
       expect(opts.breakpoints).toBeDefined();
       expect(opts.breakpoints['(max-width: 768px)']).toEqual({ dragFree: true });
@@ -340,7 +339,7 @@ describe('SlideCarousel Component', () => {
 
       const carouselContainer = screen.getByTestId('carousel-container');
       const opts = JSON.parse(carouselContainer.getAttribute('data-opts') || '{}');
-      
+
       expect(opts.breakpoints['(max-width: 768px)'].dragFree).toBe(true);
     });
   });
@@ -350,7 +349,7 @@ describe('SlideCarousel Component', () => {
       render(<SlideCarousel {...defaultSlideCarouselProps} />);
 
       const indicators = document.querySelectorAll('button[aria-label^="Go to slide"]');
-      
+
       indicators.forEach((indicator, index) => {
         expect(indicator).toHaveAttribute('aria-label', `Go to slide ${index + 1}`);
       });
@@ -374,8 +373,8 @@ describe('SlideCarousel Component', () => {
       render(<SlideCarousel {...defaultSlideCarouselProps} />);
 
       const buttons = screen.getAllByTestId('carousel-button');
-      
-      buttons.forEach(button => {
+
+      buttons.forEach((button) => {
         expect(button).toBeInTheDocument();
         expect(button.tagName.toLowerCase()).toBe('button');
       });
@@ -407,12 +406,12 @@ describe('SlideCarousel Component', () => {
 
     it('handles large numbers of slides without performance issues', () => {
       const startTime = performance.now();
-      
+
       render(<SlideCarousel {...slideCarouselPropsManySlides} />);
-      
+
       const endTime = performance.now();
       const renderTime = endTime - startTime;
-      
+
       // Should render quickly even with many slides
       expect(renderTime).toBeLessThan(100);
     });
@@ -431,12 +430,12 @@ describe('SlideCarousel Component', () => {
       render(<SlideCarousel {...defaultSlideCarouselProps} />);
 
       const indicators = document.querySelectorAll('button[aria-label^="Go to slide"]');
-      
+
       if (indicators.length > 1) {
         await act(async () => {
           fireEvent.click(indicators[1]);
         });
-        
+
         // State updates are handled by the carousel API mock
         expect(indicators[1]).toBeInTheDocument();
       }

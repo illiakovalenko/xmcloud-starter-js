@@ -1,7 +1,12 @@
 /* eslint-disable */
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Default as PromoBlockDefault, ButtonLink, TextLink } from '../../components/promo-block/PromoBlock';
+import {
+  Default as PromoBlockDefault,
+  ButtonLink,
+  TextLink,
+} from '../../components/promo-block/PromoBlock';
+import type { PromoBlockProps } from '../../components/promo-block/promo-block.props';
 import {
   defaultPromoBlockProps,
   promoBlockPropsImageRight,
@@ -28,20 +33,15 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     </Tag>
   ),
   RichText: ({ children, field, className, ...props }: any) => (
-    <div 
-      className={className} 
-      data-testid="sitecore-richtext" 
+    <div
+      className={className}
+      data-testid="sitecore-richtext"
       dangerouslySetInnerHTML={{ __html: field?.value || children }}
       {...props}
     />
   ),
   Link: ({ children, field, className, ...props }: any) => (
-    <a 
-      href={field?.value?.href}
-      className={className}
-      data-testid="sitecore-link"
-      {...props}
-    >
+    <a href={field?.value?.href} className={className} data-testid="sitecore-link" {...props}>
       {field?.value?.text || children}
     </a>
   ),
@@ -49,7 +49,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
 
 jest.mock('../../components/flex/Flex.dev', () => ({
   Flex: ({ children, direction, justify, gap, className, ...props }: any) => (
-    <div 
+    <div
       className={className}
       data-testid="flex-container"
       data-direction={direction}
@@ -64,8 +64,8 @@ jest.mock('../../components/flex/Flex.dev', () => ({
 
 jest.mock('../../components/image/ImageWrapper.dev', () => ({
   Default: ({ image, className, ...props }: any) => (
-    <img 
-      src={image?.value?.src} 
+    <img
+      src={image?.value?.src}
       alt={image?.value?.alt}
       className={className}
       data-testid="image-wrapper"
@@ -76,7 +76,7 @@ jest.mock('../../components/image/ImageWrapper.dev', () => ({
 
 jest.mock('../../components/ui/button', () => ({
   Button: ({ children, asChild, className, variant, ...props }: any) => (
-    <button 
+    <button
       className={className}
       data-testid="ui-button"
       data-variant={variant}
@@ -90,7 +90,10 @@ jest.mock('../../components/ui/button', () => ({
 
 jest.mock('../../lib/utils', () => ({
   cn: (...classes: any[]) => {
-    return classes.filter(Boolean).filter(c => typeof c === 'string' || typeof c === 'number').join(' ');
+    return classes
+      .filter(Boolean)
+      .filter((c) => typeof c === 'string' || typeof c === 'number')
+      .join(' ');
   },
 }));
 
@@ -181,7 +184,7 @@ describe('PromoBlock Component', () => {
         },
       };
 
-      render(<PromoBlockDefault {...propsWithoutVariation} />);
+      render(<PromoBlockDefault {...(propsWithoutVariation as PromoBlockProps)} />);
 
       expect(screen.getByText('Premium Audio Experience')).toBeInTheDocument();
     });
@@ -197,15 +200,10 @@ describe('PromoBlock Component', () => {
       render(<PromoBlockDefault {...promoBlockPropsVariationTwoImageRight} />);
 
       const flexContainers = screen.getAllByTestId('flex-container');
-      
+
       // Should have flex containers for layout
       expect(flexContainers.length).toBeGreaterThan(0);
-      
-      // Check for justify-end class when image is right and variation is VERSION_TWO
-      const justifyEndContainer = flexContainers.find(container => 
-        container.className.includes('justify-end')
-      );
-      
+
       // The component should render correctly regardless
       expect(screen.getByText('Premium Audio Experience')).toBeInTheDocument();
     });
@@ -241,7 +239,7 @@ describe('PromoBlock Component', () => {
 
       const richTextContent = screen.getByTestId('sitecore-richtext');
       expect(richTextContent).toBeInTheDocument();
-      
+
       // Rich text should contain HTML content
       expect(richTextContent.innerHTML).toContain('<h4>Advanced Features</h4>');
       expect(richTextContent.innerHTML).toContain('<strong>superior sound quality</strong>');
@@ -250,19 +248,19 @@ describe('PromoBlock Component', () => {
     it('handles long content without layout issues', () => {
       render(<PromoBlockDefault {...promoBlockPropsLongContent} />);
 
-      expect(screen.getByText('Revolutionary Audio Technology for the Modern Professional')).toBeInTheDocument();
+      expect(
+        screen.getByText('Revolutionary Audio Technology for the Modern Professional')
+      ).toBeInTheDocument();
       expect(screen.getByTestId('sitecore-richtext')).toBeInTheDocument();
       expect(screen.getByTestId('image-wrapper')).toBeInTheDocument();
     });
 
     it('handles missing image gracefully', () => {
-      render(<PromoBlockDefault {...promoBlockPropsNoImage} />);
+      render(<PromoBlockDefault {...(promoBlockPropsNoImage as PromoBlockProps)} />);
 
       expect(screen.getByText('Text Only Content')).toBeInTheDocument();
       expect(screen.getByTestId('sitecore-richtext')).toBeInTheDocument();
-      
-      // Image wrapper may or may not be rendered depending on field presence
-      const imageWrapper = screen.queryByTestId('image-wrapper');
+
       // Component should render without crashing regardless of image presence
       expect(document.body).toContainElement(screen.getByText('Text Only Content'));
     });
@@ -270,7 +268,7 @@ describe('PromoBlock Component', () => {
 
   describe('Fallback Scenarios', () => {
     it('returns NoDataFallback when no fields provided', () => {
-      render(<PromoBlockDefault {...promoBlockPropsNoFields} />);
+      render(<PromoBlockDefault {...(promoBlockPropsNoFields as PromoBlockProps)} />);
 
       expect(screen.getByTestId('no-data-fallback')).toBeInTheDocument();
       expect(screen.getByText('Promo Block')).toBeInTheDocument();
@@ -290,10 +288,10 @@ describe('PromoBlock Component', () => {
       render(<PromoBlockDefault {...defaultPromoBlockProps} />);
 
       const flexContainers = screen.getAllByTestId('flex-container');
-      
+
       // Should have at least one flex container for content layout
       expect(flexContainers.length).toBeGreaterThanOrEqual(1);
-      
+
       // Check for expected flex properties
       const contentFlex = flexContainers[0];
       expect(contentFlex).toHaveAttribute('data-direction', 'column');
@@ -337,11 +335,8 @@ describe('PromoBlock Component', () => {
       });
 
       it('ButtonLink is same as Default', () => {
-        const { container: buttonContainer } = render(<ButtonLink {...buttonLinkPromoBlockProps} />);
-        buttonContainer.remove();
-        
-        const { container: defaultContainer } = render(<PromoBlockDefault {...buttonLinkPromoBlockProps} />);
-        
+        render(<ButtonLink {...buttonLinkPromoBlockProps} />);
+
         // Both should render the same structure
         expect(screen.getByText('Button Link Variant')).toBeInTheDocument();
       });
@@ -386,7 +381,7 @@ describe('PromoBlock Component', () => {
       // Should have heading, content, and interactive elements in logical order
       const heading = screen.getByRole('heading', { level: 3 });
       const link = screen.getByRole('link');
-      
+
       expect(heading).toBeInTheDocument();
       expect(link).toBeInTheDocument();
     });

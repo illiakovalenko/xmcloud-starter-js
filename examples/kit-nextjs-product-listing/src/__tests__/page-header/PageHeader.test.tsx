@@ -1,12 +1,12 @@
 /* eslint-disable */
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { 
+import {
   Default as PageHeaderDefault,
   BlueText as PageHeaderBlueText,
   FiftyFifty as PageHeaderFiftyFifty,
   BlueBackground as PageHeaderBlueBackground,
-  Centered as PageHeaderCentered
+  Centered as PageHeaderCentered,
 } from '../../components/page-header/PageHeader';
 import {
   defaultPageHeaderProps,
@@ -35,26 +35,26 @@ jest.mock('../../components/page-header/PageHeaderDefault.dev', () => ({
             {fields.data.externalFields.pageHeaderTitle.jsonValue.value}
           </h1>
         )}
-        {!fields?.data?.externalFields?.pageHeaderTitle?.jsonValue?.value && 
-         fields?.data?.externalFields?.pageTitle?.jsonValue?.value && (
-          <h1 data-testid="header-title">
-            {fields.data.externalFields.pageTitle.jsonValue.value}
-          </h1>
-        )}
+        {!fields?.data?.externalFields?.pageHeaderTitle?.jsonValue?.value &&
+          fields?.data?.externalFields?.pageTitle?.jsonValue?.value && (
+            <h1 data-testid="header-title">
+              {fields.data.externalFields.pageTitle.jsonValue.value}
+            </h1>
+          )}
         {fields?.data?.externalFields?.pageSubtitle?.jsonValue?.value && (
           <p data-testid="header-subtitle">
             {fields.data.externalFields.pageSubtitle.jsonValue.value}
           </p>
         )}
         {fields?.data?.datasource?.imageRequired?.jsonValue?.value?.src && (
-          <img 
+          <img
             src={fields.data.datasource.imageRequired.jsonValue.value.src}
             alt={fields.data.datasource.imageRequired.jsonValue.value.alt}
             data-testid="header-image"
           />
         )}
         {(isPageEditing || fields?.data?.datasource?.link1?.jsonValue?.value?.href) && (
-          <a 
+          <a
             href={fields?.data?.datasource?.link1?.jsonValue?.value?.href || '#'}
             data-testid="header-link-1"
           >
@@ -62,16 +62,14 @@ jest.mock('../../components/page-header/PageHeaderDefault.dev', () => ({
           </a>
         )}
         {(isPageEditing || fields?.data?.datasource?.link2?.jsonValue?.value?.href) && (
-          <a 
+          <a
             href={fields?.data?.datasource?.link2?.jsonValue?.value?.href || '#'}
             data-testid="header-link-2"
           >
             {fields?.data?.datasource?.link2?.jsonValue?.value?.text || 'Button 2'}
           </a>
         )}
-        {params?.styles && (
-          <div data-testid="position-styles" data-styles={params.styles}></div>
-        )}
+        {params?.styles && <div data-testid="position-styles" data-styles={params.styles}></div>}
       </div>
     </div>
   ),
@@ -112,7 +110,7 @@ jest.mock('../../components/page-header/PageHeaderCentered.dev', () => ({
 // Mock window.matchMedia for reduced motion
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
+  value: jest.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -141,7 +139,9 @@ describe('PageHeader Component', () => {
       expect(screen.getByTestId('header-title')).toHaveTextContent('Discover Amazing Products');
 
       // Check subtitle
-      expect(screen.getByTestId('header-subtitle')).toHaveTextContent('Find the perfect tech solutions for your needs');
+      expect(screen.getByTestId('header-subtitle')).toHaveTextContent(
+        'Find the perfect tech solutions for your needs'
+      );
 
       // Check image
       expect(screen.getByTestId('header-image')).toHaveAttribute('src', '/page-header/hero.jpg');
@@ -242,7 +242,10 @@ describe('PageHeader Component', () => {
       expect(screen.getByTestId('page-header-fifty-fifty')).toHaveAttribute('data-editing', 'true');
 
       render(<PageHeaderBlueBackground {...defaultPageHeaderProps} />);
-      expect(screen.getByTestId('page-header-blue-background')).toHaveAttribute('data-editing', 'true');
+      expect(screen.getByTestId('page-header-blue-background')).toHaveAttribute(
+        'data-editing',
+        'true'
+      );
 
       render(<PageHeaderCentered {...defaultPageHeaderProps} />);
       expect(screen.getByTestId('page-header-centered')).toHaveAttribute('data-editing', 'true');
@@ -266,7 +269,9 @@ describe('PageHeader Component', () => {
             externalFields: {
               pageTitle: { jsonValue: { value: 'Welcome to Our Store' } },
               pageHeaderTitle: { jsonValue: { value: '' } },
-              pageSubtitle: { jsonValue: { value: 'Find the perfect tech solutions for your needs' } },
+              pageSubtitle: {
+                jsonValue: { value: 'Find the perfect tech solutions for your needs' },
+              },
             },
           },
         },
@@ -289,7 +294,7 @@ describe('PageHeader Component', () => {
   describe('Editing Mode Behavior', () => {
     it('shows buttons in editing mode regardless of href', () => {
       mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-      
+
       const propsWithEmptyLinks = {
         ...defaultPageHeaderProps,
         fields: {
@@ -337,7 +342,7 @@ describe('PageHeader Component', () => {
 
     it('hides links when they have empty href in normal mode', () => {
       mockUseSitecore.mockReturnValue(mockUseSitecoreNormal);
-      
+
       const propsWithEmptyLinks = {
         ...defaultPageHeaderProps,
         fields: {
@@ -369,7 +374,7 @@ describe('PageHeader Component', () => {
     it('passes all props to variant components', () => {
       const customProps = {
         ...defaultPageHeaderProps,
-        params: { customParam: 'test-value' }
+        params: { customParam: 'test-value' },
       };
 
       render(<PageHeaderDefault {...customProps} />);

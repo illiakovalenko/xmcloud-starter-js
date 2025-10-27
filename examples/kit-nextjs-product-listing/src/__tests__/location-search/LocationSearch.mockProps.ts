@@ -1,4 +1,7 @@
-import type { LocationSearchProps, DealershipFields } from '../../components/location-search/location-search.props';
+import type {
+  LocationSearchProps,
+  DealershipFields,
+} from '../../components/location-search/location-search.props';
 import type { Field } from '@sitecore-content-sdk/nextjs';
 
 // Inline utility functions

@@ -96,7 +96,11 @@ jest.mock('@/components/global-header/GlobalHeaderDefault.dev', () => ({
                   },
                   index: number
                 ) => (
-                  <a key={index} href={utilItem.link?.jsonValue?.value?.href} data-testid="utility-link">
+                  <a
+                    key={index}
+                    href={utilItem.link?.jsonValue?.value?.href}
+                    data-testid="utility-link"
+                  >
                     {utilItem.link?.jsonValue?.value?.text}
                   </a>
                 )
@@ -162,9 +166,7 @@ describe('GlobalHeader Component', () => {
 
   describe('Editing Mode', () => {
     it('indicates editing state correctly', () => {
-      const { useSitecore: mockUseSitecore } = jest.requireMock(
-        '@sitecore-content-sdk/nextjs'
-      );
+      const { useSitecore: mockUseSitecore } = jest.requireMock('@sitecore-content-sdk/nextjs');
 
       // Test editing mode
       mockUseSitecore.mockReturnValue({ page: { mode: { isEditing: true } } });

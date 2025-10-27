@@ -1,4 +1,7 @@
-import type { MultiPromoProps, MultiPromoItemProps } from '../../components/multi-promo/multi-promo.props';
+import type {
+  MultiPromoProps,
+  MultiPromoItemProps,
+} from '../../components/multi-promo/multi-promo.props';
 import type { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
 
 // Inline utility functions
@@ -88,7 +91,7 @@ export const multiPromoPropsMinimal: MultiPromoProps = {
       },
     },
   },
-  name: 'MultiPromo',  
+  name: 'MultiPromo',
   promos: [],
 };
 
@@ -100,7 +103,8 @@ export const multiPromoPropsThreeColumns: MultiPromoProps = {
 export const multiPromoPropsEmpty: MultiPromoProps = {
   rendering: { componentName: 'MultiPromo', params: {} },
   params: {},
-  fields: {},
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fields: undefined as any,
   name: 'MultiPromo',
   promos: [],
 };

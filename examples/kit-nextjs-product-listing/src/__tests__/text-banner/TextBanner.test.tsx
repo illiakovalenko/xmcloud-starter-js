@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
-import { 
+import { render, screen } from '@testing-library/react';
+import {
   Default as TextBannerDefault,
   TextBanner01,
   TextBanner02,
@@ -19,11 +19,9 @@ import {
   textBannerPropsEmptyFields,
   textBannerPropsNoFields,
   textBannerPropsUndefinedHeading,
-  textBannerPropsEditing,
   textBannerPropsNoStyles,
   textBannerPropsCustomTheme,
   textBannerPropsMultipleStyles,
-  textBannerPropsReducedMotion,
   mockUseSitecoreNormal,
   mockUseSitecoreEditing,
 } from './TextBanner.mockProps';
@@ -42,9 +40,9 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
 // Mock TextBanner variant components
 jest.mock('../../components/text-banner/TextBannerDefault.dev', () => ({
   TextBannerDefault: ({ fields, isPageEditing, params }: any) => (
-    <div 
-      data-testid="text-banner-default" 
-      data-editing={isPageEditing?.toString()} 
+    <div
+      data-testid="text-banner-default"
+      data-editing={isPageEditing?.toString()}
       data-styles={params?.styles || ''}
       data-theme={params?.theme || ''}
     >
@@ -58,9 +56,9 @@ jest.mock('../../components/text-banner/TextBannerDefault.dev', () => ({
 
 jest.mock('../../components/text-banner/TextBannerTextTop.dev', () => ({
   TextBannerTextTop: ({ fields, isPageEditing, params }: any) => (
-    <div 
-      data-testid="text-banner-text-top" 
-      data-editing={isPageEditing?.toString()} 
+    <div
+      data-testid="text-banner-text-top"
+      data-editing={isPageEditing?.toString()}
       data-styles={params?.styles || ''}
     >
       <div data-testid="banner-heading">{fields?.heading?.value || 'Text Top Banner'}</div>
@@ -73,9 +71,9 @@ jest.mock('../../components/text-banner/TextBannerTextTop.dev', () => ({
 
 jest.mock('../../components/text-banner/TextBannerBlueTitleRight.dev', () => ({
   TextBannerBlueTitleRight: ({ fields, isPageEditing, params }: any) => (
-    <div 
-      data-testid="text-banner-blue-title-right" 
-      data-editing={isPageEditing?.toString()} 
+    <div
+      data-testid="text-banner-blue-title-right"
+      data-editing={isPageEditing?.toString()}
       data-styles={params?.styles || ''}
     >
       <div data-testid="banner-heading">{fields?.heading?.value || 'Blue Title Right Banner'}</div>
@@ -88,9 +86,9 @@ jest.mock('../../components/text-banner/TextBannerBlueTitleRight.dev', () => ({
 
 jest.mock('../../components/text-banner/TextBanner01.dev', () => ({
   TextBanner01: ({ fields, isPageEditing, params }: any) => (
-    <div 
-      data-testid="text-banner-01" 
-      data-editing={isPageEditing?.toString()} 
+    <div
+      data-testid="text-banner-01"
+      data-editing={isPageEditing?.toString()}
       data-styles={params?.styles || ''}
     >
       <div data-testid="banner-heading">{fields?.heading?.value || 'Banner Variant 01'}</div>
@@ -103,9 +101,9 @@ jest.mock('../../components/text-banner/TextBanner01.dev', () => ({
 
 jest.mock('../../components/text-banner/TextBanner02.dev', () => ({
   TextBanner02: ({ fields, isPageEditing, params }: any) => (
-    <div 
-      data-testid="text-banner-02" 
-      data-editing={isPageEditing?.toString()} 
+    <div
+      data-testid="text-banner-02"
+      data-editing={isPageEditing?.toString()}
       data-styles={params?.styles || ''}
     >
       <div data-testid="banner-heading">{fields?.heading?.value || 'Banner Variant 02'}</div>
@@ -140,7 +138,10 @@ describe('TextBanner Component', () => {
 
       const bannerElement = screen.getByTestId('text-banner-default');
       expect(bannerElement).toHaveAttribute('data-editing', 'false');
-      expect(bannerElement).toHaveAttribute('data-styles', 'position-left custom-text-banner-styles');
+      expect(bannerElement).toHaveAttribute(
+        'data-styles',
+        'position-left custom-text-banner-styles'
+      );
       expect(bannerElement).toHaveAttribute('data-theme', 'primary');
     });
 
@@ -181,7 +182,10 @@ describe('TextBanner Component', () => {
 
       const bannerElement = screen.getByTestId('text-banner-01');
       expect(bannerElement).toHaveAttribute('data-editing', 'false');
-      expect(bannerElement).toHaveAttribute('data-styles', 'position-center premium-styling bg-dark');
+      expect(bannerElement).toHaveAttribute(
+        'data-styles',
+        'position-center premium-styling bg-dark'
+      );
     });
 
     it('handles editing state correctly in TextBanner01', () => {
@@ -205,7 +209,10 @@ describe('TextBanner Component', () => {
       render(<TextBanner02 {...textBannerPropsPositionRight} />);
 
       const bannerElement = screen.getByTestId('text-banner-02');
-      expect(bannerElement).toHaveAttribute('data-styles', 'position-right text-light custom-theme');
+      expect(bannerElement).toHaveAttribute(
+        'data-styles',
+        'position-right text-light custom-theme'
+      );
     });
   });
 
@@ -221,7 +228,10 @@ describe('TextBanner Component', () => {
       render(<TextTop {...textBannerPropsMultipleStyles} />);
 
       const bannerElement = screen.getByTestId('text-banner-text-top');
-      expect(bannerElement).toHaveAttribute('data-styles', 'position-left bg-primary text-white border-accent custom-padding responsive-layout');
+      expect(bannerElement).toHaveAttribute(
+        'data-styles',
+        'position-left bg-primary text-white border-accent custom-padding responsive-layout'
+      );
     });
   });
 
@@ -245,14 +255,20 @@ describe('TextBanner Component', () => {
     it('handles long content gracefully across variants', () => {
       render(<TextBannerDefault {...textBannerPropsLongContent} />);
 
-      expect(screen.getByText(/SYNC Audio - Revolutionizing Professional Sound Engineering/)).toBeInTheDocument();
-      expect(screen.getByText(/Experience the ultimate in professional audio excellence/)).toBeInTheDocument();
+      expect(
+        screen.getByText(/SYNC Audio - Revolutionizing Professional Sound Engineering/)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(/Experience the ultimate in professional audio excellence/)
+      ).toBeInTheDocument();
     });
 
     it('handles special characters in content across variants', () => {
       render(<TextBannerDefault {...textBannerPropsSpecialChars} />);
 
-      expect(screen.getByText('SYNC™ Àudio - Équipement Professionnel & Spëcialisé')).toBeInTheDocument();
+      expect(
+        screen.getByText('SYNC™ Àudio - Équipement Professionnel & Spëcialisé')
+      ).toBeInTheDocument();
       expect(screen.getByText(/Découvrez l'excellence acoustique/)).toBeInTheDocument();
     });
 
@@ -261,7 +277,7 @@ describe('TextBanner Component', () => {
 
       const bannerElement = screen.getByTestId('text-banner-default');
       expect(bannerElement).toBeInTheDocument();
-      
+
       // Should render heading with empty content or fallback text
       const heading = screen.getByTestId('banner-heading');
       expect(heading).toBeInTheDocument();
@@ -280,7 +296,10 @@ describe('TextBanner Component', () => {
       render(<TextBannerDefault {...textBannerPropsMultipleStyles} />);
 
       const bannerElement = screen.getByTestId('text-banner-default');
-      expect(bannerElement).toHaveAttribute('data-styles', 'position-left bg-primary text-white border-accent custom-padding responsive-layout');
+      expect(bannerElement).toHaveAttribute(
+        'data-styles',
+        'position-left bg-primary text-white border-accent custom-padding responsive-layout'
+      );
     });
 
     it('handles missing styles parameter', () => {
@@ -301,7 +320,10 @@ describe('TextBanner Component', () => {
       render(<TextBannerDefault {...textBannerPropsPositionCenter} />);
 
       const bannerElement = screen.getByTestId('text-banner-default');
-      expect(bannerElement).toHaveAttribute('data-styles', 'position-center premium-styling bg-dark');
+      expect(bannerElement).toHaveAttribute(
+        'data-styles',
+        'position-center premium-styling bg-dark'
+      );
     });
   });
 
@@ -322,7 +344,10 @@ describe('TextBanner Component', () => {
       expect(screen.getByTestId('text-banner-text-top')).toHaveAttribute('data-editing', 'true');
 
       rerender(<BlueTitleRight {...defaultTextBannerProps} />);
-      expect(screen.getByTestId('text-banner-blue-title-right')).toHaveAttribute('data-editing', 'true');
+      expect(screen.getByTestId('text-banner-blue-title-right')).toHaveAttribute(
+        'data-editing',
+        'true'
+      );
     });
 
     it('handles non-editing state correctly', () => {
@@ -444,11 +469,11 @@ describe('TextBanner Component', () => {
 
       variants.forEach(({ component: Component, testId }) => {
         const { unmount } = render(<Component {...testProps} />);
-        
+
         const element = screen.getByTestId(testId);
         expect(element).toHaveAttribute('data-styles', 'consistent-styles');
         expect(element).toHaveAttribute('data-editing', 'false');
-        
+
         unmount();
       });
     });
@@ -457,38 +482,36 @@ describe('TextBanner Component', () => {
   describe('Performance', () => {
     it('handles re-renders efficiently', () => {
       const { rerender } = render(<TextBannerDefault {...defaultTextBannerProps} />);
-      
-      const initialElement = screen.getByTestId('text-banner-default');
-      
+
       rerender(<TextBannerDefault {...defaultTextBannerProps} />);
-      
+
       const rerenderElement = screen.getByTestId('text-banner-default');
       expect(rerenderElement).toBeInTheDocument();
     });
 
     it('handles variant switching efficiently', () => {
       const { rerender } = render(<TextBannerDefault {...defaultTextBannerProps} />);
-      
+
       expect(screen.getByTestId('text-banner-default')).toBeInTheDocument();
-      
+
       rerender(<TextBanner01 {...defaultTextBannerProps} />);
       expect(screen.getByTestId('text-banner-01')).toBeInTheDocument();
-      
+
       rerender(<TextBanner02 {...defaultTextBannerProps} />);
       expect(screen.getByTestId('text-banner-02')).toBeInTheDocument();
     });
 
     it('handles rapid prop changes efficiently', () => {
       const { rerender } = render(<TextBannerDefault {...defaultTextBannerProps} />);
-      
+
       for (let i = 0; i < 10; i++) {
         const dynamicProps = {
           ...defaultTextBannerProps,
           params: { styles: `dynamic-style-${i}` },
         };
-        
+
         rerender(<TextBannerDefault {...dynamicProps} />);
-        
+
         const element = screen.getByTestId('text-banner-default');
         expect(element).toHaveAttribute('data-styles', `dynamic-style-${i}`);
       }
@@ -498,13 +521,13 @@ describe('TextBanner Component', () => {
   describe('Accessibility', () => {
     it('maintains proper component structure across variants', () => {
       const variants = [TextBannerDefault, TextBanner01, TextBanner02, TextTop, BlueTitleRight];
-      
-      variants.forEach((Component, index) => {
+
+      variants.forEach((Component) => {
         const { unmount } = render(<Component {...defaultTextBannerProps} />);
-        
+
         expect(screen.getByTestId('banner-heading')).toBeInTheDocument();
         expect(screen.getByTestId('banner-description')).toBeInTheDocument();
-        
+
         unmount();
       });
     });
@@ -514,7 +537,7 @@ describe('TextBanner Component', () => {
 
       const heading = screen.getByTestId('banner-heading');
       const description = screen.getByTestId('banner-description');
-      
+
       expect(heading).toHaveTextContent('Transform Your Audio Experience');
       expect(description).toHaveTextContent(/Discover the pinnacle of sound engineering/);
     });
@@ -532,7 +555,10 @@ describe('TextBanner Component', () => {
       render(<TextBannerDefault {...responsiveProps} />);
 
       const bannerElement = screen.getByTestId('text-banner-default');
-      expect(bannerElement).toHaveAttribute('data-styles', '@md:text-center @lg:text-left @xl:text-right responsive-grid');
+      expect(bannerElement).toHaveAttribute(
+        'data-styles',
+        '@md:text-center @lg:text-left @xl:text-right responsive-grid'
+      );
     });
 
     it('handles container query classes', () => {
@@ -546,7 +572,10 @@ describe('TextBanner Component', () => {
       render(<TextBannerDefault {...containerQueryProps} />);
 
       const bannerElement = screen.getByTestId('text-banner-default');
-      expect(bannerElement).toHaveAttribute('data-styles', '@container/banner:md:grid-cols-2 @container/banner:lg:gap-8');
+      expect(bannerElement).toHaveAttribute(
+        'data-styles',
+        '@container/banner:md:grid-cols-2 @container/banner:lg:gap-8'
+      );
     });
   });
 });

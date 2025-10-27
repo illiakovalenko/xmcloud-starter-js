@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import {
   Default as LocationSearchDefault,
   MapRight,
@@ -43,9 +43,8 @@ jest.mock('../../hooks/use-match-media', () => ({
 }));
 
 jest.mock('../../components/zipcode-modal/zipcode-modal.dev', () => ({
-  ZipcodeModal: ({ isOpen, onClose }: any) => (
-    isOpen ? <div data-testid="zipcode-modal">Zipcode Modal</div> : null
-  ),
+  ZipcodeModal: ({ isOpen }: any) =>
+    isOpen ? <div data-testid="zipcode-modal">Zipcode Modal</div> : null,
 }));
 
 jest.mock('../../components/ui/button', () => ({
@@ -102,7 +101,7 @@ jest.mock('../../components/location-search/LocationSearchDefault.dev', () => ({
 }));
 
 jest.mock('../../components/location-search/LocationSearchMapRight.dev', () => ({
-  LocationSearchMapRight: ({ fields, isPageEditing }: any) => (
+  LocationSearchMapRight: ({ isPageEditing }: any) => (
     <section data-testid="location-search-map-right">
       <span data-testid="editing-mode">{isPageEditing ? 'editing' : 'normal'}</span>
     </section>
@@ -110,7 +109,7 @@ jest.mock('../../components/location-search/LocationSearchMapRight.dev', () => (
 }));
 
 jest.mock('../../components/location-search/LocationSearchMapTopAllCentered.dev', () => ({
-  LocationSearchMapTopAllCentered: ({ fields, isPageEditing }: any) => (
+  LocationSearchMapTopAllCentered: ({ isPageEditing }: any) => (
     <section data-testid="location-search-map-top-all-centered">
       <span data-testid="editing-mode">{isPageEditing ? 'editing' : 'normal'}</span>
     </section>
@@ -118,7 +117,7 @@ jest.mock('../../components/location-search/LocationSearchMapTopAllCentered.dev'
 }));
 
 jest.mock('../../components/location-search/LocationSearchMapRightTitleZipCentered.dev', () => ({
-  LocationSearchMapRightTitleZipCentered: ({ fields, isPageEditing }: any) => (
+  LocationSearchMapRightTitleZipCentered: ({ isPageEditing }: any) => (
     <section data-testid="location-search-map-right-title-zip-centered">
       <span data-testid="editing-mode">{isPageEditing ? 'editing' : 'normal'}</span>
     </section>
@@ -126,7 +125,7 @@ jest.mock('../../components/location-search/LocationSearchMapRightTitleZipCenter
 }));
 
 jest.mock('../../components/location-search/LocationSearchTitleZipCentered.dev', () => ({
-  LocationSearchTitleZipCentered: ({ fields, isPageEditing }: any) => (
+  LocationSearchTitleZipCentered: ({ isPageEditing }: any) => (
     <section data-testid="location-search-title-zip-centered">
       <span data-testid="editing-mode">{isPageEditing ? 'editing' : 'normal'}</span>
     </section>
@@ -240,7 +239,9 @@ describe('LocationSearch Component', () => {
 
     it('renders MapRightTitleZipCentered variant', () => {
       render(<MapRightTitleZipCentered {...defaultLocationSearchProps} />);
-      expect(screen.getByTestId('location-search-map-right-title-zip-centered')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('location-search-map-right-title-zip-centered')
+      ).toBeInTheDocument();
     });
 
     it('renders MapLeftTitleZipCentered variant', () => {

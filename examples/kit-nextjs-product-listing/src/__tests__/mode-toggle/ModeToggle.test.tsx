@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { ModeToggle } from '../../components/mode-toggle/mode-toggle.dev';
 import {
   defaultModeToggleProps,
@@ -21,22 +21,22 @@ jest.mock('next-themes', () => ({
 
 // Mock lucide-react icons
 jest.mock('lucide-react', () => ({
-  Sun: ({ className, size, strokeWidth, ...props }: any) => (
-    <svg 
-      data-testid="sun-icon" 
-      className={className} 
-      width={size} 
+  Sun: ({ className, size, strokeWidth }: any) => (
+    <svg
+      data-testid="sun-icon"
+      className={className}
+      width={size}
       height={size}
       strokeWidth={strokeWidth}
     >
       <circle cx="12" cy="12" r="5" />
     </svg>
   ),
-  Moon: ({ className, size, strokeWidth, ...props }: any) => (
-    <svg 
-      data-testid="moon-icon" 
+  Moon: ({ className, size, strokeWidth }: any) => (
+    <svg
+      data-testid="moon-icon"
       className={className}
-      width={size} 
+      width={size}
       height={size}
       strokeWidth={strokeWidth}
     >
@@ -55,7 +55,13 @@ jest.mock('../../components/ui/dropdown-menu', () => ({
       {children}
     </div>
   ),
-  DropdownMenuItem: ({ children, onClick }: { children: React.ReactNode; onClick?: () => void }) => (
+  DropdownMenuItem: ({
+    children,
+    onClick,
+  }: {
+    children: React.ReactNode;
+    onClick?: () => void;
+  }) => (
     <div
       data-testid="dropdown-menu-item"
       onClick={onClick}
@@ -70,7 +76,7 @@ jest.mock('../../components/ui/dropdown-menu', () => ({
       {children}
     </div>
   ),
-  DropdownMenuTrigger: ({ children, asChild }: { children: React.ReactNode; asChild?: boolean }) => (
+  DropdownMenuTrigger: ({ children }: { children: React.ReactNode; asChild?: boolean }) => (
     <div data-testid="dropdown-menu-trigger">{children}</div>
   ),
 }));
@@ -247,7 +253,7 @@ describe('ModeToggle Component', () => {
       const menuItems = screen.getAllByRole('menuitem');
       expect(menuItems).toHaveLength(3);
 
-      menuItems.forEach(item => {
+      menuItems.forEach((item) => {
         expect(item).toHaveAttribute('tabIndex', '0');
       });
     });
@@ -280,7 +286,7 @@ describe('ModeToggle Component', () => {
       // Check if icons are rendered with expected test ids
       expect(sunIcon).toBeInTheDocument();
       expect(moonIcon).toBeInTheDocument();
-      
+
       // Icons should have proper CSS classes applied
       expect(sunIcon).toHaveClass('h-[1.2rem]', 'w-[1.2rem]');
       expect(moonIcon).toHaveClass('absolute', 'h-[1.2rem]', 'w-[1.2rem]');
@@ -331,7 +337,7 @@ describe('ModeToggle Component', () => {
       expect(button).not.toHaveAttribute('tabIndex', '-1');
 
       // Menu items should be focusable
-      menuItems.forEach(item => {
+      menuItems.forEach((item) => {
         expect(item).toHaveAttribute('tabIndex', '0');
       });
     });
@@ -381,8 +387,8 @@ describe('ModeToggle Component', () => {
 
       expect(() => {
         render(<ModeToggle {...defaultModeToggleProps} />);
-      }).not.toThrow(); 
-      
+      }).not.toThrow();
+
       // Reset mock
       mockUseTheme.mockReturnValue({
         setTheme: mockSetTheme,
@@ -400,7 +406,7 @@ describe('ModeToggle Component', () => {
       // The click will throw an error because setTheme is not a function
       // but the component renders without crashing
       expect(screen.getByText('Light')).toBeInTheDocument();
-      
+
       // Reset mock
       mockUseTheme.mockReturnValue({
         setTheme: mockSetTheme,

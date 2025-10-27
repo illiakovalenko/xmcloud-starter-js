@@ -1,4 +1,8 @@
-import type { LogoTabsProps, LogoItemProps, LogoTabContent } from '../../components/logo-tabs/logo-tabs.props';
+import type {
+  LogoTabsProps,
+  LogoItemProps,
+  LogoTabContent,
+} from '../../components/logo-tabs/logo-tabs.props';
 import type { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
 
 // Inline utility functions
@@ -13,7 +17,10 @@ const createMockLinkField = (href: string, text: string): LinkField =>
   }) as unknown as LinkField;
 
 const mockTitleField = createMockField('Our Brand Partners');
-const mockBackgroundImageField = createMockImageField('/backgrounds/partners-bg.jpg', 'Partners Background');
+const mockBackgroundImageField = createMockImageField(
+  '/backgrounds/partners-bg.jpg',
+  'Partners Background'
+);
 
 const mockLogo1: LogoItemProps = {
   title: { jsonValue: createMockField('Brand Alpha') },
@@ -47,7 +54,7 @@ const mockTabContent3: LogoTabContent = {
 
 export const defaultLogoTabsProps: LogoTabsProps = {
   rendering: { componentName: 'LogoTabs', params: {} },
-  params: { colorScheme: 'dark' },
+  params: { colorScheme: 'primary' },
   fields: {
     data: {
       datasource: {

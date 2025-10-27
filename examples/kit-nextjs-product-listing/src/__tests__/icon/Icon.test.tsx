@@ -123,7 +123,7 @@ describe('Icon Component Helper Functions', () => {
 
     it('loads and renders Facebook icon', async () => {
       render(<Icon iconName={IconName.FACEBOOK} />);
-      
+
       await waitFor(() => {
         expect(screen.getByTestId('facebook-icon')).toBeInTheDocument();
       });
@@ -131,7 +131,7 @@ describe('Icon Component Helper Functions', () => {
 
     it('loads and renders Instagram icon', async () => {
       render(<Icon iconName={IconName.INSTAGRAM} />);
-      
+
       await waitFor(() => {
         expect(screen.getByTestId('instagram-icon')).toBeInTheDocument();
       });
@@ -139,7 +139,7 @@ describe('Icon Component Helper Functions', () => {
 
     it('loads and renders arrow-left icon', async () => {
       render(<Icon iconName={IconName.ARROW_LEFT} />);
-      
+
       await waitFor(() => {
         expect(screen.getByTestId('arrow-left-icon')).toBeInTheDocument();
       });
@@ -147,7 +147,7 @@ describe('Icon Component Helper Functions', () => {
 
     it('loads and renders play icon', async () => {
       render(<Icon iconName={IconName.PLAY} />);
-      
+
       await waitFor(() => {
         expect(screen.getByTestId('play-icon')).toBeInTheDocument();
       });
@@ -155,7 +155,7 @@ describe('Icon Component Helper Functions', () => {
 
     it('passes isAriaHidden prop to loaded icon', async () => {
       render(<Icon iconName={IconName.EMAIL} isAriaHidden={false} />);
-      
+
       await waitFor(() => {
         const icon = screen.getByTestId('email-icon');
         expect(icon).toBeInTheDocument();
@@ -166,7 +166,7 @@ describe('Icon Component Helper Functions', () => {
 
     it('passes isAriaHidden true by default', async () => {
       render(<Icon iconName={IconName.EMAIL} />);
-      
+
       await waitFor(() => {
         const icon = screen.getByTestId('email-icon');
         expect(icon).toBeInTheDocument();
@@ -176,8 +176,10 @@ describe('Icon Component Helper Functions', () => {
     });
 
     it('passes additional props to loaded icon', async () => {
-      render(<Icon iconName={IconName.FACEBOOK} className="custom-icon" data-testid="facebook-test" />);
-      
+      render(
+        <Icon iconName={IconName.FACEBOOK} className="custom-icon" data-testid="facebook-test" />
+      );
+
       await waitFor(() => {
         const icon = screen.getByTestId('facebook-test');
         expect(icon).toBeInTheDocument();
@@ -187,7 +189,7 @@ describe('Icon Component Helper Functions', () => {
 
     it('passes altText through to loaded icon', async () => {
       render(<Icon iconName={IconName.FACEBOOK} altText="Facebook social link" />);
-      
+
       await waitFor(() => {
         const icon = screen.getByTestId('facebook-icon');
         expect(icon).toBeInTheDocument();
@@ -203,13 +205,13 @@ describe('Icon Component Helper Functions', () => {
 
     it('re-renders when iconName prop changes', async () => {
       const { rerender } = render(<Icon iconName={IconName.FACEBOOK} />);
-      
+
       await waitFor(() => {
         expect(screen.getByTestId('facebook-icon')).toBeInTheDocument();
       });
 
       rerender(<Icon iconName={IconName.INSTAGRAM} />);
-      
+
       await waitFor(() => {
         expect(screen.getByTestId('instagram-icon')).toBeInTheDocument();
       });

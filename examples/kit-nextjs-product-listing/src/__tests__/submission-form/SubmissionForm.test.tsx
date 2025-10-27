@@ -1,7 +1,10 @@
 /* eslint-disable */
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Default as SubmissionFormDefault, Centered as SubmissionFormCentered } from '../../components/submission-form/SubmissionForm';
+import {
+  Default as SubmissionFormDefault,
+  Centered as SubmissionFormCentered,
+} from '../../components/submission-form/SubmissionForm';
 import {
   defaultSubmissionFormProps,
   submissionFormPropsCentered,
@@ -35,8 +38,8 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
 // Mock SubmissionFormDefault component
 jest.mock('../../components/submission-form/SubmissionFormDefault.dev', () => ({
   SubmissionFormDefault: ({ fields, params, isPageEditing, ...props }: any) => (
-    <div 
-      data-testid="submission-form-default" 
+    <div
+      data-testid="submission-form-default"
       data-editing={isPageEditing?.toString()}
       data-styles={params?.styles || ''}
       data-title={fields?.title?.value || ''}
@@ -51,8 +54,8 @@ jest.mock('../../components/submission-form/SubmissionFormDefault.dev', () => ({
 // Mock SubmissionFormCentered component
 jest.mock('../../components/submission-form/SubmissionFormCentered.dev', () => ({
   SubmissionFormCentered: ({ fields, params, isPageEditing, ...props }: any) => (
-    <div 
-      data-testid="submission-form-centered" 
+    <div
+      data-testid="submission-form-centered"
       data-editing={isPageEditing?.toString()}
       data-styles={params?.styles || ''}
       data-title={fields?.title?.value || ''}
@@ -80,7 +83,7 @@ describe('SubmissionForm Component', () => {
 
     it('passes editing mode correctly to child component', () => {
       mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-      
+
       render(<SubmissionFormDefault {...defaultSubmissionFormProps} />);
 
       const defaultComponent = screen.getByTestId('submission-form-default');
@@ -89,7 +92,7 @@ describe('SubmissionForm Component', () => {
 
     it('passes non-editing mode correctly to child component', () => {
       mockUseSitecore.mockReturnValue(mockUseSitecoreNormal);
-      
+
       render(<SubmissionFormDefault {...defaultSubmissionFormProps} />);
 
       const defaultComponent = screen.getByTestId('submission-form-default');
@@ -108,7 +111,10 @@ describe('SubmissionForm Component', () => {
       render(<SubmissionFormDefault {...submissionFormPropsCustomPosition} />);
 
       const defaultComponent = screen.getByTestId('submission-form-default');
-      expect(defaultComponent).toHaveAttribute('data-styles', 'position-right bg-primary text-white');
+      expect(defaultComponent).toHaveAttribute(
+        'data-styles',
+        'position-right bg-primary text-white'
+      );
     });
 
     it('handles missing styles parameter', () => {
@@ -129,7 +135,7 @@ describe('SubmissionForm Component', () => {
 
     it('passes editing mode correctly to centered component', () => {
       mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-      
+
       render(<SubmissionFormCentered {...submissionFormPropsCentered} />);
 
       const centeredComponent = screen.getByTestId('submission-form-centered');
@@ -138,7 +144,7 @@ describe('SubmissionForm Component', () => {
 
     it('passes non-editing mode correctly to centered component', () => {
       mockUseSitecore.mockReturnValue(mockUseSitecoreNormal);
-      
+
       render(<SubmissionFormCentered {...submissionFormPropsCentered} />);
 
       const centeredComponent = screen.getByTestId('submission-form-centered');
@@ -180,14 +186,18 @@ describe('SubmissionForm Component', () => {
       render(<SubmissionFormDefault {...submissionFormPropsLongTitle} />);
 
       const titleElement = screen.getByTestId('form-title');
-      expect(titleElement).toHaveTextContent('Experience Premium Audio Excellence with SYNC Professional Equipment');
+      expect(titleElement).toHaveTextContent(
+        'Experience Premium Audio Excellence with SYNC Professional Equipment'
+      );
     });
 
     it('handles special characters in title', () => {
       render(<SubmissionFormDefault {...submissionFormPropsSpecialChars} />);
 
       const titleElement = screen.getByTestId('form-title');
-      expect(titleElement).toHaveTextContent('SYNC™ Àudio - Jóin Öur Prémium Cömmunity & Gët Ëxclusive Àccess');
+      expect(titleElement).toHaveTextContent(
+        'SYNC™ Àudio - Jóin Öur Prémium Cömmunity & Gët Ëxclusive Àccess'
+      );
     });
   });
 
@@ -262,14 +272,17 @@ describe('SubmissionForm Component', () => {
 
     it('passes same editing state to both variants', () => {
       mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-      
+
       const { rerender } = render(<SubmissionFormDefault {...defaultSubmissionFormProps} />);
-      
+
       expect(screen.getByTestId('submission-form-default')).toHaveAttribute('data-editing', 'true');
 
       rerender(<SubmissionFormCentered {...submissionFormPropsCentered} />);
 
-      expect(screen.getByTestId('submission-form-centered')).toHaveAttribute('data-editing', 'true');
+      expect(screen.getByTestId('submission-form-centered')).toHaveAttribute(
+        'data-editing',
+        'true'
+      );
     });
   });
 
@@ -286,11 +299,11 @@ describe('SubmissionForm Component', () => {
 
     it('manages useSitecore hook calls efficiently', () => {
       render(<SubmissionFormDefault {...defaultSubmissionFormProps} />);
-      
+
       const initialCallCount = mockUseSitecore.mock.calls.length;
 
       render(<SubmissionFormCentered {...submissionFormPropsCentered} />);
-      
+
       // Should call useSitecore for each component instance
       expect(mockUseSitecore.mock.calls.length).toBeGreaterThan(initialCallCount);
     });
@@ -314,7 +327,7 @@ describe('SubmissionForm Component', () => {
 
     it('provides consistent structure across variants', () => {
       const { rerender } = render(<SubmissionFormDefault {...defaultSubmissionFormProps} />);
-      
+
       expect(screen.getByTestId('form-title')).toBeInTheDocument();
       expect(screen.getByTestId('submit-info-form')).toBeInTheDocument();
 
@@ -373,28 +386,31 @@ describe('SubmissionForm Component', () => {
     it('correctly passes isPageEditing state to child components', () => {
       // Test editing state
       mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-      
+
       const { rerender } = render(<SubmissionFormDefault {...defaultSubmissionFormProps} />);
-      
+
       expect(screen.getByTestId('submission-form-default')).toHaveAttribute('data-editing', 'true');
 
       // Test non-editing state
       mockUseSitecore.mockReturnValue(mockUseSitecoreNormal);
-      
+
       rerender(<SubmissionFormDefault {...defaultSubmissionFormProps} />);
-      
-      expect(screen.getByTestId('submission-form-default')).toHaveAttribute('data-editing', 'false');
+
+      expect(screen.getByTestId('submission-form-default')).toHaveAttribute(
+        'data-editing',
+        'false'
+      );
     });
 
     it('preserves original props while adding isPageEditing', () => {
       render(<SubmissionFormDefault {...submissionFormPropsCustomPosition} />);
 
       const component = screen.getByTestId('submission-form-default');
-      
+
       // Original props should be preserved
       expect(component).toHaveAttribute('data-styles', 'position-right bg-primary text-white');
       expect(component).toHaveAttribute('data-title', 'Contact Our Audio Experts');
-      
+
       // isPageEditing should be added
       expect(component).toHaveAttribute('data-editing');
     });

@@ -9,7 +9,6 @@ import {
   productListingPropsNoProducts,
   productListingPropsMinimal,
   productListingPropsEditing,
-  productListingPropsNoDataSource,
   productListingPropsNoFields,
   mockUseSitecoreNormal,
   mockUseSitecoreEditing,
@@ -29,9 +28,9 @@ jest.mock('next-localization', () => ({
   useI18n: () => ({
     t: (key: string) => {
       const dictionary: { [key: string]: string } = {
-        'PRODUCTLISTING_DrivingRange': 'Battery Life',
-        'PRODUCTLISTING_Price': 'Starting at',
-        'PRODUCTLISTING_SeeFullSpecs': 'See Full Specs',
+        PRODUCTLISTING_DrivingRange: 'Battery Life',
+        PRODUCTLISTING_Price: 'Starting at',
+        PRODUCTLISTING_SeeFullSpecs: 'See Full Specs',
       };
       return dictionary[key] || key;
     },
@@ -43,9 +42,17 @@ jest.mock('../../hooks/use-match-media', () => ({
 }));
 
 jest.mock('../../components/animated-section/AnimatedSection.dev', () => ({
-  Default: ({ children, className, direction, delay, duration, reducedMotion, isPageEditing }: any) => (
-    <div 
-      data-testid="animated-section" 
+  Default: ({
+    children,
+    className,
+    direction,
+    delay,
+    duration,
+    reducedMotion,
+    isPageEditing,
+  }: any) => (
+    <div
+      data-testid="animated-section"
       className={className}
       data-direction={direction}
       data-delay={delay}
@@ -59,9 +66,9 @@ jest.mock('../../components/animated-section/AnimatedSection.dev', () => ({
 }));
 
 jest.mock('../../components/product-listing/ProductListingCard.dev', () => ({
-  ProductListingCard: ({ product, link, prefersReducedMotion, isPageEditing }: any) => (
-    <div 
-      data-testid="product-card" 
+  ProductListingCard: ({ product, prefersReducedMotion, isPageEditing }: any) => (
+    <div
+      data-testid="product-card"
       data-product-name={product.productName?.jsonValue?.value}
       data-reduced-motion={prefersReducedMotion}
       data-editing={isPageEditing}
@@ -75,7 +82,10 @@ jest.mock('../../components/product-listing/ProductListingCard.dev', () => ({
 
 jest.mock('../../lib/utils', () => ({
   cn: (...classes: any[]) => {
-    return classes.filter(Boolean).filter(c => typeof c === 'string' || typeof c === 'number').join(' ');
+    return classes
+      .filter(Boolean)
+      .filter((c) => typeof c === 'string' || typeof c === 'number')
+      .join(' ');
   },
 }));
 
@@ -106,7 +116,7 @@ describe('ProductListing Component', () => {
 
       const productCards = screen.getAllByTestId('product-card');
       expect(productCards).toHaveLength(3);
-      
+
       expect(screen.getByText('Pro Audio Headphones')).toBeInTheDocument();
       expect(screen.getByText('Wireless Earbuds')).toBeInTheDocument();
       expect(screen.getByText('Studio Monitors')).toBeInTheDocument();
@@ -127,9 +137,9 @@ describe('ProductListing Component', () => {
       render(<ProductListingDefault {...defaultProductListingProps} />);
 
       const productCards = screen.getAllByTestId('product-card');
-      
+
       // First product (index 0) goes to right column
-      // Second product (index 1) goes to left column  
+      // Second product (index 1) goes to left column
       // Third product (index 2) goes to right column
       expect(productCards).toHaveLength(3);
     });
@@ -139,7 +149,7 @@ describe('ProductListing Component', () => {
 
       const productCards = screen.getAllByTestId('product-card');
       expect(productCards).toHaveLength(2);
-      
+
       expect(screen.getByText('Pro Audio Headphones')).toBeInTheDocument();
       expect(screen.getByText('Wireless Earbuds')).toBeInTheDocument();
     });
@@ -149,7 +159,7 @@ describe('ProductListing Component', () => {
 
       const productCards = screen.getAllByTestId('product-card');
       expect(productCards).toHaveLength(1);
-      
+
       expect(screen.getByText('Pro Audio Headphones')).toBeInTheDocument();
     });
 
@@ -227,12 +237,12 @@ describe('ProductListing Component', () => {
       render(<ProductListingDefault {...defaultProductListingProps} />);
 
       const animatedSections = screen.getAllByTestId('animated-section');
-      animatedSections.forEach(section => {
+      animatedSections.forEach((section) => {
         expect(section).toHaveAttribute('data-reduced-motion', 'true');
       });
 
       const productCards = screen.getAllByTestId('product-card');
-      productCards.forEach(card => {
+      productCards.forEach((card) => {
         expect(card).toHaveAttribute('data-reduced-motion', 'true');
       });
     });
@@ -244,12 +254,12 @@ describe('ProductListing Component', () => {
       render(<ProductListingDefault {...productListingPropsEditing} />);
 
       const animatedSections = screen.getAllByTestId('animated-section');
-      animatedSections.forEach(section => {
+      animatedSections.forEach((section) => {
         expect(section).toHaveAttribute('data-editing', 'true');
       });
 
       const productCards = screen.getAllByTestId('product-card');
-      productCards.forEach(card => {
+      productCards.forEach((card) => {
         expect(card).toHaveAttribute('data-editing', 'true');
       });
     });
@@ -259,7 +269,7 @@ describe('ProductListing Component', () => {
       render(<ProductListingDefault {...defaultProductListingProps} />);
 
       const animatedSections = screen.getAllByTestId('animated-section');
-      animatedSections.forEach(section => {
+      animatedSections.forEach((section) => {
         expect(section).toHaveAttribute('data-editing', 'false');
       });
     });
@@ -294,14 +304,14 @@ describe('ProductListing Component', () => {
       render(<ProductListingDefault {...defaultProductListingProps} />);
 
       const animatedSections = screen.getAllByTestId('animated-section');
-      
+
       // Main title section
       expect(animatedSections[0]).toHaveAttribute('data-direction', 'down');
       expect(animatedSections[0]).toHaveAttribute('data-duration', '400');
 
       // Product sections should have up direction
       const productAnimations = animatedSections.slice(1);
-      productAnimations.forEach(section => {
+      productAnimations.forEach((section) => {
         expect(section).toHaveAttribute('data-direction', 'up');
         expect(section).toHaveAttribute('data-duration', '400');
       });
@@ -314,7 +324,7 @@ describe('ProductListing Component', () => {
       const productAnimations = animatedSections.slice(1); // Skip title section
 
       // Should have delays for staggered animation
-      productAnimations.forEach(section => {
+      productAnimations.forEach((section) => {
         const delay = section.getAttribute('data-delay');
         expect(delay).toMatch(/\d+/); // Should be a number
       });
@@ -350,9 +360,9 @@ describe('ProductListing Component', () => {
       render(<ProductListingDefault {...defaultProductListingProps} />);
 
       const productCards = screen.getAllByTestId('product-card');
-      
+
       // Cards should be focusable elements
-      productCards.forEach(card => {
+      productCards.forEach((card) => {
         expect(card).toBeInTheDocument();
       });
     });
@@ -381,7 +391,7 @@ describe('ProductListing Component', () => {
       render(<ProductListingDefault {...defaultProductListingProps} />);
 
       const productCards = screen.getAllByTestId('product-card');
-      
+
       // Simulate multiple interactions
       act(() => {
         fireEvent.mouseEnter(productCards[0]);

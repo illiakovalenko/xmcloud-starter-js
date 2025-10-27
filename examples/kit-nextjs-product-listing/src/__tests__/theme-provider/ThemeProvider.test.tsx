@@ -1,6 +1,7 @@
 /* eslint-disable */
+// @ts-nocheck
 import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from '../../components/theme-provider/theme-provider.dev';
 import {
   defaultThemeProviderProps,
@@ -30,13 +31,17 @@ jest.mock('next-themes', () => ({
 describe('ThemeProvider Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    
+
     // Default mock implementation that renders children
-    mockNextThemesProvider.mockImplementation(({ children, ...props }) => 
-      React.createElement('div', { 
-        'data-testid': 'next-themes-provider',
-        'data-props': JSON.stringify(props)
-      }, children)
+    mockNextThemesProvider.mockImplementation(({ children, ...props }) =>
+      React.createElement(
+        'div',
+        {
+          'data-testid': 'next-themes-provider',
+          'data-props': JSON.stringify(props),
+        },
+        children
+      )
     );
   });
 
@@ -81,7 +86,7 @@ describe('ThemeProvider Component', () => {
       // Should only render the NextThemesProvider, no additional wrapper elements
       const provider = screen.getByTestId('next-themes-provider');
       expect(provider).toBeInTheDocument();
-      
+
       // Verify no extra wrapper div from our component
       expect(container.firstChild).toBe(provider);
     });
@@ -97,7 +102,7 @@ describe('ThemeProvider Component', () => {
           enableSystem: false,
         })
       );
-      
+
       expect(screen.getByTestId('light-child')).toBeInTheDocument();
     });
 
@@ -110,7 +115,7 @@ describe('ThemeProvider Component', () => {
           enableSystem: false,
         })
       );
-      
+
       expect(screen.getByTestId('dark-child')).toBeInTheDocument();
     });
 
@@ -123,7 +128,7 @@ describe('ThemeProvider Component', () => {
           storageKey: 'custom-theme-key',
         })
       );
-      
+
       expect(screen.getByTestId('custom-attr-child')).toBeInTheDocument();
     });
 
@@ -236,7 +241,7 @@ describe('ThemeProvider Component', () => {
           children: expect.anything(),
         })
       );
-      
+
       expect(screen.getByTestId('minimal-child')).toBeInTheDocument();
     });
 
@@ -265,12 +270,18 @@ describe('ThemeProvider Component', () => {
         forcedTheme: undefined,
         enableColorScheme: true,
         nonce: 'custom-nonce',
-        children: [screen.getByTestId ? null : <div data-testid="test-child">Test</div>],
+        children: [
+          <div data-testid="test-child" key="test">
+            Test
+          </div>,
+        ],
       };
 
-      render(<ThemeProvider {...customProps}>
-        <div data-testid="test-child">Test Child</div>
-      </ThemeProvider>);
+      render(
+        <ThemeProvider {...customProps}>
+          <div data-testid="test-child">Test Child</div>
+        </ThemeProvider>
+      );
 
       expect(mockNextThemesProvider).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -374,9 +385,11 @@ describe('ThemeProvider Component', () => {
 
     it('handles missing props gracefully', () => {
       expect(() => {
-        render(<ThemeProvider>
-          <div data-testid="no-props-child">No Props Child</div>
-        </ThemeProvider>);
+        render(
+          <ThemeProvider>
+            <div data-testid="no-props-child">No Props Child</div>
+          </ThemeProvider>
+        );
       }).not.toThrow();
 
       expect(screen.getByTestId('no-props-child')).toBeInTheDocument();
@@ -419,7 +432,7 @@ describe('ThemeProvider Component', () => {
         const startTime = performance.now();
         const { unmount } = render(<ThemeProvider {...defaultThemeProviderProps} />);
         const endTime = performance.now();
-        
+
         renderTimes.push(endTime - startTime);
         unmount();
       }
@@ -472,9 +485,7 @@ describe('ThemeProvider Component', () => {
     it('works with React component composition', () => {
       const ComposedComponent = ({ children }: { children: React.ReactNode }) => (
         <div data-testid="composed-wrapper">
-          <ThemeProvider {...defaultThemeProviderProps}>
-            {children}
-          </ThemeProvider>
+          <ThemeProvider {...defaultThemeProviderProps}>{children}</ThemeProvider>
         </div>
       );
 

@@ -75,7 +75,7 @@ jest.mock('../../components/image-gallery/ImageGallery.dev', () => ({
 }));
 
 jest.mock('../../components/image-gallery/ImageGalleryGrid.dev', () => ({
-  ImageGalleryGrid: ({ fields, isPageEditing }: any) => (
+  ImageGalleryGrid: ({ isPageEditing }: any) => (
     <section data-testid="image-gallery-grid">
       <span data-testid="editing-mode">{isPageEditing ? 'editing' : 'normal'}</span>
     </section>
@@ -83,7 +83,7 @@ jest.mock('../../components/image-gallery/ImageGalleryGrid.dev', () => ({
 }));
 
 jest.mock('../../components/image-gallery/ImageGalleryFiftyFifty.dev', () => ({
-  ImageGalleryFiftyFifty: ({ fields, isPageEditing }: any) => (
+  ImageGalleryFiftyFifty: ({ isPageEditing }: any) => (
     <section data-testid="image-gallery-fifty-fifty">
       <span data-testid="editing-mode">{isPageEditing ? 'editing' : 'normal'}</span>
     </section>
@@ -91,7 +91,7 @@ jest.mock('../../components/image-gallery/ImageGalleryFiftyFifty.dev', () => ({
 }));
 
 jest.mock('../../components/image-gallery/ImageGalleryFeaturedImage.dev', () => ({
-  ImageGalleryFeaturedImage: ({ fields, isPageEditing }: any) => (
+  ImageGalleryFeaturedImage: ({ isPageEditing }: any) => (
     <section data-testid="image-gallery-featured-image">
       <span data-testid="editing-mode">{isPageEditing ? 'editing' : 'normal'}</span>
     </section>
@@ -99,7 +99,7 @@ jest.mock('../../components/image-gallery/ImageGalleryFeaturedImage.dev', () => 
 }));
 
 jest.mock('../../components/image-gallery/ImageGalleryNoSpacing.dev', () => ({
-  ImageGalleryNoSpacing: ({ fields, isPageEditing }: any) => (
+  ImageGalleryNoSpacing: ({ isPageEditing }: any) => (
     <section data-testid="image-gallery-no-spacing">
       <span data-testid="editing-mode">{isPageEditing ? 'editing' : 'normal'}</span>
     </section>

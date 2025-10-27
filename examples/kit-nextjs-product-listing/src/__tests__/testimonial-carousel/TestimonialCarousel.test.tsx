@@ -71,7 +71,12 @@ jest.mock('../../components/ui/carousel', () => ({
     }, [setApi]);
 
     return (
-      <div ref={ref} className={`w-full ${className || ''}`} data-testid="testimonial-carousel" data-opts={JSON.stringify(opts)}>
+      <div
+        ref={ref}
+        className={`w-full ${className || ''}`}
+        data-testid="testimonial-carousel"
+        data-opts={JSON.stringify(opts)}
+      >
         {children}
       </div>
     );
@@ -99,7 +104,15 @@ jest.mock('../../components/ui/carousel', () => ({
       Next {children}
     </button>
   ),
-  CarouselPrevious: ({ children, className, variant, disabled, onFocus, onBlur, ...props }: any) => (
+  CarouselPrevious: ({
+    children,
+    className,
+    variant,
+    disabled,
+    onFocus,
+    onBlur,
+    ...props
+  }: any) => (
     <button
       type="button"
       data-testid="carousel-previous"
@@ -119,14 +132,10 @@ jest.mock('../../components/testimonial-carousel/TestimonialCarouselItem', () =>
   Default: ({ testimonialQuote, testimonialAttribution }: any) => (
     <div data-testid="testimonial-item">
       {testimonialAttribution?.jsonValue?.value && (
-        <div data-testid="testimonial-attribution">
-          {testimonialAttribution.jsonValue.value}
-        </div>
+        <div data-testid="testimonial-attribution">{testimonialAttribution.jsonValue.value}</div>
       )}
       {testimonialQuote?.jsonValue?.value && (
-        <div data-testid="testimonial-quote">
-          {testimonialQuote.jsonValue.value}
-        </div>
+        <div data-testid="testimonial-quote">{testimonialQuote.jsonValue.value}</div>
       )}
     </div>
   ),
@@ -142,7 +151,10 @@ jest.mock('../../utils/NoDataFallback', () => ({
 // Mock cn utility
 jest.mock('../../lib/utils', () => ({
   cn: (...classes: any[]) => {
-    return classes.filter(Boolean).filter(c => typeof c === 'string' || typeof c === 'number').join(' ');
+    return classes
+      .filter(Boolean)
+      .filter((c) => typeof c === 'string' || typeof c === 'number')
+      .join(' ');
   },
 }));
 
@@ -150,7 +162,7 @@ describe('TestimonialCarousel Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockUseSitecore.mockReturnValue(mockUseSitecoreNormal);
-    
+
     // Mock window methods
     Object.defineProperty(window, 'addEventListener', { value: jest.fn() });
     Object.defineProperty(window, 'removeEventListener', { value: jest.fn() });
@@ -167,34 +179,36 @@ describe('TestimonialCarousel Component', () => {
       // Check main structure
       expect(screen.getByTestId('testimonial-carousel')).toBeInTheDocument();
       expect(screen.getByTestId('carousel-content')).toBeInTheDocument();
-      
+
       // Check testimonial items
       const testimonialItems = screen.getAllByTestId('testimonial-item');
       expect(testimonialItems).toHaveLength(3);
-      
+
       // Check navigation buttons
       expect(screen.getByTestId('carousel-next')).toBeInTheDocument();
       expect(screen.getByTestId('carousel-previous')).toBeInTheDocument();
     });
 
-  it('applies correct CSS classes and styling', () => {
-    render(<TestimonialCarouselDefault {...defaultTestimonialCarouselProps} />);
+    it('applies correct CSS classes and styling', () => {
+      render(<TestimonialCarouselDefault {...defaultTestimonialCarouselProps} />);
 
-    // Test that the component renders with basic structure
-    const carousel = screen.getByTestId('testimonial-carousel');
-    expect(carousel).toHaveClass('w-full');
-    
-    // Component renders successfully (the real component would have more complex styling)
-    expect(carousel).toBeInTheDocument();
-  });
+      // Test that the component renders with basic structure
+      const carousel = screen.getByTestId('testimonial-carousel');
+      expect(carousel).toHaveClass('w-full');
+
+      // Component renders successfully (the real component would have more complex styling)
+      expect(carousel).toBeInTheDocument();
+    });
 
     it('renders testimonial content correctly', () => {
       render(<TestimonialCarouselDefault {...defaultTestimonialCarouselProps} />);
 
       // Check first testimonial content
       expect(screen.getByText('Sarah Johnson, Music Producer')).toBeInTheDocument();
-      expect(screen.getByText(/SYNC Audio has completely transformed my music production/)).toBeInTheDocument();
-      
+      expect(
+        screen.getByText(/SYNC Audio has completely transformed my music production/)
+      ).toBeInTheDocument();
+
       // Check that all testimonials are rendered
       const attributions = screen.getAllByTestId('testimonial-attribution');
       expect(attributions).toHaveLength(3);
@@ -218,10 +232,10 @@ describe('TestimonialCarousel Component', () => {
 
       const nextButton = screen.getByTestId('carousel-next');
       const prevButton = screen.getByTestId('carousel-previous');
-      
+
       expect(nextButton).toBeInTheDocument();
       expect(prevButton).toBeInTheDocument();
-      
+
       // Previous should be disabled initially (mocked to return false for canScrollPrev)
       expect(prevButton).toBeDisabled();
     });
@@ -231,7 +245,7 @@ describe('TestimonialCarousel Component', () => {
 
       const nextButton = screen.getByTestId('carousel-next');
       const prevButton = screen.getByTestId('carousel-previous');
-      
+
       // Focus events should trigger show/hide logic
       await act(async () => {
         fireEvent.focus(nextButton);
@@ -239,7 +253,7 @@ describe('TestimonialCarousel Component', () => {
         fireEvent.focus(prevButton);
         fireEvent.blur(prevButton);
       });
-      
+
       expect(nextButton).toBeInTheDocument();
       expect(prevButton).toBeInTheDocument();
     });
@@ -249,7 +263,7 @@ describe('TestimonialCarousel Component', () => {
 
       const nextButton = screen.getByTestId('carousel-next');
       const prevButton = screen.getByTestId('carousel-previous');
-      
+
       // Both should have common classes
       expect(nextButton).toHaveClass('@md:h-[58px]', '@md:w-[58px]', 'absolute', 'top-1/2');
       expect(prevButton).toHaveClass('@md:h-[58px]', '@md:w-[58px]', 'absolute', 'top-1/2');
@@ -261,12 +275,12 @@ describe('TestimonialCarousel Component', () => {
       render(<TestimonialCarouselDefault {...defaultTestimonialCarouselProps} />);
 
       const carouselContainer = screen.getByTestId('testimonial-carousel');
-      
+
       // Simulate mouse move
       await act(async () => {
         fireEvent.mouseMove(carouselContainer, { clientX: 100 });
       });
-      
+
       expect(carouselContainer).toBeInTheDocument();
     });
 
@@ -274,12 +288,12 @@ describe('TestimonialCarousel Component', () => {
       render(<TestimonialCarouselDefault {...defaultTestimonialCarouselProps} />);
 
       const carouselContainer = screen.getByTestId('testimonial-carousel');
-      
+
       // Simulate mouse leave
       await act(async () => {
         fireEvent.mouseLeave(carouselContainer);
       });
-      
+
       expect(carouselContainer).toBeInTheDocument();
     });
 
@@ -289,13 +303,13 @@ describe('TestimonialCarousel Component', () => {
       // Test that the component renders and is accessible
       const carousel = screen.getByTestId('testimonial-carousel');
       expect(carousel).toBeInTheDocument();
-      
+
       // Focus and blur events can be handled
       await act(async () => {
         fireEvent.focus(carousel);
         fireEvent.blur(carousel);
       });
-      
+
       expect(carousel).toBeInTheDocument();
     });
   });
@@ -306,17 +320,23 @@ describe('TestimonialCarousel Component', () => {
 
       const testimonialItems = screen.getAllByTestId('testimonial-item');
       expect(testimonialItems).toHaveLength(1);
-      
-      expect(screen.getByText('Outstanding audio quality that exceeds all expectations.')).toBeInTheDocument();
+
+      expect(
+        screen.getByText('Outstanding audio quality that exceeds all expectations.')
+      ).toBeInTheDocument();
       expect(screen.getByText('John Smith, Audiophile')).toBeInTheDocument();
     });
 
     it('handles long testimonial content', () => {
       render(<TestimonialCarouselDefault {...testimonialCarouselPropsLongTestimonials} />);
 
-      expect(screen.getByText(/SYNC Audio has revolutionized my entire approach/)).toBeInTheDocument();
-      expect(screen.getByText('Alexandra Thompson, Grammy-winning Producer and Sound Designer')).toBeInTheDocument();
-      
+      expect(
+        screen.getByText(/SYNC Audio has revolutionized my entire approach/)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Alexandra Thompson, Grammy-winning Producer and Sound Designer')
+      ).toBeInTheDocument();
+
       const testimonialItems = screen.getAllByTestId('testimonial-item');
       expect(testimonialItems).toHaveLength(2);
     });
@@ -324,7 +344,9 @@ describe('TestimonialCarousel Component', () => {
     it('handles special characters in testimonials', () => {
       render(<TestimonialCarouselDefault {...testimonialCarouselPropsSpecialChars} />);
 
-      expect(screen.getByText(/L'équipement SYNC Audio™ offre une qualité sonore/)).toBeInTheDocument();
+      expect(
+        screen.getByText(/L'équipement SYNC Audio™ offre une qualité sonore/)
+      ).toBeInTheDocument();
       expect(screen.getByText('François Dubois, Ingénieur du Son')).toBeInTheDocument();
       expect(screen.getByText(/SYNC Àudio ïs thë bëst chöice/)).toBeInTheDocument();
     });
@@ -334,7 +356,7 @@ describe('TestimonialCarousel Component', () => {
 
       const testimonialItems = screen.getAllByTestId('testimonial-item');
       expect(testimonialItems).toHaveLength(1);
-      
+
       // Should render quote but no attribution section
       expect(screen.getByText('Great sound quality and excellent build.')).toBeInTheDocument();
       expect(screen.queryByTestId('testimonial-attribution')).not.toBeInTheDocument();
@@ -345,7 +367,7 @@ describe('TestimonialCarousel Component', () => {
 
       const testimonialItems = screen.getAllByTestId('testimonial-item');
       expect(testimonialItems).toHaveLength(1);
-      
+
       // Should render attribution but no quote
       expect(screen.getByText('Jane Doe, Customer')).toBeInTheDocument();
       expect(screen.queryByTestId('testimonial-quote')).not.toBeInTheDocument();
@@ -356,11 +378,11 @@ describe('TestimonialCarousel Component', () => {
 
       const testimonialItems = screen.getAllByTestId('testimonial-item');
       expect(testimonialItems).toHaveLength(2);
-      
+
       // Items should render but with empty content
       const quotes = screen.queryAllByTestId('testimonial-quote');
       const attributions = screen.queryAllByTestId('testimonial-attribution');
-      
+
       // With empty values, the conditional rendering should not show these elements
       expect(quotes).toHaveLength(0);
       expect(attributions).toHaveLength(0);
@@ -402,7 +424,7 @@ describe('TestimonialCarousel Component', () => {
       // Test that the component renders with custom styles props
       const carousel = screen.getByTestId('testimonial-carousel');
       expect(carousel).toBeInTheDocument();
-      
+
       // The component would apply custom styles in the real implementation
     });
 
@@ -421,7 +443,7 @@ describe('TestimonialCarousel Component', () => {
 
       const testimonialItems = screen.getAllByTestId('testimonial-item');
       expect(testimonialItems).toHaveLength(8);
-      
+
       const carouselItems = screen.getAllByTestId('carousel-item');
       expect(carouselItems).toHaveLength(8);
     });
@@ -430,7 +452,7 @@ describe('TestimonialCarousel Component', () => {
       render(<TestimonialCarouselDefault {...defaultTestimonialCarouselProps} />);
 
       const carouselItems = screen.getAllByTestId('carousel-item');
-      carouselItems.forEach(item => {
+      carouselItems.forEach((item) => {
         expect(item).toHaveClass(
           '@lg:basis-3/4',
           '@md:basis-4/5',
@@ -466,14 +488,14 @@ describe('TestimonialCarousel Component', () => {
       // Test that keyboard events can be handled
       const carousel = screen.getByTestId('testimonial-carousel');
       expect(carousel).toBeInTheDocument();
-      
+
       // Simulate keyboard events
       await act(async () => {
         fireEvent.focus(carousel);
         fireEvent.keyDown(carousel, { key: 'ArrowLeft' });
         fireEvent.keyDown(carousel, { key: 'ArrowRight' });
       });
-      
+
       expect(carousel).toBeInTheDocument();
     });
 
@@ -482,7 +504,7 @@ describe('TestimonialCarousel Component', () => {
 
       const nextButton = screen.getByTestId('carousel-next');
       const prevButton = screen.getByTestId('carousel-previous');
-      
+
       expect(nextButton).toHaveAttribute('type', 'button');
       expect(prevButton).toHaveAttribute('type', 'button');
     });
@@ -493,7 +515,7 @@ describe('TestimonialCarousel Component', () => {
       render(<TestimonialCarouselDefault {...defaultTestimonialCarouselProps} />);
 
       const carouselContainer = screen.getByTestId('testimonial-carousel');
-      
+
       // Rapid mouse movements and keyboard events
       await act(async () => {
         for (let i = 0; i < 10; i++) {
@@ -501,15 +523,17 @@ describe('TestimonialCarousel Component', () => {
           fireEvent.keyDown(carouselContainer, { key: 'ArrowRight' });
         }
       });
-      
+
       expect(carouselContainer).toBeInTheDocument();
     });
 
     it('handles re-renders efficiently', () => {
-      const { rerender } = render(<TestimonialCarouselDefault {...defaultTestimonialCarouselProps} />);
-      
+      const { rerender } = render(
+        <TestimonialCarouselDefault {...defaultTestimonialCarouselProps} />
+      );
+
       rerender(<TestimonialCarouselDefault {...defaultTestimonialCarouselProps} />);
-      
+
       const rerenderCarousel = screen.getByTestId('testimonial-carousel');
       expect(rerenderCarousel).toBeInTheDocument();
     });
@@ -517,11 +541,13 @@ describe('TestimonialCarousel Component', () => {
 
   describe('Event Handling', () => {
     it('properly cleans up event listeners', () => {
-      const { unmount } = render(<TestimonialCarouselDefault {...defaultTestimonialCarouselProps} />);
-      
+      const { unmount } = render(
+        <TestimonialCarouselDefault {...defaultTestimonialCarouselProps} />
+      );
+
       // Component should set up listeners
       expect(screen.getByTestId('testimonial-carousel')).toBeInTheDocument();
-      
+
       // Should clean up on unmount
       unmount();
     });
@@ -531,7 +557,7 @@ describe('TestimonialCarousel Component', () => {
 
       // The carousel API should be set up and handle select events
       const liveRegion = document.querySelector('[aria-live="polite"]');
-      
+
       await waitFor(() => {
         // After the API is set and select event is triggered
         expect(liveRegion).toBeInTheDocument();
@@ -546,7 +572,7 @@ describe('TestimonialCarousel Component', () => {
       // Test that the component supports responsive design
       const carousel = screen.getByTestId('testimonial-carousel');
       expect(carousel).toBeInTheDocument();
-      
+
       // The real component would use @container queries for responsive behavior
     });
 
@@ -555,11 +581,20 @@ describe('TestimonialCarousel Component', () => {
 
       const nextButton = screen.getByTestId('carousel-next');
       const prevButton = screen.getByTestId('carousel-previous');
-      
-      expect(nextButton).toHaveClass('@md:h-[58px]', '@md:w-[58px]', '@lg:h-[116px]', '@lg:w-[116px]');
-      expect(prevButton).toHaveClass('@md:h-[58px]', '@md:w-[58px]', '@lg:h-[116px]', '@lg:w-[116px]');
-    });
 
+      expect(nextButton).toHaveClass(
+        '@md:h-[58px]',
+        '@md:w-[58px]',
+        '@lg:h-[116px]',
+        '@lg:w-[116px]'
+      );
+      expect(prevButton).toHaveClass(
+        '@md:h-[58px]',
+        '@md:w-[58px]',
+        '@lg:h-[116px]',
+        '@lg:w-[116px]'
+      );
+    });
   });
 
   describe('Error Handling', () => {

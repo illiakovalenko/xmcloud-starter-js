@@ -22,7 +22,7 @@ import {
 // Mock dependencies
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   RichText: ({ field, className, ...props }: any) => (
-    <div 
+    <div
       data-testid="sitecore-richtext"
       className={className}
       dangerouslySetInnerHTML={{ __html: field?.value || '' }}
@@ -33,7 +33,10 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
 
 jest.mock('../../lib/utils', () => ({
   cn: (...classes: any[]) => {
-    return classes.filter(Boolean).filter(c => typeof c === 'string' || typeof c === 'number').join(' ');
+    return classes
+      .filter(Boolean)
+      .filter((c) => typeof c === 'string' || typeof c === 'number')
+      .join(' ');
   },
 }));
 
@@ -49,7 +52,7 @@ describe('RichTextBlock Component', () => {
       render(<RichTextBlockDefault {...defaultRichTextBlockProps} />);
 
       expect(screen.getByTestId('sitecore-richtext')).toBeInTheDocument();
-      
+
       // Check for specific content elements
       expect(screen.getByText('Welcome to Our Platform')).toBeInTheDocument();
       expect(screen.getByText(/This is a/)).toBeInTheDocument();
@@ -87,7 +90,9 @@ describe('RichTextBlock Component', () => {
       render(<RichTextBlockDefault {...richTextBlockPropsSimple} />);
 
       expect(screen.getByTestId('sitecore-richtext')).toBeInTheDocument();
-      expect(screen.getByText('This is a simple paragraph of text without complex formatting.')).toBeInTheDocument();
+      expect(
+        screen.getByText('This is a simple paragraph of text without complex formatting.')
+      ).toBeInTheDocument();
     });
 
     it('renders minimal HTML content', () => {
@@ -102,7 +107,7 @@ describe('RichTextBlock Component', () => {
 
       const richTextContent = screen.getByTestId('sitecore-richtext');
       expect(richTextContent).toBeInTheDocument();
-      
+
       // Check for various HTML elements in the rich text
       expect(screen.getByText('Main Heading')).toBeInTheDocument();
       expect(screen.getByText('Subheading')).toBeInTheDocument();
@@ -114,7 +119,7 @@ describe('RichTextBlock Component', () => {
       render(<RichTextBlockDefault {...richTextBlockPropsEmpty} />);
 
       expect(screen.getByTestId('sitecore-richtext')).toBeInTheDocument();
-      
+
       const component = document.querySelector('.component.rich-text');
       expect(component).toBeInTheDocument();
     });
@@ -164,7 +169,7 @@ describe('RichTextBlock Component', () => {
 
       const richTextContent = screen.getByTestId('sitecore-richtext');
       expect(richTextContent).toBeInTheDocument();
-      
+
       // HTML entities should be properly rendered
       expect(richTextContent.innerHTML).toContain('&lt;script&gt;');
       expect(richTextContent.innerHTML).toContain('&amp;');
@@ -177,7 +182,7 @@ describe('RichTextBlock Component', () => {
 
       const richTextContent = screen.getByTestId('sitecore-richtext');
       expect(richTextContent).toBeInTheDocument();
-      
+
       // Check for table elements
       expect(richTextContent.innerHTML).toContain('<table>');
       expect(richTextContent.innerHTML).toContain('<thead>');
@@ -190,7 +195,7 @@ describe('RichTextBlock Component', () => {
 
       const richTextContent = screen.getByTestId('sitecore-richtext');
       expect(richTextContent).toBeInTheDocument();
-      
+
       expect(richTextContent.innerHTML).toContain('<img');
       expect(richTextContent.innerHTML).toContain('src="/images/example.jpg"');
       expect(richTextContent.innerHTML).toContain('alt="Example image"');
@@ -201,7 +206,7 @@ describe('RichTextBlock Component', () => {
 
       const richTextContent = screen.getByTestId('sitecore-richtext');
       expect(richTextContent).toBeInTheDocument();
-      
+
       expect(richTextContent.innerHTML).toContain('class="highlight"');
       expect(richTextContent.innerHTML).toContain('class="callout-box"');
     });
@@ -219,7 +224,7 @@ describe('RichTextBlock Component', () => {
       // The hint is actually only shown in the text variable calculation
       // but won't be displayed in the actual component due to the fields check
       // So this test should verify the fallback behavior instead
-      
+
       const propsWithFields = {
         params: {},
         fields: {
@@ -231,7 +236,7 @@ describe('RichTextBlock Component', () => {
           dataSource: '',
         },
       };
-      
+
       render(<RichTextBlockDefault {...propsWithFields} />);
 
       // Component should render structure with empty content
@@ -251,7 +256,7 @@ describe('RichTextBlock Component', () => {
       // Check inner content container
       const contentContainer = document.querySelector('.component-content');
       expect(contentContainer).toBeInTheDocument();
-      
+
       // Check that rich text is inside content container
       const richText = screen.getByTestId('sitecore-richtext');
       expect(contentContainer).toContainElement(richText);
@@ -273,7 +278,7 @@ describe('RichTextBlock Component', () => {
       // Rich text content should maintain semantic HTML structure
       const richTextContent = screen.getByTestId('sitecore-richtext');
       expect(richTextContent).toBeInTheDocument();
-      
+
       // Check for semantic elements in the HTML
       expect(richTextContent.innerHTML).toContain('<h1>');
       expect(richTextContent.innerHTML).toContain('<h2>');
@@ -306,7 +311,9 @@ describe('RichTextBlock Component', () => {
 
       rerender(<RichTextBlockDefault {...richTextBlockPropsSimple} />);
 
-      expect(screen.getByText('This is a simple paragraph of text without complex formatting.')).toBeInTheDocument();
+      expect(
+        screen.getByText('This is a simple paragraph of text without complex formatting.')
+      ).toBeInTheDocument();
     });
 
     it('manages large content without issues', () => {
@@ -314,7 +321,7 @@ describe('RichTextBlock Component', () => {
 
       const richTextContent = screen.getByTestId('sitecore-richtext');
       expect(richTextContent).toBeInTheDocument();
-      
+
       // Component should handle complex HTML without performance issues
       expect(richTextContent.innerHTML.length).toBeGreaterThan(100);
     });
@@ -343,7 +350,7 @@ describe('RichTextBlock Component', () => {
       const missingTextProps = {
         params: {},
         fields: {
-          // text field is missing  
+          // text field is missing
         },
         rendering: {
           uid: 'test-missing-text-uid',
@@ -355,7 +362,7 @@ describe('RichTextBlock Component', () => {
       expect(() => {
         render(<RichTextBlockDefault {...missingTextProps} />);
       }).not.toThrow();
-      
+
       // Component should render structure but may not show the hint text
       expect(screen.getByTestId('sitecore-richtext')).toBeInTheDocument();
     });
@@ -374,7 +381,7 @@ describe('RichTextBlock Component', () => {
         ...richTextBlockPropsSimple,
         params: { styles: '' },
       };
-      
+
       render(<RichTextBlockDefault {...emptyStylesProps} />);
 
       const component = document.querySelector('.component.rich-text');
@@ -387,7 +394,7 @@ describe('RichTextBlock Component', () => {
         ...richTextBlockPropsSimple,
         params: {},
       };
-      
+
       render(<RichTextBlockDefault {...undefinedStylesProps} />);
 
       const component = document.querySelector('.component.rich-text');

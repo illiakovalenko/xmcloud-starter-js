@@ -22,18 +22,14 @@ import {
 jest.mock('../../components/ui/button', () => ({
   Button: ({ children, asChild, variant, className, ...props }: any) => {
     if (asChild) {
-      return React.cloneElement(children, { 
-        ...props, 
+      return React.cloneElement(children, {
+        ...props,
         className: `${className} button-${variant}`,
         'data-testid': 'nav-button',
       });
     }
     return (
-      <button 
-        className={`${className} button-${variant}`}
-        data-testid="nav-button"
-        {...props}
-      >
+      <button className={`${className} button-${variant}`} data-testid="nav-button" {...props}>
         {children}
       </button>
     );
@@ -42,7 +38,7 @@ jest.mock('../../components/ui/button', () => ({
 
 jest.mock('next/link', () => {
   return ({ children, href, className, prefetch, ...props }: any) => (
-    <a 
+    <a
       href={href}
       className={className}
       data-prefetch={prefetch}
@@ -56,7 +52,7 @@ jest.mock('next/link', () => {
 
 jest.mock('@radix-ui/react-navigation-menu', () => ({
   Root: ({ children, className, orientation, ...props }: any) => (
-    <nav 
+    <nav
       className={className}
       data-orientation={orientation}
       data-testid="navigation-root"
@@ -79,11 +75,7 @@ jest.mock('@radix-ui/react-navigation-menu', () => ({
 
 jest.mock('@radix-ui/react-icons', () => ({
   ChevronDownIcon: ({ className, ...props }: any) => (
-    <svg 
-      className={className}
-      data-testid="chevron-down-icon"
-      {...props}
-    >
+    <svg className={className} data-testid="chevron-down-icon" {...props}>
       <path d="M7 10L12 15L17 10H7Z" />
     </svg>
   ),
@@ -91,7 +83,10 @@ jest.mock('@radix-ui/react-icons', () => ({
 
 jest.mock('../../lib/utils', () => ({
   cn: (...classes: any[]) => {
-    return classes.filter(Boolean).filter(c => typeof c === 'string' || typeof c === 'number').join(' ');
+    return classes
+      .filter(Boolean)
+      .filter((c) => typeof c === 'string' || typeof c === 'number')
+      .join(' ');
   },
 }));
 
@@ -160,7 +155,7 @@ describe('SecondaryNavigation Component', () => {
 
       const mobileButton = document.querySelector('.block.sm\\:hidden button');
       expect(mobileButton).toBeInTheDocument();
-      
+
       const chevronIcon = screen.getByTestId('chevron-down-icon');
       expect(chevronIcon).toBeInTheDocument();
     });
@@ -227,7 +222,7 @@ describe('SecondaryNavigation Component', () => {
 
       expect(screen.getByText('Products')).toBeInTheDocument();
       expect(screen.getByText('Headphones')).toBeInTheDocument();
-      
+
       // Other children should not be present
       expect(screen.queryByText('Speakers')).not.toBeInTheDocument();
     });
@@ -244,7 +239,7 @@ describe('SecondaryNavigation Component', () => {
 
       const linksWithoutUrl = screen.getAllByText('No URL');
       expect(linksWithoutUrl.length).toBeGreaterThan(0);
-      
+
       const firstLinkWithoutUrl = linksWithoutUrl[0].closest('a');
       expect(firstLinkWithoutUrl).toHaveAttribute('href', '');
     });
@@ -293,7 +288,7 @@ describe('SecondaryNavigation Component', () => {
       // Check child links that should have prefetch={false}
       const headphonesLink = screen.getByText('Headphones').closest('a');
       expect(headphonesLink).toHaveAttribute('data-prefetch', 'false');
-      
+
       const speakersLink = screen.getByText('Speakers').closest('a');
       expect(speakersLink).toHaveAttribute('data-prefetch', 'false');
     });
@@ -302,8 +297,8 @@ describe('SecondaryNavigation Component', () => {
       render(<SecondaryNavigationDefault {...defaultSecondaryNavigationProps} />);
 
       const navButtons = screen.getAllByTestId('nav-button');
-      
-      navButtons.forEach(button => {
+
+      navButtons.forEach((button) => {
         expect(button).toHaveClass('button-link');
       });
     });
@@ -399,8 +394,8 @@ describe('SecondaryNavigation Component', () => {
       render(<SecondaryNavigationDefault {...defaultSecondaryNavigationProps} />);
 
       const links = screen.getAllByRole('link');
-      
-      links.forEach(link => {
+
+      links.forEach((link) => {
         expect(link).toHaveAttribute('href');
       });
     });
@@ -419,7 +414,9 @@ describe('SecondaryNavigation Component', () => {
 
   describe('Performance', () => {
     it('handles re-renders efficiently', () => {
-      const { rerender } = render(<SecondaryNavigationDefault {...defaultSecondaryNavigationProps} />);
+      const { rerender } = render(
+        <SecondaryNavigationDefault {...defaultSecondaryNavigationProps} />
+      );
 
       expect(screen.getByText('Products')).toBeInTheDocument();
 
@@ -432,7 +429,7 @@ describe('SecondaryNavigation Component', () => {
       render(<SecondaryNavigationDefault {...defaultSecondaryNavigationProps} />);
 
       const mobileButton = document.querySelector('.block.sm\\:hidden button');
-      
+
       // Multiple clicks should not cause issues
       fireEvent.click(mobileButton as Element);
       fireEvent.click(mobileButton as Element);

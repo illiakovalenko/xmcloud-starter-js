@@ -14,7 +14,11 @@ jest.mock('@/components/ui/card', () => ({
 }));
 
 jest.mock('@/components/button-component/ButtonComponent', () => ({
-  ButtonBase: ({ buttonLink }: any) => <a data-testid="button-link" href={buttonLink?.url ?? '#'}>link</a>,
+  ButtonBase: ({ buttonLink }: any) => (
+    <a data-testid="button-link" href={buttonLink?.url ?? '#'}>
+      link
+    </a>
+  ),
 }));
 
 import { Default as FooterNavigationCallout } from '@/components/footer-navigation-callout/FooterNavigationCallout.dev';
