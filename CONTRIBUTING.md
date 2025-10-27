@@ -64,9 +64,9 @@ Navigate to the relevant example (e.g., kit-nextjs-article-starter) and start th
 
 ## 🤖 AI-Assisted Development
 
-This repository includes Cursor AI coding agent guidance files to help maintain consistent code quality and follow Sitecore XM Cloud best practices.
+This repository includes comprehensive AI coding agent guidance files to help maintain consistent code quality and follow Sitecore XM Cloud best practices across multiple AI assistants.
 
-### Cursor Rules
+### Cursor AI Rules
 
 The repository contains `.cursor/rules/` directory with AI guidance files:
 
@@ -81,22 +81,63 @@ The repository contains `.cursor/rules/` directory with AI guidance files:
   - `nextjs.mdc` - Next.js specific patterns, routing, and API development
   - `testing.mdc` - Testing strategies for XM Cloud components and integrations
 
+### GitHub Copilot Support
+
+The repository includes dedicated GitHub Copilot guidance files:
+
+- **`copilot-instructions.md`** - Comprehensive GitHub Copilot instructions covering:
+  - Project overview and repository structure
+  - Technology stack and coding standards
+  - Sitecore component development patterns
+  - Safe field handling and editing mode support
+  - Content SDK import guidelines
+  - Styling and UI patterns with examples
+
+- **`LLMs.txt`** - Concise LLM guidance file containing:
+  - Core architecture principles
+  - Code quality standards
+  - Security and accessibility requirements
+  - Performance optimization guidelines
+  - Multi-starter context and safety rules
+
 ### Using AI Assistance
 
-When using AI coding assistants like Cursor:
+When using AI coding assistants:
+
+**Cursor AI:**
 - Rules automatically provide context based on the files you're working with
 - Follow the naming conventions and architectural guidance provided
 - Refer to the rules when uncertain about XM Cloud implementation approaches
+
+**GitHub Copilot:**
+- Reference `copilot-instructions.md` for detailed development patterns
+- Use `LLMs.txt` for quick context about project standards
+- Follow the component development workflow and safety guidelines
+
+**All AI Assistants:**
 - All starter applications inherit these rules for consistent development
+- Focus on TypeScript-first development with strict mode
+- Always validate Sitecore datasource existence
+- Implement proper error handling and accessibility features
 
-### Contributing to Rules
+### Contributing to AI Guidance
 
-To improve the AI guidance:
+To improve the AI guidance files:
+
+**For Cursor Rules:**
 1. Edit the relevant `.mdc` files in `.cursor/rules/`
 2. Keep rules under 500 lines and focused on specific concerns
 3. Include concrete examples and file references using `@filepath` syntax
+
+**For GitHub Copilot:**
+1. Update `copilot-instructions.md` for detailed patterns and examples
+2. Update `LLMs.txt` for concise guidance and quick reference
+3. Ensure consistency between all AI guidance files
+
+**General Guidelines:**
 4. Test changes with AI coding assistants to ensure effectiveness
 5. Consider impact across all starter applications
+6. Keep guidance files synchronized with actual codebase patterns
 
 5. 🚀 Submitting a Pull Request
 Once your changes are ready:

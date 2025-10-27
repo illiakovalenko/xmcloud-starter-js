@@ -77,6 +77,39 @@ For developers new to XM Cloud you can follow the Getting Started Guide on the [
 
 A new starter SPA based on Angular has been introduced with JSS v22.3.0. The Angular starter has been designed to be compatible with XM Cloud and should be used with the provided node XM Cloud proxy application to handle server-side rendering (SSR), data queries, personalization and more. For more details and information on how to run and deploy the Angular starter and proxy to XM Cloud have a look at [SPA starters monorepo](examples/basic-spa/)
 
+## Development Workflow
+
+This repository uses a **DMZ git workflow** to ensure the `main` branch is always clean, deployable, and production-ready.
+
+### Quick Overview
+
+- **`main` branch**: Always clean and deployable (never commit directly)
+- **`dmz` branch**: Validation layer where PRs are merged and tested
+- **Feature branches**: Created from `main`, PRs target `dmz`
+
+### Key Requirements
+
+1. ✅ Always create feature branches from the latest `main`
+2. ✅ Create PRs to `dmz` (not `main`)
+3. ✅ Use **Squash and merge** only (enforced)
+4. ✅ Ensure your branch is based on the latest `main` before creating a PR
+5. ✅ PR validation runs automatically (lint, build, test, type-check)
+6. ✅ After merge to `dmz`, CI validates again and auto-fast-forwards `main`
+
+### For Contributors
+
+📖 **[Read the full DMZ Workflow Guide](.github/DMZ-WORKFLOW.md)** for detailed instructions, common issues, and best practices.
+
+### For Repository Maintainers
+
+🔒 **[Branch Protection Setup Guide](.github/BRANCH-PROTECTION-SETUP.md)** - Configure GitHub branch protection rules to enforce the workflow.
+
 ## AI-Assisted Development
 
-This repository includes Cursor AI guidance files (`.cursor/rules/`) to help maintain consistent code quality and follow Sitecore XM Cloud best practices across all starter applications. These rules automatically provide context and enforce patterns when using AI coding assistants like Cursor. See the [Contributing Guide](CONTRIBUTING.md#ai-assisted-development) for details on using AI assistance with this project.
+This repository includes comprehensive AI guidance files to help maintain consistent code quality and follow Sitecore XM Cloud best practices across all starter applications:
+
+- **Cursor AI Rules** (`.cursor/rules/`) - Automatically provide context and enforce patterns when using Cursor AI
+- **GitHub Copilot Instructions** (`copilot-instructions.md`) - Detailed development patterns and component guidelines for GitHub Copilot
+- **LLM Guidance** (`LLMs.txt`) - Concise guidance for various AI assistants covering architecture principles and safety rules
+
+These files ensure consistent development patterns whether you're using Cursor AI, GitHub Copilot, or other AI coding assistants. See the [Contributing Guide](CONTRIBUTING.md#ai-assisted-development) for details on using AI assistance with this project.
