@@ -1,7 +1,7 @@
 import React, { JSX } from 'react';
 import { ComponentProps } from 'lib/component-props';
 import componentMap from '.sitecore/component-map';
-import Placeholder from 'components/content-sdk/Placeholder';
+import { AppPlaceholder } from "@sitecore-content-sdk/nextjs";
 
 /**
  * The number of columns that can be inserted into the column splitter component.
@@ -26,26 +26,30 @@ type ColumnStyles = {
 };
 
 interface ColumnSplitterProps extends ComponentProps {
-  params: ComponentProps['params'] & ColumnWidths & ColumnStyles;
+  params: ComponentProps["params"] & ColumnWidths & ColumnStyles;
 }
 
-export const Default = ({ params, rendering, page }: ColumnSplitterProps): JSX.Element => {
+export const Default = ({
+  params,
+  rendering,
+  page,
+}: ColumnSplitterProps): JSX.Element => {
   const { EnabledPlaceholders, RenderingIdentifier: id, styles } = params;
 
-  const enabledColumns = EnabledPlaceholders?.split(',') ?? [];
+  const enabledColumns = EnabledPlaceholders?.split(",") ?? [];
 
   return (
     <div className={`row component column-splitter ${styles}`} id={id}>
       {enabledColumns.map((columnNum, index) => {
         const num = Number(columnNum) as ColumnNumber;
-        const columnWidth = params[`ColumnWidth${num}`] ?? '';
-        const columnStyle = params[`Styles${num}`] ?? '';
+        const columnWidth = params[`ColumnWidth${num}`] ?? "";
+        const columnStyle = params[`Styles${num}`] ?? "";
         const columnClassNames = `${columnWidth} ${columnStyle}`.trim();
 
         return (
           <div key={index} className={columnClassNames}>
             <div className="row">
-              <Placeholder
+              <AppPlaceholder
                 name={`column-${columnNum}-{*}`}
                 rendering={rendering}
                 page={page}
