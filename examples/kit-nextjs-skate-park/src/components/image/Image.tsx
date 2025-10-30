@@ -1,3 +1,5 @@
+'use client';
+import React, { CSSProperties } from 'react';
 import {
   Field,
   ImageField,
@@ -7,7 +9,6 @@ import {
   Text,
   useSitecore,
 } from '@sitecore-content-sdk/nextjs';
-import React, { CSSProperties } from 'react';
 import { ComponentProps } from 'lib/component-props';
 
 interface ImageFields {
