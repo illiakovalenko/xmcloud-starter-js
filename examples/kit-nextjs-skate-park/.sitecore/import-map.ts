@@ -5,11 +5,9 @@ import { combineImportEntries, defaultImportEntries } from '@sitecore-content-sd
 
 import { useState, useEffect } from 'react';
 import React from 'react';
-import { Link, Text, useSitecore, RichText, NextImage, Placeholder as Placeholder_8a80e63291fea86e0744df19113dc44bec187216, ServerPlaceholder, CdpHelper, withDatasourceCheck } from '@sitecore-content-sdk/nextjs';
+import { Link, Text, AppPlaceholder, RichText, NextImage, useSitecore, CdpHelper, withDatasourceCheck } from '@sitecore-content-sdk/nextjs';
 import componentMap from '.sitecore/component-map';
-import Placeholder from 'components/content-sdk/Placeholder';
-import client from 'lib/sitecore-client';
-import { rsc } from 'rsc-env';
+import client from 'src/lib/sitecore-client';
 import { pageView } from '@sitecore-cloudsdk/events/browser';
 import config from 'sitecore.config';
 
@@ -27,11 +25,10 @@ const importMap = [
     exports: [
       { name: 'Link', value: Link },
       { name: 'Text', value: Text },
-      { name: 'useSitecore', value: useSitecore },
+      { name: 'AppPlaceholder', value: AppPlaceholder },
       { name: 'RichText', value: RichText },
       { name: 'NextImage', value: NextImage },
-      { name: 'Placeholder', value: Placeholder_8a80e63291fea86e0744df19113dc44bec187216 },
-      { name: 'ServerPlaceholder', value: ServerPlaceholder },
+      { name: 'useSitecore', value: useSitecore },
       { name: 'CdpHelper', value: CdpHelper },
       { name: 'withDatasourceCheck', value: withDatasourceCheck },
     ]
@@ -43,21 +40,9 @@ const importMap = [
     ]
   },
   {
-    module: 'components/content-sdk/Placeholder',
-    exports: [
-      { name: 'default', value: Placeholder },
-    ]
-  },
-  {
-    module: 'lib/sitecore-client',
+    module: 'src/lib/sitecore-client',
     exports: [
       { name: 'default', value: client },
-    ]
-  },
-  {
-    module: 'rsc-env',
-    exports: [
-      { name: 'rsc', value: rsc },
     ]
   },
   {
