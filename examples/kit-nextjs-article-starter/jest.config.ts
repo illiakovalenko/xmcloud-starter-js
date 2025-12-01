@@ -18,8 +18,11 @@ const config: Config = {
   // Stop running tests after `n` failures
   // bail: 0,
 
+  // Enable caching to improve test performance
+  cache: true,
+
   // The directory where Jest should store its cached dependency information
-  // cacheDirectory: "C:\\Users\\NaveenHedallaArachch\\AppData\\Local\\Temp\\jest",
+  cacheDirectory: '<rootDir>/.jest-cache',
 
   // Automatically clear mock calls, instances, contexts and results before every test
   clearMocks: true,
@@ -28,7 +31,15 @@ const config: Config = {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  // collectCoverageFrom: undefined,
+  collectCoverageFrom: [
+    'src/components/**/*.{js,jsx,ts,tsx}',
+    '!src/components/**/*.stories.{js,jsx,ts,tsx}',
+    '!src/components/**/__tests__/**',
+    '!src/**/*.d.ts',
+    '!src/**/*.props.{ts,tsx}', // Exclude type-only props files
+    '!src/components/ui/**', // Exclude third-party Shadcn/ui components
+    '!src/components/**/*.dev.{ts,tsx}', // Optionally exclude variant implementations
+  ],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: "coverage",
@@ -42,12 +53,7 @@ const config: Config = {
   coverageProvider: "v8",
 
   // A list of reporter names that Jest uses when writing coverage reports
-  // coverageReporters: [
-  //   "json",
-  //   "text",
-  //   "lcov",
-  //   "clover"
-  // ],
+  coverageReporters: ['text', 'lcov', 'html', 'json-summary'],
 
   // An object that configures minimum threshold enforcement for coverage results
   // coverageThreshold: undefined,
@@ -76,7 +82,7 @@ const config: Config = {
   // globals: {},
 
   // The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
-  // maxWorkers: "50%",
+  maxWorkers: "50%",
 
   // An array of directory names to be searched recursively up from the requiring module's location
   // moduleDirectories: [
@@ -100,6 +106,13 @@ const config: Config = {
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    '^components/(.*)$': '<rootDir>/src/components/$1',
+    '^lib/(.*)$': '<rootDir>/src/lib/$1',
+    '^ui/(.*)$': '<rootDir>/src/components/ui/$1',
+    '^hooks/(.*)$': '<rootDir>/src/hooks/$1',
+    '^utils/(.*)$': '<rootDir>/src/utils/$1',
+    '^types/(.*)$': '<rootDir>/src/types/$1',
+    'sitecore.config': '<rootDir>/sitecore.config.ts',
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -147,7 +160,7 @@ const config: Config = {
   // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  setupFilesAfterEnv: ['<rootDir>/src/__tests__/jest.setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,
@@ -166,8 +179,7 @@ const config: Config = {
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
-    "**/__tests__/**/*.test.?([mc])[jt]s?(x)",
-    "**/?(*.)+(spec|test).?([mc])[jt]s?(x)"
+    "<rootDir>/src/__tests__/**/*.test.[jt]s?(x)",
   ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
@@ -189,9 +201,7 @@ const config: Config = {
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   transformIgnorePatterns: [
-    "\\\\node_modules\\\\",
-    "\\.pnp\\.[^\\\\]+$",
-    "node_modules/(?!(@sitecore-content-sdk|@sitecore-feaas)/)"
+    "node_modules/(?!(?:@sitecore-content-sdk|@sitecore-feaas|lucide-react|change-case)/)",
   ],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
@@ -205,6 +215,9 @@ const config: Config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+
+  // Optimize memory usage - restart workers after they use this much memory
+  workerIdleMemoryLimit: '512MB',
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

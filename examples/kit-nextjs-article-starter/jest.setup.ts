@@ -58,3 +58,47 @@ jest.mock('@/utils/NoDataFallback', () => ({
       `${componentName} requires a datasource item assigned.`
     ),
 }));
+
+// Suppress expected console errors in tests
+const originalError = console.error;
+const originalWarn = console.warn;
+
+beforeAll(() => {
+  // Suppress specific React warnings that are expected in tests
+  console.error = (...args: any[]) => {
+    const message = typeof args[0] === 'string' ? args[0] : args[0]?.toString() || '';
+    
+    // Suppress specific expected warnings
+    if (
+      message.includes('An empty string') ||
+      message.includes('was not wrapped in act') ||
+      message.includes('Each child in a list should have a unique') ||
+      message.includes('Not implemented: navigation') ||
+      message.includes('Warning: ReactDOM.render')
+    ) {
+      return;
+    }
+    
+    originalError.call(console, ...args);
+  };
+
+  console.warn = (...args: any[]) => {
+    const message = typeof args[0] === 'string' ? args[0] : args[0]?.toString() || '';
+    
+    // Suppress specific expected warnings
+    if (
+      message.includes('was not wrapped in act') ||
+      message.includes('Not implemented')
+    ) {
+      return;
+    }
+    
+    originalWarn.call(console, ...args);
+  };
+});
+
+afterAll(() => {
+  console.error = originalError;
+  console.warn = originalWarn;
+});
+
