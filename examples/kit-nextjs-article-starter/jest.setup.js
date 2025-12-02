@@ -1,5 +1,5 @@
-import '@testing-library/jest-dom';
-import React from 'react';
+const React = require('react');
+require('@testing-library/jest-dom');
 
 // Mock Next.js router
 jest.mock('next/router', () => ({
@@ -28,7 +28,7 @@ jest.mock('next/router', () => ({
 // Mock Next.js Image component
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: (props: any) => {
+  default: (props) => {
     // eslint-disable-next-line @next/next/no-img-element
     return React.createElement('img', props);
   },
@@ -36,24 +36,24 @@ jest.mock('next/image', () => ({
 
 // Mock Sitecore Content SDK components
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  RichText: jest.fn(({ field }: { field: any }) => {
+  RichText: jest.fn(({ field }) => {
     return React.createElement('div', { 'data-testid': 'rich-text-content' }, field?.value || 'No content');
   }),
-  Field: ({ field }: { field: any }) => {
+  Field: ({ field }) => {
     return React.createElement('span', {}, field?.value || '');
   },
 }));
 
 // Mock utility functions
 jest.mock('@/lib/utils', () => ({
-  cn: (...classes: (string | undefined)[]) => {
+  cn: (...classes) => {
     return classes.filter(Boolean).join(' ');
   },
 }));
 
 // Mock NoDataFallback component
 jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: { componentName: string }) => 
+  NoDataFallback: ({ componentName }) => 
     React.createElement('div', { 'data-testid': 'no-data-fallback' }, 
       `${componentName} requires a datasource item assigned.`
     ),
@@ -65,7 +65,7 @@ const originalWarn = console.warn;
 
 beforeAll(() => {
   // Suppress specific React warnings that are expected in tests
-  console.error = (...args: any[]) => {
+  console.error = (...args) => {
     const message = typeof args[0] === 'string' ? args[0] : args[0]?.toString() || '';
     
     // Suppress specific expected warnings
@@ -82,7 +82,7 @@ beforeAll(() => {
     originalError.call(console, ...args);
   };
 
-  console.warn = (...args: any[]) => {
+  console.warn = (...args) => {
     const message = typeof args[0] === 'string' ? args[0] : args[0]?.toString() || '';
     
     // Suppress specific expected warnings
