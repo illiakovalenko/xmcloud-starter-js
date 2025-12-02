@@ -30,6 +30,19 @@ export const mockImagePropsComplete = {
       },
     },
   },
+  page: {
+    layout: {
+      sitecore: {
+        route: {
+          fields: {},
+        },
+      },
+    },
+    mode: {
+      isEditing: false,
+      isPreview: false,
+    },
+  },
 };
 
 // Mock props with image but no link (should not wrap in link)
@@ -59,6 +72,19 @@ export const mockImagePropsNoLink = {
       value: {},
     },
   },
+  page: {
+    layout: {
+      sitecore: {
+        route: {
+          fields: {},
+        },
+      },
+    },
+    mode: {
+      isEditing: false,
+      isPreview: false,
+    },
+  },
 };
 
 // Mock props with no fields (should show empty hint)
@@ -71,6 +97,19 @@ export const mockImagePropsNoFields = {
   params: {
     styles: 'image-empty-styles',
     RenderingIdentifier: 'image-empty-id',
+  },
+  page: {
+    layout: {
+      sitecore: {
+        route: {
+          fields: {},
+        },
+      },
+    },
+    mode: {
+      isEditing: false,
+      isPreview: false,
+    },
   },
 } as any;
 
@@ -99,6 +138,19 @@ export const mockBannerProps = {
     },
     TargetUrl: {
       value: {},
+    },
+  },
+  page: {
+    layout: {
+      sitecore: {
+        route: {
+          fields: {},
+        },
+      },
+    },
+    mode: {
+      isEditing: false,
+      isPreview: false,
     },
   },
 };

@@ -24,6 +24,19 @@ export const mockTitleProps = {
       },
     },
   },
+  page: {
+    layout: {
+      sitecore: {
+        route: {
+          fields: {},
+        },
+      },
+    },
+    mode: {
+      isEditing: false,
+      isPreview: false,
+    },
+  },
 };
 
 // Mock props for editing mode
@@ -52,6 +65,19 @@ export const mockTitlePropsEditing = {
       },
     },
   },
+  page: {
+    layout: {
+      sitecore: {
+        route: {
+          fields: {},
+        },
+      },
+    },
+    mode: {
+      isEditing: true,
+      isPreview: false,
+    },
+  },
 };
 
 // Mock props with no fields (edge case)
@@ -68,6 +94,19 @@ export const mockTitlePropsNoFields = {
   fields: {
     data: {
       // No datasource or contextItem
+    },
+  },
+  page: {
+    layout: {
+      sitecore: {
+        route: {
+          fields: {},
+        },
+      },
+    },
+    mode: {
+      isEditing: false,
+      isPreview: false,
     },
   },
 };

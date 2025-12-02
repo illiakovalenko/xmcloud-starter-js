@@ -65,6 +65,11 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       Placeholder: {name}
     </div>
   ),
+  AppPlaceholder: ({ name, rendering, ...props }) => (
+    <div data-testid={`placeholder-${name}`} {...props}>
+      Placeholder: {name}
+    </div>
+  ),
   NextImage: ({ field, ...props }) => {
     if (field?.value?.src) {
       return <img src={field.value.src} alt={field.value.alt || ''} {...props} />;
@@ -88,7 +93,9 @@ beforeAll(() => {
       typeof args[0] === 'string' &&
       (args[0].includes('Warning: ReactDOM.render is no longer supported') ||
         args[0].includes('for a non-boolean attribute') ||
-        args[0].includes('editable'))
+        args[0].includes('editable') ||
+        args[0].includes('An update to') ||
+        args[0].includes('was not wrapped in act'))
     ) {
       return;
     }
