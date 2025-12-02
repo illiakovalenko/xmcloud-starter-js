@@ -10,6 +10,7 @@ import {
   mockPageData,
   mockPageDataEditing,
   mockPageDataWithoutTitle,
+  mockParams,
 } from './Title.mockProps';
 
 // Mock the useSitecore hook
@@ -29,28 +30,32 @@ describe('Title Component', () => {
   });
 
   describe('Rendering in normal mode', () => {
-    it('should render with page title when available', () => {
+    it('should render with datasource title when available', () => {
       render(<Title {...defaultProps} />);
 
-      expect(screen.getByText('Page Title')).toBeInTheDocument();
+      expect(screen.getByText('Datasource Title')).toBeInTheDocument();
       expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
     });
 
-    it('should render with default text when page title is not available', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataWithoutTitle);
-      render(<Title {...defaultProps} />);
-
-      expect(screen.getByText('Add Title')).toBeInTheDocument();
-    });
-
-    it('should render with default text when datasource is not available', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataWithoutTitle);
+    it('should render with context title when datasource is not available', () => {
+      mockUseSitecore.mockReturnValue(mockPageData);
       render(<Title {...(propsWithoutDatasource as any)} />);
 
-      expect(screen.getByText('Add Title')).toBeInTheDocument();
+      expect(screen.getByText('Context Title')).toBeInTheDocument();
     });
 
-    it('should render with default text when fields are empty', () => {
+    it('should render with page title when datasource and context are not available', () => {
+      const propsWithoutBoth = {
+        params: mockParams,
+        fields: { data: { datasource: null, contextItem: null } },
+      };
+      mockUseSitecore.mockReturnValue(mockPageData);
+      render(<Title {...(propsWithoutBoth as any)} />);
+
+      expect(screen.getByText('Page Title')).toBeInTheDocument();
+    });
+
+    it('should render with default text when all sources are not available', () => {
       mockUseSitecore.mockReturnValue(mockPageDataWithoutTitle);
       render(<Title {...(propsWithEmptyFields as any)} />);
 
@@ -60,14 +65,14 @@ describe('Title Component', () => {
     it('should apply custom styles', () => {
       render(<Title {...defaultProps} />);
 
-      const container = screen.getByText('Page Title').closest('.component.title');
+      const container = screen.getByText('Datasource Title').closest('.component.title');
       expect(container).toHaveClass('component', 'title', 'custom-title-style');
     });
 
     it('should render without custom styles when not provided', () => {
       render(<Title {...propsWithoutStyles} />);
 
-      const container = screen.getByText('Page Title').closest('.component.title');
+      const container = screen.getByText('Datasource Title').closest('.component.title');
       expect(container).toHaveClass('component', 'title');
       expect(container).not.toHaveClass('custom-title-style');
     });
@@ -87,7 +92,7 @@ describe('Title Component', () => {
     it('should have correct rendering identifier', () => {
       render(<Title {...defaultProps} />);
 
-      const container = screen.getByText('Page Title').closest('.component.title');
+      const container = screen.getByText('Datasource Title').closest('.component.title');
       expect(container).toHaveAttribute('id', 'title-rendering-id');
     });
   });
@@ -100,7 +105,7 @@ describe('Title Component', () => {
     it('should render with editable text in editing mode', () => {
       render(<Title {...defaultProps} />);
 
-      const textElement = screen.getByText('Page Title');
+      const textElement = screen.getByText('Datasource Title');
       expect(textElement).toHaveAttribute('data-editable', 'true');
     });
 
@@ -118,7 +123,7 @@ describe('Title Component', () => {
       
       render(<Title {...defaultProps} />);
 
-      const textElement = screen.getByText('Page Title');
+      const textElement = screen.getByText('Datasource Title');
       expect(textElement).toHaveAttribute('data-editable', 'true');
     });
   });
@@ -127,7 +132,7 @@ describe('Title Component', () => {
     it('should render correct DOM structure', () => {
       render(<Title {...defaultProps} />);
 
-      const container = screen.getByText('Page Title').closest('.component.title');
+      const container = screen.getByText('Datasource Title').closest('.component.title');
       expect(container).toHaveClass('component', 'title', 'custom-title-style');
       
       const contentDiv = container?.querySelector('.component-content');
@@ -140,7 +145,7 @@ describe('Title Component', () => {
     it('should pass correct props to Text component', () => {
       render(<Title {...defaultProps} />);
 
-      const textElement = screen.getByText('Page Title');
+      const textElement = screen.getByText('Datasource Title');
       expect(textElement).toHaveClass('field-title');
       expect(textElement.tagName).toBe('H1');
     });
@@ -162,7 +167,7 @@ describe('Title Component', () => {
       
       render(<Title {...propsWithoutParams} />);
 
-      expect(screen.getByText('Page Title')).toBeInTheDocument();
+      expect(screen.getByText('Datasource Title')).toBeInTheDocument();
     });
 
     it('should handle missing fields gracefully', () => {
