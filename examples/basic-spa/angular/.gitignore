@@ -14,6 +14,9 @@ scjssconfig.json
 # dependencies
 /node_modules
 
+# Lock files
+package-lock.json
+
 # local env files
 .env.local
 .env.*.local

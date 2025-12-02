@@ -39,7 +39,7 @@ Languages:
     - ID: "84a2a397-786e-43bd-85a0-bfbcc51fc3f3"
       Hint: image
       Value: |
-        <image mediaid="{BBFF51AC-334E-4023-A26F-E051EBEDB369}" />
+        <image mediaid="{865E1E26-2CF0-4ADC-86CF-0FC3D0A76658}" alt="Electric Car" />
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
       Value: "9dcb454c-83dd-423d-907d-5a0e93b08eda"

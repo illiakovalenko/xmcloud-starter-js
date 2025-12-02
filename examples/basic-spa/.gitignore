@@ -2,4 +2,7 @@
 # dependencies
 /node_modules
 
+# Lock files
+package-lock.json
+
 /.pnpm-store

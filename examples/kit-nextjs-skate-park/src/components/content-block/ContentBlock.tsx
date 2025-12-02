@@ -1,6 +1,6 @@
+import { JSX } from 'react';
 import { Text, RichText, Field, withDatasourceCheck } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
-import { JSX } from 'react';
 
 type ContentBlockProps = ComponentProps & {
   fields: {

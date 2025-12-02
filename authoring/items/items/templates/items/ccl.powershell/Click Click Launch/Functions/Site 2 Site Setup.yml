@@ -130,6 +130,7 @@ SharedFields:
             $nexaPage = Get-Item -Path "$sitePath/Home/Products/Nexa" -Language $Site.Language
             $nexaPageHeader = Get-Item -Path "$sitePath/Home/Products/Nexa/Data/Page Header 1" -Language $Site.Language
             $terraPage = Get-Item -Path "$sitePath/Home/Products/Terra" -Language $Site.Language
+            $terraPageHeader = Get-Item -Path "$sitePath/Home/Products/Terra/Data/Page Header 1" -Language $Site.Language
             
             Update-LinkField -Item $aeroLink -FieldName "link" -TargetItem $aeroPage
             Update-LinkField -Item $nexaLink -FieldName "link" -TargetItem $nexaPage
@@ -161,6 +162,8 @@ SharedFields:
             # Re-enable when page header 2 is added to Nexa
             # Get-Item -Path "$($item.ItemPath)/Products/Nexa/Data/Page Header 2" -Language $Site.Language | Update-LinkField -FieldName "link1" -TargetItem $testDriveItem
             # Get-Item -Path "$($item.ItemPath)/Products/Nexa/Data/Page Header 2" -Language $Site.Language | Update-LinkField -FieldName "link2" -TargetItem $item
+            Get-Item -Path "$($item.ItemPath)/Products/Terra/Data/Page Header 2" -Language $Site.Language | Update-LinkField -FieldName "link1" -TargetItem $testDriveItem
+            Get-Item -Path "$($item.ItemPath)/Products/Terra/Data/Page Header 2" -Language $Site.Language | Update-LinkField -FieldName "link2" -TargetItem $item
             
             Write-Verbose "Update product pages with the correct taxonomy"
             $productTag = Get-Item -Path "$sitePath/Data/Taxonomy/Content Types/Product" -Language $Site.Language
@@ -260,6 +263,8 @@ SharedFields:
                 Set-Rendering -Item $nexaPage -FinalLayout
             Update-LinkField -Item $nexaPageHeader -FieldName "link1" -TargetItem $testDriveItem
             Update-LinkField -Item $nexaPageHeader -FieldName "link2" -TargetItem $item
+            Update-LinkField -Item $terraPageHeader -FieldName "link1" -TargetItem $testDriveItem
+            Update-LinkField -Item $terraPageHeader -FieldName "link2" -TargetItem $item
             # update Aero product
             Get-Rendering -Item $aeroPage -Rendering $renderingImageGallery -FinalLayout | `
                 Set-RenderingParameter -Parameter @{ "FieldNames" = $imageGalleryVariant.ID } | `
@@ -270,6 +275,16 @@ SharedFields:
             Get-Rendering -Item $aeroPage -Rendering $renderingTextBanner -FinalLayout | `
                 Set-RenderingParameter -Parameter @{ "FieldNames" = $textBannerVariant.ID } | `
                 Set-Rendering -Item $aeroPage -FinalLayout
+            # update Terra product
+            Get-Rendering -Item $terraPage -Rendering $renderingImageGallery -FinalLayout | `
+                Set-RenderingParameter -Parameter @{ "FieldNames" = $imageGalleryVariant.ID } | `
+                Set-Rendering -Item $terraPage -FinalLayout
+            Get-Rendering -Item $terraPage -Rendering $renderingPageHeader -FinalLayout | `
+                Set-RenderingParameter -Parameter @{ "FieldNames" = $pageHeaderVariant.ID } | `
+                Set-Rendering -Item $terraPage -FinalLayout
+            Get-Rendering -Item $terraPage -Rendering $renderingTextBanner -FinalLayout | `
+                Set-RenderingParameter -Parameter @{ "FieldNames" = $textBannerVariant.ID } | `
+                Set-Rendering -Item $terraPage -FinalLayout
             # update Test Drive landing
             Get-Rendering -Item $testDriveItem -Rendering $renderingPageHeader -FinalLayout | `
                 Set-RenderingParameter -Parameter @{ "FieldNames" = $pageHeaderVariant.ID } | `

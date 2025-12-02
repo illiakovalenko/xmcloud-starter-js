@@ -1,4 +1,4 @@
-﻿// Below are built-in components that are available in the app, it's recommended to keep them as is
+// Below are built-in components that are available in the app, it's recommended to keep them as is
 import { BYOCWrapper, FEaaSWrapper, NextjsContentSdkComponent } from '@sitecore-content-sdk/nextjs';
 import { Form } from '@sitecore-content-sdk/nextjs';
 // end of built-in components
@@ -49,7 +49,7 @@ import * as Icon from 'components/icon/Icon';
 import * as Image from 'components/sxa/Image';
 import * as ImageBanner from 'components/site-three/ImageBanner';
 import * as ImageBlock from 'components/image/ImageBlock';
-import * as ImageCarousel from 'components/site-three/ImageCarousel';
+import * as ImageCarousel from 'components/image-carousel/ImageCarousel';
 import * as ImageGallery from 'components/image-gallery/ImageGallery';
 import * as ImageWrapper from 'components/image/ImageWrapper.dev';
 import * as LinkList from 'components/sxa/LinkList';
