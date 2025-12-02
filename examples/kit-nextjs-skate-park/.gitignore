@@ -30,3 +30,7 @@ package-lock.json
 !.sitecore/component-map.ts
 !.sitecore/component-map.client.ts
 !.sitecore/import-map.ts
+
+#testing
+/coverage
+/.jest-cache

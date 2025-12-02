@@ -44,7 +44,7 @@ export const Default = ({ params, fields, page }: TitleProps): JSX.Element => {
   const { styles, RenderingIdentifier: id } = params;
   const datasource = fields?.data?.datasource || fields?.data?.contextItem;
   const datasourceField: TextField = datasource?.field?.jsonValue as TextField;
-  const contextField: TextField = page.layout.sitecore.route?.fields?.Title as TextField;
+  const contextField: TextField = page?.layout?.sitecore?.route?.fields?.Title as TextField;
   const titleField: TextField = datasourceField || contextField;
 
   const link: LinkField = {
@@ -58,7 +58,7 @@ export const Default = ({ params, fields, page }: TitleProps): JSX.Element => {
 
   return (
     <ComponentContent styles={styles} id={id}>
-      {page.mode.isEditing ? (
+      {page?.mode?.isEditing ? (
         <Text field={titleField} />
       ) : (
         <Link field={link}>
