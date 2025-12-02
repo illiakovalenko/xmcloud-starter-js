@@ -71,7 +71,7 @@ export const Default = (props: MultiPromoProps) => {
 
   if (props.fields) {
     return (
-      <section className={`relative ${props.params?.styles}`} data-class-change>
+      <section className={`relative ${props.params?.styles || ''}`} data-class-change>
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="mb-6 text-2xl lg:text-5xl uppercase">
@@ -82,9 +82,9 @@ export const Default = (props: MultiPromoProps) => {
             </p>
           </div>
           <div className={`${parentBasedGridClasses} ${parentBasedGridItemClasses} mt-12`}>
-            {datasource?.children?.results?.map((promo) => {
+            {datasource?.children?.results?.filter(Boolean).map((promo) => {
               return <PromoItem key={promo?.id} {...promo} />;
-            })}
+            }) || null}
           </div>
         </div>
       </section>
@@ -101,7 +101,10 @@ export const Stacked = (props: MultiPromoProps) => {
 
   if (props.fields) {
     return (
-      <section className={`relative ${props.params?.styles} overflow-hidden`} data-class-change>
+      <section
+        className={`relative ${props.params?.styles || ''} overflow-hidden`}
+        data-class-change
+      >
         <span className="absolute top-1/3 left-1/3 [.multipromo-3-2_&]:-left-1/3 w-screen h-64 bg-primary opacity-50 blur-[400px] -rotate-15 [.multipromo-3-2_&]:rotate-15 z-0"></span>
         <div className="relative container mx-auto px-4 py-16 z-10">
           <div className={`${parentBasedGridClasses}`}>
@@ -115,7 +118,7 @@ export const Stacked = (props: MultiPromoProps) => {
             </div>
           </div>
           <div className={`${parentBasedGridClasses} ${parentBasedGridItemClasses} mt-30`}>
-            {datasource?.children?.results?.map((promo) => {
+            {datasource?.children?.results?.filter(Boolean).map((promo) => {
               return (
                 <div
                   key={promo?.id}
@@ -124,7 +127,7 @@ export const Stacked = (props: MultiPromoProps) => {
                   <PromoItem {...promo} />
                 </div>
               );
-            })}
+            }) || null}
           </div>
         </div>
       </section>
@@ -141,7 +144,7 @@ export const SingleColumn = (props: MultiPromoProps) => {
 
   if (props.fields) {
     return (
-      <section className={`relative ${props.params.styles}`} data-class-change>
+      <section className={`relative ${props.params?.styles || ''}`} data-class-change>
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-2xl mb-16">
             <h2 className="mb-6 text-2xl lg:text-5xl uppercase">
@@ -152,9 +155,9 @@ export const SingleColumn = (props: MultiPromoProps) => {
             </p>
           </div>
           <div className="grid gap-14">
-            {datasource.children.results.map((promo) => {
-              return <PromoItem key={promo.id} {...promo} isHorizontal />;
-            })}
+            {datasource?.children?.results?.filter(Boolean).map((promo) => {
+              return <PromoItem key={promo?.id} {...promo} isHorizontal />;
+            }) || null}
           </div>
         </div>
       </section>

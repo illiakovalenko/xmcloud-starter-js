@@ -10,8 +10,8 @@ export const ImageCarouselEditMode = (
   props: ImageCarouselProps & { componentName: string; showBackgroundText?: boolean }
 ) => {
   const { fields, isPageEditing, componentName, showBackgroundText = true } = props;
-  const { title, imageItems } = fields.data.datasource;
-  const { results: slides } = imageItems;
+  const { title, imageItems } = fields?.data?.datasource ?? {};
+  const { results: slides = [] } = imageItems || {};
   const containerClasses =
     '@container bg-primary group text-primary-foreground relative flex w-full flex-col items-center justify-center py-[99px]';
 
@@ -25,7 +25,7 @@ export const ImageCarouselEditMode = (
         <div className="mb-8 w-full space-y-4 text-center">
           <Text
             tag="h2"
-            field={title.jsonValue}
+            field={title?.jsonValue}
             className="font-heading @md:text-5xl mx-auto max-w-[760px] text-pretty text-3xl font-light leading-none tracking-normal antialiased group-[.position-center]:text-center group-[.position-right]:text-right"
           />
         </div>

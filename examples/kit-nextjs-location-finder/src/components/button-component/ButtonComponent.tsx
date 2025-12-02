@@ -163,29 +163,40 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
   const { fields, params, page } = props;
   const { buttonLink, icon, isAriaHidden = true } = fields || {};
   const { size, iconPosition = 'trailing', iconClassName, isPageEditing } = params || {};
-  const { variant } = props || ButtonVariants.DEFAULT;
+  const variant = props?.variant || ButtonVariants.DEFAULT;
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
   const isEditing = isPageEditing || page?.mode?.isEditing;
   if (!isEditing && !linkIsValid(buttonLink)) return null;
 
-  const buttonIcon: EnumValues<typeof IconName> =
-    (buttonLink?.value?.linktype as EnumValues<typeof IconName>) ||
-    iconName ||
-    (iconPosition === IconPosition.LEADING ? IconName.ARROW_LEFT : IconName.ARROW_RIGHT);
+  // Only set a button icon if one is explicitly provided
+  const buttonIcon: EnumValues<typeof IconName> | undefined =
+    iconName || (buttonLink?.value?.linktype as EnumValues<typeof IconName>) || undefined;
+
+  // Default icon size for buttons if not provided
+  const iconClass = iconClassName || 'h-4 w-4';
+
   if (fields) {
     return (
       <Button asChild variant={variant} size={size}>
         {isEditing ? (
-          <Link field={buttonLink} editable={true} />
+          <span className="inline-flex items-center gap-2">
+            {iconPosition === IconPosition.LEADING && buttonIcon && (
+              <Icon iconName={buttonIcon} className={iconClass} isAriaHidden={ariaHidden} />
+            )}
+            <Link field={buttonLink} editable={true} />
+            {iconPosition !== IconPosition.LEADING && buttonIcon && (
+              <Icon iconName={buttonIcon} className={iconClass} isAriaHidden={ariaHidden} />
+            )}
+          </span>
         ) : (
           <Link editable={isEditing} field={buttonLink}>
-            {iconPosition === IconPosition.LEADING && (
-              <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
+            {iconPosition === IconPosition.LEADING && buttonIcon && (
+              <Icon iconName={buttonIcon} className={iconClass} isAriaHidden={ariaHidden} />
             )}
             {buttonLink?.value?.text}
-            {iconPosition !== IconPosition.LEADING && (
-              <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
+            {iconPosition !== IconPosition.LEADING && buttonIcon && (
+              <Icon iconName={buttonIcon} className={iconClass} isAriaHidden={ariaHidden} />
             )}
           </Link>
         )}
