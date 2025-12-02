@@ -24,6 +24,10 @@ package-lock.json
 # vercel
 .vercel
 
+# jest
+/.jest-cache
+/coverage
+
 # sitecore temp files
 .sitecore/*
 # except for component-map
