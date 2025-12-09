@@ -16,6 +16,7 @@ export default defineCliConfig({
       extractFiles(),
       writeImportMap({
         paths: ['src/components'],
+        exclude: ['src/components/component-library/*'],
       }),
     ],
   },

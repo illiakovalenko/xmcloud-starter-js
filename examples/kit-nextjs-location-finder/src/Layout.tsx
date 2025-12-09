@@ -1,10 +1,15 @@
 import React, { type JSX } from 'react';
-import { Field, ImageField, Page, AppPlaceholder } from '@sitecore-content-sdk/nextjs';
+import {
+  Field,
+  ImageField,
+  Page,
+  AppPlaceholder,
+} from '@sitecore-content-sdk/nextjs';
 import Scripts from 'src/Scripts';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Sora, Roboto } from 'next/font/google';
 import SitecoreStyles from 'components/content-sdk/SitecoreStyles';
-import { DesignLibraryLayout } from './DesignLibraryLayout';
+import { DesignLibraryApp } from '@sitecore-content-sdk/nextjs';
 import componentMap from '.sitecore/component-map';
 import Providers from './Providers';
 
@@ -43,7 +48,7 @@ export interface RouteFields {
 const Layout = ({ page }: LayoutProps): JSX.Element => {
   const { layout, mode } = page;
   const { route } = layout.sitecore;
-  const mainClassPageEditing =  mode.isEditing ? 'editing-mode' : 'prod-mode';
+  const mainClassPageEditing = mode.isEditing ? 'editing-mode' : 'prod-mode';
   const classNamesMain = `${mainClassPageEditing} ${body.variable} ${heading.variable} main-layout`;
 
   return (
@@ -54,7 +59,16 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
         {/* root placeholder for the app, which we add components to using route data */}
         <div className={`min-h-screen flex flex-col ${classNamesMain}`}>
           {page.mode.isDesignLibrary ? (
-            <DesignLibraryLayout />
+            route && (
+              <DesignLibraryApp
+                page={page}
+                rendering={route}
+                componentMap={componentMap}
+                loadServerImportMap={() =>
+                  import('.sitecore/import-map.server')
+                }
+              />
+            )
           ) : (
             <>
               <header>
