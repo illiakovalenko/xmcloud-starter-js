@@ -48,7 +48,8 @@ interface PersonItem extends ComponentProps {
   personLinkedIn?: LinkField;
 }
 
-export const Default: React.FC<ArticleHeaderProps> = ({ fields, externalFields }) => {
+export const Default: React.FC<ArticleHeaderProps> = (props) => {
+  const { fields, externalFields, page } = props;
   const { imageRequired, eyebrowOptional } = fields;
   const { pageHeaderTitle, pageReadTime, pageDisplayDate, pageAuthor } = externalFields || {};
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -221,6 +222,7 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, externalFields }
                 priority
                 sizes="(max-width: 768px) 100vw, 800px"
                 ref={imageRef}
+                page={page}
               />
             </div>
             {/* Blur overlay - separate for better performance */}
@@ -318,6 +320,7 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, externalFields }
                     priority
                     sizes="(max-width: 768px) 100vw, 800px"
                     ref={imageRef}
+                    page={page}
                   />
                 </div>
 

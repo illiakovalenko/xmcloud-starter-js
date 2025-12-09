@@ -5,7 +5,7 @@ import {
   Link as ContentSdkLink,
   LinkField,
   Text,
-  useSitecore,
+  Page,
 } from '@sitecore-content-sdk/nextjs';
 import React, { CSSProperties, type JSX } from 'react';
 
@@ -18,6 +18,7 @@ interface Fields {
 type ImageProps = {
   params: { [key: string]: string };
   fields: Fields;
+  page: Page;
 };
 
 const ImageDefault = (props: ImageProps): JSX.Element => (
@@ -30,8 +31,7 @@ const ImageDefault = (props: ImageProps): JSX.Element => (
 
 export const Banner = (props: ImageProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
   const classHeroBannerEmpty =
     isEditing && props.fields?.Image?.value?.class === 'scEmptyImage' ? 'hero-banner-empty' : '';
   const backgroundStyle = (props?.fields?.Image?.value?.src && {
@@ -41,7 +41,7 @@ export const Banner = (props: ImageProps): JSX.Element => {
     ...props.fields.Image,
     value: {
       ...props.fields.Image.value,
-      style: { width: '100%', height: '100%' },
+      style: { objectFit: 'cover', width: '100%', height: '100%' },
     },
   };
 
@@ -51,15 +51,14 @@ export const Banner = (props: ImageProps): JSX.Element => {
       id={id ? id : undefined}
     >
       <div className="component-content sc-sxa-image-hero-banner" style={backgroundStyle}>
-        {isEditing ? <ContentSdkImage field={modifyImageProps} /> : ''}
+        {isEditing ? <ContentSdkImage field={modifyImageProps} loading='eager' fetchPriority='high' /> : ''}
       </div>
     </div>
   );
 };
 
 export const Default = (props: ImageProps): JSX.Element => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
 
   if (props.fields) {
     const Image = () => <ContentSdkImage field={props.fields.Image} />;

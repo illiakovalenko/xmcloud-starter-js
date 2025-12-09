@@ -1,3 +1,5 @@
+'use client';
+
 import { CdpHelper, useSitecore } from '@sitecore-content-sdk/nextjs';
 import { useEffect } from 'react';
 import { pageView } from '@sitecore-cloudsdk/events/browser';
@@ -9,6 +11,10 @@ import { JSX } from 'react';
  * It uses the Sitecore Cloud SDK to enable page view events on the client-side.
  * See Sitecore Cloud SDK documentation for details.
  * https://www.npmjs.com/package/@sitecore-cloudsdk/events
+ * 
+ * Note: This component uses useSitecore() hook because it's a client-side tracking component
+ * that runs outside the normal component rendering flow and needs to access page context
+ * from the SitecoreProvider.
  */
 const CdpPageView = (): JSX.Element => {
   const {

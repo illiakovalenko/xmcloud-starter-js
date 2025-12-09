@@ -1,3 +1,4 @@
+'use client';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
@@ -27,7 +28,6 @@ interface ZipcodeSearchFormProps {
   /**
    * Optional callback function that is called when the form is submitted
    */
-  // eslint-disable-next-line no-unused-vars
   onSubmit?: (values: ZipcodeFormValues) => void;
 
   /**

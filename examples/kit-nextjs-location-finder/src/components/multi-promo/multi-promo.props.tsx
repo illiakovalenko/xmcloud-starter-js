@@ -1,5 +1,5 @@
 import { ComponentProps } from '@/lib/component-props';
-import { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
+import { Field, ImageField, LinkField, Page } from '@sitecore-content-sdk/nextjs';
 
 export interface MultiPromoParams {
   numColumns?: string;
@@ -38,4 +38,5 @@ export type MultiPromoItemProps = {
   link?: {
     jsonValue?: LinkField;
   };
+  page?: Page; // Optional page prop for ImageWrapper
 };

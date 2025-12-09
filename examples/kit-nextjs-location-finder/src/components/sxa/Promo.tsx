@@ -6,7 +6,7 @@ import {
   ImageField,
   Field,
   LinkField,
-  useSitecore,
+  Page,
 } from '@sitecore-content-sdk/nextjs';
 import { Button } from '@/components/ui/button';
 
@@ -21,6 +21,7 @@ interface Fields {
 type PromoProps = {
   params: { [key: string]: string };
   fields: Fields;
+  page: Page;
 };
 
 const PromoDefaultComponent = (props: PromoProps): JSX.Element => (
@@ -33,8 +34,7 @@ const PromoDefaultComponent = (props: PromoProps): JSX.Element => (
 
 export const Default = (props: PromoProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
 
   if (props.fields) {
     return (
@@ -87,8 +87,7 @@ export const Default = (props: PromoProps): JSX.Element => {
 
 export const CenteredCard = (props: PromoProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
 
   if (props.fields) {
     return (

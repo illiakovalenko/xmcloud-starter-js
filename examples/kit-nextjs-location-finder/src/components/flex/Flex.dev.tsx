@@ -6,7 +6,9 @@ import {
   ComponentParams,
   ComponentRendering,
   getFieldValue,
-  Placeholder,
+  AppPlaceholder,
+  Page,
+  NextjsContentSdkComponent,
 } from '@sitecore-content-sdk/nextjs';
 import { Slot } from '@radix-ui/react-slot';
 import { EnumValues } from '@/enumerations/generic.enum';
@@ -265,6 +267,8 @@ export interface XMComponent {
   rendering: ComponentRendering & { params: ComponentParams };
   params: ComponentParams;
   fields: ComponentFields;
+  page: Page;
+  componentMap: Map<string, NextjsContentSdkComponent>;
 }
 
 const getVariantString = <T extends FlexVariantKey>(
@@ -336,7 +340,7 @@ export const FlexItem: React.FC<FlexItemProps> = ({
   );
 };
 
-export const XMFlex: React.FC<XMComponent> = ({ params, rendering, fields }) => {
+export const XMFlex: React.FC<XMComponent> = ({ params, rendering, fields, page, componentMap }) => {
   const phKey = `flex-${params.DynamicPlaceholderId}`;
   return (
     <Flex
@@ -346,12 +350,12 @@ export const XMFlex: React.FC<XMComponent> = ({ params, rendering, fields }) => 
       gap={getFieldValue(fields, 'gap')}
       className={getFieldValue(fields, 'className')}
     >
-      <Placeholder name={phKey} rendering={rendering} />
+      <AppPlaceholder page={page} componentMap={componentMap} name={phKey} rendering={rendering} />
     </Flex>
   );
 };
 
-export const XMFlexItem: React.FC<XMComponent> = ({ params, rendering, fields }) => {
+export const XMFlexItem: React.FC<XMComponent> = ({ params, rendering, fields, page, componentMap }) => {
   const phKey = `flex-item-${params.DynamicPlaceholderId}`;
   return (
     <FlexItem
@@ -361,7 +365,7 @@ export const XMFlexItem: React.FC<XMComponent> = ({ params, rendering, fields })
       alignSelf={getFieldValue(fields, 'alignSelf')}
       className={getFieldValue(fields, 'className')}
     >
-      <Placeholder name={phKey} rendering={rendering} />
+      <AppPlaceholder page={page} componentMap={componentMap} name={phKey} rendering={rendering} />
     </FlexItem>
   );
 };

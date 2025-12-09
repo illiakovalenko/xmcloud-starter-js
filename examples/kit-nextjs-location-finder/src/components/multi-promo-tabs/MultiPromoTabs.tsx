@@ -1,6 +1,8 @@
+'use client';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useId } from 'react';
-import { useSitecore, Text } from '@sitecore-content-sdk/nextjs';
+import { Text } from '@sitecore-content-sdk/nextjs';
 import { AnimatePresence } from 'framer-motion';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import {
@@ -18,8 +20,7 @@ export const Default: React.FC<MultiPromoTabsProps> = (props) => {
   const [activeTab, setActiveTab] = useState(0);
   const { fields } = props;
 
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
   const id = useId();
 
   if (fields) {
@@ -82,7 +83,7 @@ export const Default: React.FC<MultiPromoTabsProps> = (props) => {
           <AnimatePresence mode="wait">
             {tabItems.map((item, index) => (
               <TabsContent key={index} value={index.toString()}>
-                <PromoTab {...item} isEditMode={isEditing} />
+                <PromoTab {...item} isEditMode={isEditing} page={props.page} />
               </TabsContent>
             ))}
           </AnimatePresence>

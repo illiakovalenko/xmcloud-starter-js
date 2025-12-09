@@ -70,6 +70,7 @@ export const ImageGalleryGrid: React.FC<ImageGalleryProps> = (props) => {
                   data-component="image-1"
                   image={image1}
                   className="rounded-default h-auto w-full"
+                  page={props.page}
                 />
               )}
             </div>
@@ -84,6 +85,7 @@ export const ImageGalleryGrid: React.FC<ImageGalleryProps> = (props) => {
                   data-component="image-2"
                   image={image2}
                   className="rounded-default h-auto w-full"
+                  page={props.page}
                 />
               )}
             </div>
@@ -98,6 +100,7 @@ export const ImageGalleryGrid: React.FC<ImageGalleryProps> = (props) => {
                   data-component="image-3"
                   image={image3}
                   className="rounded-default h-auto w-full"
+                  page={props.page}
                 />
               )}
             </div>
@@ -112,6 +115,7 @@ export const ImageGalleryGrid: React.FC<ImageGalleryProps> = (props) => {
                   data-component="image-4"
                   image={image4}
                   className="rounded-default h-auto w-full"
+                  page={props.page}
                 />
               )}
             </div>

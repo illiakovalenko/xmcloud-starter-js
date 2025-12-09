@@ -1,4 +1,4 @@
-import { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
+import { Field, ImageField, LinkField, Page } from '@sitecore-content-sdk/nextjs';
 
 import { ComponentProps } from '@/lib/component-props';
 
@@ -54,4 +54,5 @@ export interface ProductCardProps {
   link: LinkField;
   prefersReducedMotion: boolean;
   isPageEditing: boolean;
+  page?: Page; // Optional page prop for ImageWrapper
 }

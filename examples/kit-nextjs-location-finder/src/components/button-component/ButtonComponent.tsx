@@ -2,7 +2,7 @@
 import React, { type JSX } from 'react';
 import { Default as Icon } from '@/components/icon/Icon';
 import { IconName } from '@/enumerations/Icon.enum';
-import { Link, LinkField, ComponentRendering } from '@sitecore-content-sdk/nextjs';
+import { Link, LinkField, ComponentRendering, Page } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
 import { Button } from '@/components/ui/button';
 import { EnumValues } from '@/enumerations/generic.enum';
@@ -110,6 +110,7 @@ const EditableButton = (props: {
   size?: EnumValues<typeof ButtonSize>;
   //if asIconLink is set the text will not show up in the link but as an aria label
   asIconLink?: boolean;
+  page?: Page;
   [key: string]: any;
 }): JSX.Element | null => {
   const {
@@ -123,6 +124,7 @@ const EditableButton = (props: {
     className,
     isPageEditing = false,
     asIconLink = false,
+    page,
   } = props || {};
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   if (!isPageEditing && !isValidEditableLink(buttonLink, icon)) return null;
@@ -132,11 +134,11 @@ const EditableButton = (props: {
       {isPageEditing ? (
         <span className="flex">
           {iconPosition === IconPosition.LEADING ? (
-            <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
+            <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} page={page} />
           ) : null}
           <Link field={buttonLink} editable={isPageEditing} />
           {iconPosition !== IconPosition.LEADING ? (
-            <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
+            <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} page={page} />
           ) : null}
         </span>
       ) : (
@@ -147,11 +149,11 @@ const EditableButton = (props: {
           aria-label={asIconLink ? buttonLink?.value?.text : undefined}
         >
           {iconPosition === IconPosition.LEADING && icon?.value?.src ? (
-            <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
+            <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} page={page} />
           ) : null}
           {!asIconLink && buttonLink?.value?.text}
           {iconPosition !== IconPosition.LEADING && icon?.value?.src ? (
-            <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
+            <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} page={page} />
           ) : null}
         </Link>
       )}
