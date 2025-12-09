@@ -110,7 +110,7 @@ const PromoBlock = (props: PromoBlockProps): JSX.Element => {
           </Flex>
         </Flex>
         <div className={variantChoice.container}>
-          <ImageWrapper image={image} className={variantChoice.image} />
+          <ImageWrapper image={image} className={variantChoice.image} page={props.page} />
         </div>
       </div>
     );

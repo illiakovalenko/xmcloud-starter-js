@@ -1,3 +1,5 @@
+'use client';
+
 import { Text } from '@sitecore-content-sdk/nextjs';
 import React, { useState } from 'react';
 import { NoDataFallback } from '@/utils/NoDataFallback';
@@ -132,6 +134,7 @@ export const ProductListingDefault: React.FC<ProductListingProps> = (props) => {
                           link={viewAllLink?.jsonValue}
                           prefersReducedMotion={isReducedMotion}
                           isPageEditing={isPageEditing}
+                          page={props.page}
                         />
                       </div>
                     </AnimatedSection>
@@ -164,6 +167,7 @@ export const ProductListingDefault: React.FC<ProductListingProps> = (props) => {
                           link={viewAllLink?.jsonValue}
                           prefersReducedMotion={isReducedMotion}
                           isPageEditing={isPageEditing}
+                          page={props.page}
                         />
                       </div>
                     </AnimatedSection>

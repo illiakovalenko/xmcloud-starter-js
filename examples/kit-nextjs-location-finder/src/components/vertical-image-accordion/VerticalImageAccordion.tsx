@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Text, Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
@@ -34,7 +36,8 @@ interface VerticalImageAccordionProps extends ComponentProps {
   fields: VerticalImageAccordionFields;
 }
 
-export const Default: React.FC<VerticalImageAccordionProps> = ({ fields }) => {
+export const Default: React.FC<VerticalImageAccordionProps> = (props) => {
+  const { fields, page } = props;
   const [activeIndex, setActiveIndex] = useState<number>(1);
   const [isExpanding, setIsExpanding] = useState(false);
 
@@ -110,6 +113,7 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields }) => {
                     className="rounded-default h-full w-full object-cover"
                     wrapperClass="h-full w-full"
                     aria-hidden="true"
+                    page={page}
                   />
                 )}
               </div>

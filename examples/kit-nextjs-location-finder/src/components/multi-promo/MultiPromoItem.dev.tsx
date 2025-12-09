@@ -14,6 +14,7 @@ const mapToItemProps = (fields: MultiPromoItemProps) => {
 export const Default: React.FC<MultiPromoItemProps> = (props) => {
   const itemProps = mapToItemProps(props || {});
   const { title, image, link } = itemProps || {};
+  const { page } = props;
 
   return (
     <>
@@ -22,6 +23,7 @@ export const Default: React.FC<MultiPromoItemProps> = (props) => {
           image={image}
           className="aspect-[131/121] w-full rounded-3xl object-cover"
           wrapperClass="aspect-[131/121] w-full mb-7"
+          page={page}
         />
       )}
       {title && (

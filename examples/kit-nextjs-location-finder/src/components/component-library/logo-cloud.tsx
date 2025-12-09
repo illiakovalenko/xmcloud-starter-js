@@ -4,7 +4,7 @@ import {
   Link as ContentSdkLink,
   RichText as ContentSdkRichText,
   Text as ContentSdkText,
-  useSitecore,
+  Page,
 } from '@sitecore-content-sdk/nextjs';
 import { Button } from 'shadcd/components/ui/button';
 import { IGQLImageField, IGQLLinkField, IGQLRichTextField, IGQLTextField } from 'src/types/igql';
@@ -33,11 +33,11 @@ interface LogoFields {
 type LogoCloudProps = {
   params: { [key: string]: string };
   fields: Fields;
+  page: Page;
 };
 
 export const Default = (props: LogoCloudProps): JSX.Element => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
 
   return (
     <section

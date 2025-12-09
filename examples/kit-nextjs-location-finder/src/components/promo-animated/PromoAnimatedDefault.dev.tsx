@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState, useRef } from 'react';
 import { Text, RichText } from '@sitecore-content-sdk/nextjs';
 import { ButtonBase as Button } from '@/components/button-component/ButtonComponent';
@@ -49,6 +51,7 @@ export const PromoAnimatedDefault: React.FC<PromoAnimatedProps> = (props) => {
                   wrapperClass="relative aspect-square w-full"
                   sizes="(min-width: 768px) 452px, 350px"
                   priority={true}
+                  page={props.page}
                 />
                 <AnimatedSection
                   animationType="rotate"

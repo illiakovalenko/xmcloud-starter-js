@@ -1,10 +1,12 @@
+'use client';
+
 import { Text, Link as EditableLink } from '@sitecore-content-sdk/nextjs';
 import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
 import { Button } from '@/components/ui/button';
 import { CardSpotlight } from '@/components/card-spotlight/card-spotlight.dev';
 import type { ProductCardProps } from './product-listing.props';
 import Link from 'next/link';
-import { useI18n } from 'next-localization';
+import { useTranslations } from 'next-intl';
 import { dictionaryKeys } from '@/variables/dictionary';
 
 const ProductListingCard = ({
@@ -12,8 +14,9 @@ const ProductListingCard = ({
   link,
   prefersReducedMotion,
   isPageEditing,
+  page,
 }: ProductCardProps) => {
-  const { t } = useI18n();
+  const t = useTranslations();
   const dictionary = {
     PRODUCTLISTING_DrivingRange: t(dictionaryKeys.PRODUCTLISTING_DrivingRange),
     PRODUCTLISTING_Price: t(dictionaryKeys.PRODUCTLISTING_Price),
@@ -26,7 +29,7 @@ const ProductListingCard = ({
         data-component="ProductListingCard"
       >
         <div className="relative overflow-hidden">
-          <ImageWrapper image={product.productThumbnail?.jsonValue} className="mx-auto" />
+          <ImageWrapper image={product.productThumbnail?.jsonValue} className="mx-auto" page={page} />
         </div>
 
         <div className="space-y-6">

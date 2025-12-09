@@ -69,6 +69,7 @@ export const ImageGalleryFiftyFifty: React.FC<ImageGalleryProps> = (props) => {
                   wrapperClass="w-full relative rounded-default aspect-square "
                   className=" h-full w-full object-cover"
                   data-component="image-1"
+                  page={props.page}
                 />
               )}
             </div>
@@ -87,6 +88,7 @@ export const ImageGalleryFiftyFifty: React.FC<ImageGalleryProps> = (props) => {
                   wrapperClass="w-full relative rounded-default aspect-square "
                   className="h-full w-full object-cover"
                   data-component="image-2"
+                  page={props.page}
                 />
               )}
             </div>
@@ -108,6 +110,7 @@ export const ImageGalleryFiftyFifty: React.FC<ImageGalleryProps> = (props) => {
                   wrapperClass="w-full relative rounded-default aspect-square"
                   className="h-full w-full object-cover"
                   data-component="image-3"
+                  page={props.page}
                 />
               )}
             </div>
@@ -129,6 +132,7 @@ export const ImageGalleryFiftyFifty: React.FC<ImageGalleryProps> = (props) => {
                   image={image4}
                   wrapperClass="w-full relative rounded-default aspect-square "
                   className=" h-full w-full object-cover"
+                  page={props.page}
                 />
               )}
             </div>

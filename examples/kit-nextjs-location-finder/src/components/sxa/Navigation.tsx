@@ -1,10 +1,12 @@
+'use client';
+
 import React, { useState, type JSX } from 'react';
 import {
   Link as ContentSdkLink,
   LinkField,
   Text,
   TextField,
-  useSitecore,
+  Page,
 } from '@sitecore-content-sdk/nextjs';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
@@ -49,10 +51,9 @@ const getLinkField = (props: NavigationProps): LinkField => ({
   },
 });
 
-export const Default = (props: NavigationProps): JSX.Element => {
+export const Default = (props: NavigationProps & { page: Page }): JSX.Element => {
   const [isOpenMenu, openMenu] = useState(false);
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
   const styles =
     props.params != null
       ? `${props.params.GridParameters ?? ''} ${props.params.Styles ?? ''}`.trimEnd()
@@ -87,6 +88,7 @@ export const Default = (props: NavigationProps): JSX.Element => {
         fields={element}
         handleClick={(event: React.MouseEvent<HTMLElement>) => handleToggleMenu(event, false)}
         relativeLevel={1}
+        page={props.page}
       />
     ));
 
@@ -174,9 +176,8 @@ export const Header = (): JSX.Element => {
   );
 };
 
-const NavigationList = (props: NavigationProps) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+const NavigationList = (props: NavigationProps & { page: Page }) => {
+  const { isEditing } = props.page.mode;
   const [active, setActive] = useState(false);
   const classNameList = `${props.fields.Styles.concat('rel-level' + props.relativeLevel).join(
     ' '
@@ -190,6 +191,7 @@ const NavigationList = (props: NavigationProps) => {
         fields={element}
         handleClick={props.handleClick}
         relativeLevel={props.relativeLevel + 1}
+        page={props.page}
       />
     ));
   }

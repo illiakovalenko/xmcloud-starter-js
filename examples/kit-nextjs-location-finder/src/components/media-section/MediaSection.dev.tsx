@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
-import { useSitecore, ImageField } from '@sitecore-content-sdk/nextjs';
+import { ImageField, useSitecore } from '@sitecore-content-sdk/nextjs';
 import { getImageProps } from 'next/image';
 import { cn } from '@/lib/utils';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
@@ -122,6 +122,7 @@ export const Default = ({
             className
           )}
           alt=""
+          page={page}
         />
       ) : null}
     </div>

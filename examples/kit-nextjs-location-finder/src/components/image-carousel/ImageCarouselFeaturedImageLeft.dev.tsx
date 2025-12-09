@@ -309,6 +309,7 @@ export const ImageCarouselFeaturedImageLeft = (props: ImageCarouselProps) => {
                             <ImageWrapper
                               image={slides[slideIndex].image?.jsonValue}
                               className="object-cover"
+                              page={props.page}
                             />
                           </div>
                         </motion.div>

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
+import { Field, ImageField, LinkField, Page } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
 
 interface MultiPromoTabsParams {
@@ -13,6 +13,7 @@ export interface MultiPromoTabsFields {
   link1?: { jsonValue: LinkField };
   image2?: { jsonValue: ImageField };
   link2?: { jsonValue: LinkField };
+  page?: Page; // Optional page prop for ImageWrapper
 }
 
 export interface MultiPromoTabsProps extends ComponentProps {

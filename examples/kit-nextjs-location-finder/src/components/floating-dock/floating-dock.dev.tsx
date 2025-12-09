@@ -13,7 +13,7 @@ import {
   useTransform,
 } from 'framer-motion';
 import { useRef, useState, useEffect, useCallback } from 'react';
-import { createPortal } from 'react-dom';
+import { Portal } from '@/components/portal/portal.dev';
 
 export const FloatingDock = ({
   items,
@@ -68,16 +68,10 @@ const FloatingDockMobile = ({
   forceCollapse?: boolean;
 }) => {
   const [open, setOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const firstItemRef = useRef<HTMLButtonElement>(null);
   const lastItemRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    setIsMounted(true);
-    return () => setIsMounted(false);
-  }, []);
 
   const closeMenu = useCallback(() => setOpen(false), []);
 
@@ -155,7 +149,7 @@ const FloatingDockMobile = ({
       aria-label="Share menu"
     >
       <AnimatePresence>
-        {open && isMounted && createPortal(<Backdrop onClick={closeMenu} />, document.body)}
+        {open && <Portal><Backdrop onClick={closeMenu} /></Portal>}
       </AnimatePresence>
 
       <AnimatePresence>

@@ -1,5 +1,5 @@
 import { cva } from 'class-variance-authority';
-import { Text, Link, useSitecore, Field, LinkField } from '@sitecore-content-sdk/nextjs';
+import { Text, Link, Field, LinkField } from '@sitecore-content-sdk/nextjs';
 import { Button } from '@/components/ui/button';
 import { Default as AnimatedSection } from '@/components/animated-section/AnimatedSection.dev';
 import { NoDataFallback } from '@/utils/NoDataFallback';
@@ -58,8 +58,7 @@ type CtaBannerFields = {
 type CtaBannerProps = ComponentProps & CtaBannerFields & CtaBannerParams;
 
 export const Default: React.FC<CtaBannerProps> = (props) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
   const { fields, params } = props;
 
   if (fields) {

@@ -6,7 +6,7 @@ import { MultiPromoTabsFields } from './multi-promo-tabs.props';
 import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
 
 const Default = (props: MultiPromoTabsFields) => {
-  const { link1, link2, image1, image2, isEditMode } = props;
+  const { link1, link2, image1, image2, isEditMode, page } = props;
 
   const handleClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -41,7 +41,7 @@ const Default = (props: MultiPromoTabsFields) => {
         }
       >
         <div className="flex h-full w-full overflow-hidden">
-          <ImageWrapper image={image1?.jsonValue} className="h-full w-full object-cover" />
+          <ImageWrapper image={image1?.jsonValue} className="h-full w-full object-cover" page={page} />
         </div>
         {link1?.jsonValue && (
           <Button
@@ -70,6 +70,7 @@ const Default = (props: MultiPromoTabsFields) => {
           <ImageWrapper
             image={image2?.jsonValue as ImageField}
             className="  h-full w-full object-cover"
+            page={page}
           />
         </div>
         {link2?.jsonValue && (

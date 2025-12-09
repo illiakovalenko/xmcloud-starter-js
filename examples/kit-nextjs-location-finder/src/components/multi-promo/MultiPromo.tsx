@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useRef } from 'react';
 import { RichText, Text } from '@sitecore-content-sdk/nextjs';
 import { debounce } from 'radash';
@@ -122,7 +124,7 @@ export const Default: React.FC<MultiPromoProps> = (props) => {
                       }
                     )}
                   >
-                    <MultiPromoItem key={index} {...item} />
+                    <MultiPromoItem key={index} {...item} page={props.page} />
                   </CarouselItem>
                 ))}
               </CarouselContent>

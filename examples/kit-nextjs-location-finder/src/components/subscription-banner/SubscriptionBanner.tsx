@@ -1,3 +1,5 @@
+'use client';
+
 import { Text, Field, LinkField } from '@sitecore-content-sdk/nextjs';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
