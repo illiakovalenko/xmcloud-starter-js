@@ -1,4 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+'use client';
+
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import {
   NextImage as ContentSdkImage,
