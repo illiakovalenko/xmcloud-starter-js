@@ -11,8 +11,6 @@
 *.itempackage
 *.sicpackage
 
-# Lock files - should not be committed
-package-lock.json
 
 #Ignore thumbnails created by Windows
 Thumbs.db
