@@ -1,3 +1,5 @@
+'use client';
+
 import { PromoAnimatedProps } from './promo-animated.props';
 import { PromoAnimatedDefault } from './PromoAnimatedDefault.dev';
 import { PromoAnimatedImageRight } from './PromoAnimatedImageRight.dev';

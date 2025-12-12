@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { LocationSearchProps } from './location-search.props';
 import { LocationSearchDefault } from './LocationSearchDefault.dev';

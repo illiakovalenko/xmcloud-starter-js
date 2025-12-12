@@ -1,3 +1,5 @@
+'use client';
+
 import type React from 'react';
 import type { ImageGalleryProps } from './image-gallery.props';
 import { ImageGalleryDefault } from './ImageGallery.dev';

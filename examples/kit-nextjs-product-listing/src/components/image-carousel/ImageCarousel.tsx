@@ -1,3 +1,5 @@
+'use client';
+
 import type React from 'react';
 import type { ImageCarouselProps } from './image-carousel.props';
 import { ImageCarouselDefault } from './ImageCarouselDefault.dev';
