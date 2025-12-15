@@ -1,3 +1,5 @@
+'use client';
+
 import type React from 'react';
 import type { HeroProps } from './hero.props';
 import { HeroDefault } from './HeroDefault.dev';

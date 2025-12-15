@@ -1,3 +1,5 @@
+'use client';
+
 import type React from 'react';
 import type { PageHeaderProps } from './page-header.props';
 import { PageHeaderDefault } from './PageHeaderDefault.dev';

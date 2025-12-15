@@ -1,3 +1,5 @@
+'use client';
+
 import type React from 'react';
 import type { GlobalFooterProps } from './global-footer.props';
 import { GlobalFooterDefault } from './GlobalFooterDefault.dev';
