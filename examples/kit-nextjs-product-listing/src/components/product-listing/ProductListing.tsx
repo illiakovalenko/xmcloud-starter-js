@@ -1,3 +1,5 @@
+'use client';
+
 import type React from 'react';
 import type { ProductListingProps } from './product-listing.props';
 import { ProductListingDefault } from './ProductListingDefault.dev';

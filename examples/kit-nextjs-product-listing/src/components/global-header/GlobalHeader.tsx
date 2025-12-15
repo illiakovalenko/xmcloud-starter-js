@@ -1,3 +1,5 @@
+'use client';
+
 import type React from 'react';
 import type { GlobalHeaderProps } from './global-header.props';
 import { GlobalHeaderDefault } from './GlobalHeaderDefault.dev';

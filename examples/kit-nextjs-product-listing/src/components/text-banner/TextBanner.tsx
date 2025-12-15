@@ -1,3 +1,5 @@
+'use client';
+
 import type { TextBannerProps } from './text-banner.props';
 import { TextBannerDefault } from './TextBannerDefault.dev';
 import { TextBannerTextTop } from './TextBannerTextTop.dev';
