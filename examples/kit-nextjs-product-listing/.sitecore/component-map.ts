@@ -82,6 +82,8 @@ import * as RichText from 'components/sxa/RichText';
 import * as RichTextBlock from 'components/rich-text-block/RichTextBlock';
 import * as RowSplitter from 'components/sxa/RowSplitter';
 import * as SecondaryNavigation from 'components/secondary-navigation/SecondaryNavigation';
+import * as SearchExperience from 'components/search-experience/SearchExperience';
+import * as SearchExperienceLoadMore from 'components/search-experience/SearchExperience.LoadMore';
 import * as SignupBanner from 'components/site-three/SignupBanner';
 import * as SiteMetadata from 'components/site-metadata/SiteMetadata';
 import * as SlideCarousel from 'components/slide-carousel/SlideCarousel.dev';
@@ -185,6 +187,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['RichTextBlock', RichTextBlock],
   ['RowSplitter', RowSplitter],
   ['SecondaryNavigation', SecondaryNavigation],
+  ['SearchExperience', { ...SearchExperience, ...SearchExperienceLoadMore }],
   ['SignupBanner', SignupBanner],
   ['SiteMetadata', SiteMetadata],
   ['SlideCarousel', SlideCarousel],
