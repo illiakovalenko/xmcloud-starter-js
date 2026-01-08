@@ -84,7 +84,11 @@ export const LoadMore = (props: SearchExperienceProps) => {
   return (
     <div className={`component search-indexing ${styles}`} id={id ? id : undefined}>
       <div className="component-content">
-        <div className="max-w-7xl mx-auto p-6">
+        <div
+          className={cn('max-w-7xl mx-auto p-6', {
+            'pt-24 lg:pt-32': !isEditing,
+          })}
+        >
           <div className="mb-8">
             <SearchInput value={inputValue} onChange={(value) => onSearchChange(value, true)} />
 
