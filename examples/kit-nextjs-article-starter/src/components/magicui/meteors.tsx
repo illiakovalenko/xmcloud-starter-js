@@ -67,14 +67,13 @@ export const Meteors = ({
             backgroundColor: `rgba(var(--meteor-color, 255, 255, 255), var(--meteor-opacity, 1))`,
             width: `${size}px`,
             height: `${size}px`,
-            animation: `${style.animationDuration} linear ${style.animationDelay} infinite`,
+            animation: `meteorAnimation ${style.animationDuration} linear ${style.animationDelay} infinite`,
             opacity: 1,
             position: 'absolute',
             pointerEvents: 'none',
             transform: `rotate(${angle}deg)`,
             borderRadius: '9999px',
             boxShadow: '0 0 0 1px rgba(255,255,255,0.1)',
-            animationName: 'meteorAnimation',
           }}
           className={cn(
             'pointer-events-none absolute rotate-[var(--angle)] rounded-full shadow-[0_0_0_1px_rgba(255,255,255,0.1)]',

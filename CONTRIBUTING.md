@@ -21,11 +21,12 @@ Ensure the following tools are installed on your system:
    
   Planned Branching Stratergy:
 
-   DMZ flow will be implemented in the future to support better development practices with following branches:
-   - **`dmz`** - Integration branch which will be the target of all pull requests by contributors
-   - **`main`** - Stable branch used for cutting branches and production  deployments after implementation of DMZ flow. Will not accept pull requests from contributors (PRs merged to dmz branch will be automatically merged to main if the merge builds and passes all automated tests).
+     **⚠️ Important**: All branches must be cut from **`main`** and pull requests must be raised against the **`dmz`** branch to enable proper merging and testing workflow.
 
-     **⚠️ Important**: All pull requests must be raised against the **`dmz`** branch to enable proper merging and testing workflow.
+   Bi Weekly sprints are used for development with following branches:
+   - **`dmz`** - Integration branch which will be the target of all pull requests by contributors. Acts as the staging branch that is merged at the end of each sprint to `main` branch after testing.
+   - **`main`** - Stable branch used for cutting branches and production deployments. Will not accept pull requests from contributors directly.
+
 
  
 

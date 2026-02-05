@@ -132,6 +132,7 @@ import * as GlobalFooterBlackLargedev from 'src/components/global-footer/GlobalF
 import * as GlobalFooterBlackCompactdev from 'src/components/global-footer/GlobalFooterBlackCompact.dev';
 import * as GlobalFooter from 'src/components/global-footer/GlobalFooter';
 import * as FooterNavigationColumndev from 'src/components/global-footer/FooterNavigationColumn.dev';
+import * as FooterNavigationColumn from 'src/components/global-footer/FooterNavigationColumn';
 import * as ZipcodeSearchFormdev from 'src/components/forms/zipcode/ZipcodeSearchForm.dev';
 import * as successcompactdev from 'src/components/forms/success/success-compact.dev';
 import * as SubmitInfoFormdev from 'src/components/forms/submitinfo/SubmitInfoForm.dev';
@@ -299,7 +300,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['GlobalFooterBlackLarge', { ...GlobalFooterBlackLargedev }],
   ['GlobalFooterBlackCompact', { ...GlobalFooterBlackCompactdev }],
   ['GlobalFooter', { ...GlobalFooter, componentType: 'client' }],
-  ['FooterNavigationColumn', { ...FooterNavigationColumndev }],
+  ['FooterNavigationColumn', { ...FooterNavigationColumndev, ...FooterNavigationColumn, componentType: 'client' }],
   ['ZipcodeSearchForm', { ...ZipcodeSearchFormdev }],
   ['success-compact', { ...successcompactdev }],
   ['SubmitInfoForm', { ...SubmitInfoFormdev }],

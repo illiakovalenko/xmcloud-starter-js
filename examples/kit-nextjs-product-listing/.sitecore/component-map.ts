@@ -173,6 +173,7 @@ import * as GlobalFooter from 'src/components/global-footer/GlobalFooter';
 import * as globalfooterprops from 'src/components/global-footer/global-footer.props';
 import * as globalfooterdictionary from 'src/components/global-footer/global-footer.dictionary';
 import * as FooterNavigationColumndev from 'src/components/global-footer/FooterNavigationColumn.dev';
+import * as FooterNavigationColumn from 'src/components/global-footer/FooterNavigationColumn';
 import * as ZipcodeSearchFormdev from 'src/components/forms/zipcode/ZipcodeSearchForm.dev';
 import * as zipcodesearchformprops from 'src/components/forms/zipcode/zipcode-search-form.props';
 import * as successcompactdev from 'src/components/forms/success/success-compact.dev';
@@ -404,7 +405,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['GlobalFooterBlackCompact', { ...GlobalFooterBlackCompactdev }],
   ['GlobalFooter', { ...GlobalFooter, componentType: 'client' }],
   ['global-footer', { ...globalfooterprops, ...globalfooterdictionary }],
-  ['FooterNavigationColumn', { ...FooterNavigationColumndev }],
+  ['FooterNavigationColumn', { ...FooterNavigationColumndev, ...FooterNavigationColumn, componentType: 'client' }],
   ['ZipcodeSearchForm', { ...ZipcodeSearchFormdev }],
   ['zipcode-search-form', { ...zipcodesearchformprops }],
   ['success-compact', { ...successcompactdev }],

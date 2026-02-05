@@ -1,4 +1,5 @@
-import { Link, LinkField, Text, TextField } from '@sitecore-content-sdk/nextjs';
+import { LinkField, Text, TextField } from '@sitecore-content-sdk/nextjs';
+import NextLink from 'next/link';
 import { ComponentProps } from 'lib/component-props';
 import React, { type JSX } from 'react';
 
@@ -83,9 +84,13 @@ export const Default = (props: TitleProps): JSX.Element => {
         {mode.isEditing ? (
           <Text field={titleField} />
         ) : (
-          <Link field={link}>
+          link?.value?.href ? (
+            <NextLink href={link.value.href}>
+              <Text field={titleField} />
+            </NextLink>
+          ) : (
             <Text field={titleField} />
-          </Link>
+          )
         )}
       </>
     </ComponentContent>

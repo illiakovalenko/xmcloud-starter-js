@@ -113,6 +113,8 @@ export const Default = (props: NavigationProps): JSX.Element => {
 };
 
 export const ButtonNavigation = (props: NavigationProps): JSX.Element => {
+  const { page } = useSitecore();
+  const isPageEditing = page?.mode?.isEditing;
   const list = Object.values(props.fields).filter((element) => element);
 
   console.log(list);
@@ -124,25 +126,49 @@ export const ButtonNavigation = (props: NavigationProps): JSX.Element => {
           Component Categories
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {list.map((section) => (
-            <ContentSdkLink
-              key={section.id}
-              field={getLinkField({ fields: section } as NavigationProps)}
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-              prefetch={false}
-            >
-              <h4 className="text-xl font-semibold text-brand-sky mb-2">
-                {getNavigationText({ fields: section } as NavigationProps)}
-              </h4>
-              <p className="text-brand-black mb-4">
-                Explore {getNavigationText({ fields: section } as NavigationProps)} components
-              </p>
-              <div className="flex items-center text-brand-sky">
-                <span className="mr-2">View components</span>
-                <ArrowRight size={20} />
-              </div>
-            </ContentSdkLink>
-          ))}
+          {list.map((section) => {
+            const linkField = getLinkField({ fields: section } as NavigationProps);
+            const href = linkField?.value?.href;
+            return isPageEditing ? (
+              <ContentSdkLink
+                key={section.id}
+                field={linkField}
+                className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                prefetch={false}
+              >
+                <h4 className="text-xl font-semibold text-brand-sky mb-2">
+                  {getNavigationText({ fields: section } as NavigationProps)}
+                </h4>
+                <p className="text-brand-black mb-4">
+                  Explore {getNavigationText({ fields: section } as NavigationProps)} components
+                </p>
+                <div className="flex items-center text-brand-sky">
+                  <span className="mr-2">View components</span>
+                  <ArrowRight size={20} />
+                </div>
+              </ContentSdkLink>
+            ) : (
+              href && (
+                <Link
+                  key={section.id}
+                  href={href}
+                  className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                  prefetch={false}
+                >
+                  <h4 className="text-xl font-semibold text-brand-sky mb-2">
+                    {getNavigationText({ fields: section } as NavigationProps)}
+                  </h4>
+                  <p className="text-brand-black mb-4">
+                    Explore {getNavigationText({ fields: section } as NavigationProps)} components
+                  </p>
+                  <div className="flex items-center text-brand-sky">
+                    <span className="mr-2">View components</span>
+                    <ArrowRight size={20} />
+                  </div>
+                </Link>
+              )
+            );
+          })}
         </div>
       </div>
     </section>

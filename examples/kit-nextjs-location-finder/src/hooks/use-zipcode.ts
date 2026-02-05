@@ -196,7 +196,6 @@ export function useZipcode(defaultZipcode: string) {
           timeoutRef.current = null;
         }
 
-        console.error('Geolocation error:', error);
         let errorMessage = 'Failed to get location';
 
         // Handle specific geolocation errors

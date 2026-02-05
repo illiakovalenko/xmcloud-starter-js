@@ -85,6 +85,7 @@ import * as GlobalFooterBlackLargedev from 'src/components/global-footer/GlobalF
 import * as GlobalFooterBlackCompactdev from 'src/components/global-footer/GlobalFooterBlackCompact.dev';
 import * as GlobalFooter from 'src/components/global-footer/GlobalFooter';
 import * as FooterNavigationColumndev from 'src/components/global-footer/FooterNavigationColumn.dev';
+import * as FooterNavigationColumn from 'src/components/global-footer/FooterNavigationColumn';
 import * as ZipcodeSearchFormdev from 'src/components/forms/zipcode/ZipcodeSearchForm.dev';
 import * as SubmitInfoFormdev from 'src/components/forms/submitinfo/SubmitInfoForm.dev';
 import * as EmailSignupFormdev from 'src/components/forms/email/EmailSignupForm.dev';
@@ -92,6 +93,7 @@ import * as floatingdockdev from 'src/components/floating-dock/floating-dock.dev
 import * as Carousel from 'src/components/carousel/Carousel';
 import * as cardspotlightdev from 'src/components/card-spotlight/card-spotlight.dev';
 import * as ArticleHeader from 'src/components/article-header/ArticleHeader';
+import * as AnimatedSectiondev from 'src/components/animated-section/AnimatedSection.dev';
 import * as AlertBannerdev from 'src/components/alert-banner/AlertBanner.dev';
 import * as AccordionBlockTwoColumnTitleLeftdev from 'src/components/accordion-block/AccordionBlockTwoColumnTitleLeft.dev';
 import * as AccordionBlockOneColumnTitleLeftdev from 'src/components/accordion-block/AccordionBlockOneColumnTitleLeft.dev';
@@ -181,7 +183,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['GlobalFooterBlackLarge', { ...GlobalFooterBlackLargedev }],
   ['GlobalFooterBlackCompact', { ...GlobalFooterBlackCompactdev }],
   ['GlobalFooter', { ...GlobalFooter }],
-  ['FooterNavigationColumn', { ...FooterNavigationColumndev }],
+  ['FooterNavigationColumn', { ...FooterNavigationColumndev, ...FooterNavigationColumn }],
   ['ZipcodeSearchForm', { ...ZipcodeSearchFormdev }],
   ['SubmitInfoForm', { ...SubmitInfoFormdev }],
   ['EmailSignupForm', { ...EmailSignupFormdev }],
@@ -189,6 +191,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['Carousel', { ...Carousel }],
   ['card-spotlight', { ...cardspotlightdev }],
   ['ArticleHeader', { ...ArticleHeader }],
+  ['AnimatedSection', { ...AnimatedSectiondev }],
   ['AlertBanner', { ...AlertBannerdev }],
   ['AccordionBlockTwoColumnTitleLeft', { ...AccordionBlockTwoColumnTitleLeftdev }],
   ['AccordionBlockOneColumnTitleLeft', { ...AccordionBlockOneColumnTitleLeftdev }],
