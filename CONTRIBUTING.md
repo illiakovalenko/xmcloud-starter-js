@@ -50,9 +50,21 @@ Navigate to the relevant example (e.g., kit-nextjs-article-starter) and start th
 
 💡 Make sure to populate the required environment variables in your .env.local file to connect to your XM Cloud instance.
 
-      cd examples/kit-nextjs-article-starter
-      npm install
-      npm run dev
+   **Development (with hot reload):**
+   ```bash
+   cd examples/kit-nextjs-article-starter
+   npm install
+   npm run dev
+   ```
+
+   **Build and run for production:**
+   ```bash
+   cd examples/kit-nextjs-article-starter
+   npm install
+   npm run build
+   npm run start
+   ```
+   Use `npm run build` to create a production build, then `npm run start` to run it locally.
 
 4. 💡 Coding Guidelines
   - Follow existing file structure, patterns, and naming conventions.
@@ -197,6 +209,7 @@ Make sure your branch is up-to-date with upstream/main and create your PR agains
 
     ✅ Before submitting:
       - Run code formatters or linters if configured.
+      - Run `npm run build` in your example folder to ensure the project builds successfully.
       - Remove unused code and files.
       - Rebase or squash commits into a clean history.
 
