@@ -1,19 +1,28 @@
-import { isDesignLibraryPreviewData } from '@sitecore-content-sdk/nextjs/editing';
-import { notFound } from 'next/navigation';
-import { draftMode } from 'next/headers';
-import { SiteInfo } from '@sitecore-content-sdk/nextjs';
-import sites from '.sitecore/sites.json';
-import { routing } from 'src/i18n/routing';
-import scConfig from 'sitecore.config';
-import client from 'src/lib/sitecore-client';
-import Layout, { RouteFields } from 'src/Layout';
-import components from '.sitecore/component-map';
-import Providers from 'src/Providers';
-import { NextIntlClientProvider } from 'next-intl';
-import { setRequestLocale } from 'next-intl/server';
+import { isDesignLibraryPreviewData } from "@sitecore-content-sdk/nextjs/editing";
+import { notFound } from "next/navigation";
+import { draftMode } from "next/headers";
+import { SiteInfo } from "@sitecore-content-sdk/nextjs";
+import sites from ".sitecore/sites.json";
+import { routing } from "src/i18n/routing";
+import scConfig from "sitecore.config";
+import client from "src/lib/sitecore-client";
+import Layout, { RouteFields } from "src/Layout";
+import components from ".sitecore/component-map";
+import Providers from "src/Providers";
+import { NextIntlClientProvider } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
+
+// Configure dynamic rendering to avoid SSR issues with client-side hooks
+// This ensures all pages are rendered on-demand rather than pre-rendered at build time
+export const dynamic = 'force-dynamic';
 
 type PageProps = {
-  params: Promise<{ site: string; locale: string; path?: string[]; [key: string]: string | string[] | undefined }>;
+  params: Promise<{
+    site: string;
+    locale: string;
+    path?: string[];
+    [key: string]: string | string[] | undefined;
+  }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
@@ -43,7 +52,11 @@ export default async function Page({ params, searchParams }: PageProps) {
   }
 
   // Fetch the component data from Sitecore (Likely will be deprecated)
-  const componentProps = await client.getComponentData(page.layout, {}, components);
+  const componentProps = await client.getComponentData(
+    page.layout,
+    {},
+    components
+  );
 
   return (
     <NextIntlClientProvider>
@@ -57,9 +70,17 @@ export default async function Page({ params, searchParams }: PageProps) {
 // This function gets called at build and export time to determine
 // pages for SSG ("paths", as tokenized array).
 export const generateStaticParams = async () => {
-  if (process.env.NODE_ENV !== 'development' && scConfig.generateStaticPaths) {
+  if (process.env.NODE_ENV !== "development" && scConfig.generateStaticPaths) {
+    // Filter sites to only include the sites this starter is designed to serve.
+    // This prevents cross-site build errors when multiple starters share the same XM Cloud instance.
+    const defaultSite = scConfig.defaultSite;
+    const allowedSites = defaultSite
+      ? sites
+          .filter((site: SiteInfo) => site.name === defaultSite)
+          .map((site: SiteInfo) => site.name)
+      : sites.map((site: SiteInfo) => site.name);
     return await client.getAppRouterStaticParams(
-      sites.map((site: SiteInfo) => site.name),
+      allowedSites,
       routing.locales.slice()
     );
   }
@@ -73,6 +94,9 @@ export const generateMetadata = async ({ params }: PageProps) => {
   // The same call as for rendering the page. Should be cached by default react behavior
   const page = await client.getPage(path ?? [], { site, locale });
   return {
-    title: (page?.layout.sitecore.route?.fields as RouteFields)?.Title?.value?.toString() || 'Page',
+    title:
+      (
+        page?.layout.sitecore.route?.fields as RouteFields
+      )?.Title?.value?.toString() || "Page",
   };
 };

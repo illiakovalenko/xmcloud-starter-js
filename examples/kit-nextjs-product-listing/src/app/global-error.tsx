@@ -36,7 +36,7 @@ export default function GlobalError() {
 
   if (page) {
     return (
-      <Providers page={page} locale={scConfig.defaultLanguage} messages={{}}>
+      <Providers page={page}>
         <Layout page={page} />
       </Providers>
     );

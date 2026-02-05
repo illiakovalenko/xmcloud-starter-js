@@ -34,8 +34,8 @@ const accent = IBM_Plex_Mono({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${heading.variable} ${body.variable} ${accent.variable}`}>
-      <body>{children}</body>
+    <html lang="en" className={`${heading.variable} ${body.variable} ${accent.variable}`} suppressHydrationWarning>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

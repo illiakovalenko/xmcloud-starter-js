@@ -4,6 +4,7 @@ import React, { type JSX } from 'react';
 import { Default as Icon } from '@/components/icon/Icon';
 import { IconName } from '@/enumerations/Icon.enum';
 import { Link, LinkField, ComponentRendering } from '@sitecore-content-sdk/nextjs';
+import NextLink from 'next/link';
 import { ComponentProps } from '@/lib/component-props';
 import { Button } from '@/components/ui/button';
 import { EnumValues } from '@/enumerations/generic.enum';
@@ -76,23 +77,25 @@ const ButtonBase = (
       {isPageEditing ? (
         <Link field={buttonLink} editable={true} />
       ) : (
-        <Link field={buttonLink} editable={isPageEditing}>
-          {iconPosition === IconPosition.LEADING && icon ? (
-            <Icon
-              iconName={iconName ? iconName : IconName.ARROW_LEFT}
-              className={iconClassName}
-              isAriaHidden={ariaHidden}
-            />
-          ) : null}
-          {buttonLink?.value?.text}
-          {iconPosition !== IconPosition.LEADING && icon ? (
-            <Icon
-              iconName={iconName ? iconName : IconName.ARROW_LEFT}
-              className={iconClassName}
-              isAriaHidden={ariaHidden}
-            />
-          ) : null}
-        </Link>
+        buttonLink?.value?.href && (
+          <NextLink href={buttonLink.value.href}>
+            {iconPosition === IconPosition.LEADING && icon ? (
+              <Icon
+                iconName={iconName ? iconName : IconName.ARROW_LEFT}
+                className={iconClassName}
+                isAriaHidden={ariaHidden}
+              />
+            ) : null}
+            {buttonLink?.value?.text}
+            {iconPosition !== IconPosition.LEADING && icon ? (
+              <Icon
+                iconName={iconName ? iconName : IconName.ARROW_LEFT}
+                className={iconClassName}
+                isAriaHidden={ariaHidden}
+              />
+            ) : null}
+          </NextLink>
+        )
       )}
     </Button>
   );
@@ -178,15 +181,17 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
         {isPageEditing ? (
           <Link field={buttonLink} editable={true} />
         ) : (
-          <Link editable={isPageEditing} field={buttonLink}>
-            {iconPosition === IconPosition.LEADING && (
-              <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
-            )}
-            {buttonLink?.value?.text}
-            {iconPosition !== IconPosition.LEADING && (
-              <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
-            )}
-          </Link>
+          buttonLink?.value?.href && (
+            <NextLink href={buttonLink.value.href}>
+              {iconPosition === IconPosition.LEADING && (
+                <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
+              )}
+              {buttonLink?.value?.text}
+              {iconPosition !== IconPosition.LEADING && (
+                <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
+              )}
+            </NextLink>
+          )
         )}
       </Button>
     );

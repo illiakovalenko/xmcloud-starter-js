@@ -21,11 +21,12 @@ Ensure the following tools are installed on your system:
    
   Planned Branching Stratergy:
 
-   DMZ flow will be implemented in the future to support better development practices with following branches:
-   - **`dmz`** - Integration branch which will be the target of all pull requests by contributors
-   - **`main`** - Stable branch used for cutting branches and production  deployments after implementation of DMZ flow. Will not accept pull requests from contributors (PRs merged to dmz branch will be automatically merged to main if the merge builds and passes all automated tests).
+     **⚠️ Important**: All branches must be cut from **`main`** and pull requests must be raised against the **`dmz`** branch to enable proper merging and testing workflow.
 
-     **⚠️ Important**: All pull requests must be raised against the **`dmz`** branch to enable proper merging and testing workflow.
+   Bi Weekly sprints are used for development with following branches:
+   - **`dmz`** - Integration branch which will be the target of all pull requests by contributors. Acts as the staging branch that is merged at the end of each sprint to `main` branch after testing.
+   - **`main`** - Stable branch used for cutting branches and production deployments. Will not accept pull requests from contributors directly.
+
 
  
 
@@ -49,9 +50,21 @@ Navigate to the relevant example (e.g., kit-nextjs-article-starter) and start th
 
 💡 Make sure to populate the required environment variables in your .env.local file to connect to your XM Cloud instance.
 
-      cd examples/kit-nextjs-article-starter
-      npm install
-      npm run dev
+   **Development (with hot reload):**
+   ```bash
+   cd examples/kit-nextjs-article-starter
+   npm install
+   npm run dev
+   ```
+
+   **Build and run for production:**
+   ```bash
+   cd examples/kit-nextjs-article-starter
+   npm install
+   npm run build
+   npm run start
+   ```
+   Use `npm run build` to create a production build, then `npm run start` to run it locally.
 
 4. 💡 Coding Guidelines
   - Follow existing file structure, patterns, and naming conventions.
@@ -196,6 +209,7 @@ Make sure your branch is up-to-date with upstream/main and create your PR agains
 
     ✅ Before submitting:
       - Run code formatters or linters if configured.
+      - Run `npm run build` in your example folder to ensure the project builds successfully.
       - Remove unused code and files.
       - Rebase or squash commits into a clean history.
 

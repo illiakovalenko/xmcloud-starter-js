@@ -9,7 +9,12 @@ import client from 'src/lib/sitecore-client';
 import Layout, { RouteFields } from 'src/Layout';
 import components from '.sitecore/component-map';
 import Providers from 'src/Providers';
-import { setRequestLocale, getMessages } from 'next-intl/server';
+import { NextIntlClientProvider } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
+
+// Configure dynamic rendering to avoid SSR issues with client-side hooks
+// This ensures all pages are rendered on-demand rather than pre-rendered at build time
+export const dynamic = 'force-dynamic';
 
 type PageProps = {
   params: Promise<{
@@ -49,23 +54,28 @@ export default async function Page({ params, searchParams }: PageProps) {
   // Fetch the component data from Sitecore (Likely will be deprecated)
   const componentProps = await client.getComponentData(page.layout, {}, components);
 
-  // Get messages for client components
-  const messages = await getMessages();
-
   return (
-    <Providers page={page} componentProps={componentProps} locale={locale} messages={messages}>
-      <Layout page={page} />
-    </Providers>
+    <NextIntlClientProvider>
+      <Providers page={page} componentProps={componentProps}>
+        <Layout page={page} />
+      </Providers>
+    </NextIntlClientProvider>
   );
 }
 // This function gets called at build and export time to determine
 // pages for SSG ("paths", as tokenized array).
 export const generateStaticParams = async () => {
   if (process.env.NODE_ENV !== 'development' && scConfig.generateStaticPaths) {
-    return await client.getAppRouterStaticParams(
-      sites.map((site: SiteInfo) => site.name),
-      routing.locales.slice()
-    );
+    // Filter sites to only include the sites this starter is designed to serve.
+    // This prevents cross-site build errors when multiple starters share the same XM Cloud instance.
+    const defaultSite = scConfig.defaultSite;
+    const allowedSites = defaultSite
+      ? sites
+          .filter((site: SiteInfo) => site.name === defaultSite)
+          .map((site: SiteInfo) => site.name)
+      : sites.map((site: SiteInfo) => site.name);
+
+    return await client.getAppRouterStaticParams(allowedSites, routing.locales.slice());
   }
   return [];
 };
@@ -102,7 +112,5 @@ export const generateMetadata = async ({ params }: PageProps) => {
         ogImageSrc ||
         'https://edge.sitecorecloud.io/sitecoresaa60dc-chahcontentabf6-maina179-91b6/media/Feature/JSS-Experience-Accelerator/Basic-Site/banner-image.jpg?h=2001&iar=0&w=3000',
     },
-    
   };
 };
-

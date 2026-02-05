@@ -12,6 +12,10 @@ import Providers from 'src/Providers';
 import { NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 
+// Configure dynamic rendering to avoid SSR issues with client-side hooks
+// This ensures all pages are rendered on-demand rather than pre-rendered at build time
+export const dynamic = 'force-dynamic';
+
 type PageProps = {
   params: Promise<{
     site: string;
@@ -67,8 +71,16 @@ export default async function Page({ params, searchParams }: PageProps) {
 // pages for SSG ("paths", as tokenized array).
 export const generateStaticParams = async () => {
   if (process.env.NODE_ENV !== 'development' && scConfig.generateStaticPaths) {
+    // Filter sites to only include the sites this starter is designed to serve.
+    // This prevents cross-site build errors when multiple starters share the same XM Cloud instance.
+    const defaultSite = scConfig.defaultSite;
+    const allowedSites = defaultSite
+      ? sites
+          .filter((site: SiteInfo) => site.name === defaultSite)
+          .map((site: SiteInfo) => site.name)
+      : sites.map((site: SiteInfo) => site.name);
     return await client.getAppRouterStaticParams(
-      sites.map((site: SiteInfo) => site.name),
+      allowedSites,
       routing.locales.slice(),
     );
   }
