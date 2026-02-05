@@ -9,16 +9,16 @@ SharedFields:
   Value: Default
 - ID: "94470b31-e282-4d8d-bc54-85689efb294c"
   Hint: ServerSideRenderingEngineConfigUrl
-  Value: "https://xmc-eh-3vxdr1cyamcuqrx0tevu8r-s.sitecore-staging.cloud:443/api/editing/config"
+  Value: "https://xmc-4txoyb26dqtvyvl6fn3s41-eh-s.sitecore-staging.cloud:443/api/editing/config"
 - ID: "9c6106ea-7a5a-48e2-8cad-f0f693b1e2d4"
   Hint: __Read Only
   Value: 1
 - ID: "e32c1801-79b3-4fc1-a9c4-3c6e6c2968ae"
   Hint: ServerSideRenderingEngineApplicationUrl
-  Value: "https://xmc-eh-3vxdr1cyamcuqrx0tevu8r-s.sitecore-staging.cloud/"
+  Value: "https://xmc-4txoyb26dqtvyvl6fn3s41-eh-s.sitecore-staging.cloud/"
 - ID: "fc76919b-0d7c-4732-865d-2af795fb38a4"
   Hint: ServerSideRenderingEngineEndpointUrl
-  Value: "https://xmc-eh-3vxdr1cyamcuqrx0tevu8r-s.sitecore-staging.cloud:443/api/editing/render"
+  Value: "https://xmc-4txoyb26dqtvyvl6fn3s41-eh-s.sitecore-staging.cloud:443/api/editing/render"
 Languages:
 - Language: "de-DE"
   Fields:
@@ -58,7 +58,7 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20251124T100805Z
+      Value: 20251215T140243Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |

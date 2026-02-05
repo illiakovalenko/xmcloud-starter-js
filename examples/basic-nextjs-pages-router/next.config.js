@@ -39,6 +39,8 @@ const nextConfig = {
         port: '',
       },
     ],
+    // Disable image optimization in development to avoid upstream timeouts
+    unoptimized: process.env.NODE_ENV === 'development',
   },
 
   async rewrites() {

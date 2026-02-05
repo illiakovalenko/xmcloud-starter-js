@@ -81,13 +81,27 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
                       primaryNavigationLinks.targetItems.length > 0 &&
                       primaryNavigationLinks?.targetItems.map((item, index) => (
                         <NavigationMenuItem key={`${item.link?.jsonValue?.value?.text}-${index}`}>
-                          <Button
-                            variant="ghost"
-                            asChild
-                            className="font-body bg-transparent text-base font-medium hover:bg-transparent"
-                          >
-                            <ContentSdkLink field={item.link?.jsonValue} prefetch={false} />
-                          </Button>
+                          {isPageEditing ? (
+                            <Button
+                              variant="ghost"
+                              asChild
+                              className="font-body bg-transparent text-base font-medium hover:bg-transparent"
+                            >
+                              <ContentSdkLink field={item.link?.jsonValue} />
+                            </Button>
+                          ) : (
+                            item.link?.jsonValue?.value?.href && (
+                              <Button
+                                variant="ghost"
+                                asChild
+                                className="font-body bg-transparent text-base font-medium hover:bg-transparent"
+                              >
+                                <Link href={item.link.jsonValue.value.href}>
+                                  {item.link.jsonValue.value.text}
+                                </Link>
+                              </Button>
+                            )
+                          )}
                         </NavigationMenuItem>
                       ))}
                   </NavigationMenuList>
@@ -117,9 +131,19 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
           {/* Desktop CTA */}
           {headerContact?.jsonValue?.value && (
             <div className="@lg:flex @lg:items-center @lg:justify-end z-10 hidden">
-              <Button asChild className="font-heading text-base font-medium">
-                <ContentSdkLink field={headerContact.jsonValue} prefetch={false} />
-              </Button>
+              {isPageEditing ? (
+                <Button asChild className="font-heading text-base font-medium">
+                  <ContentSdkLink field={headerContact.jsonValue} />
+                </Button>
+              ) : (
+                headerContact.jsonValue.value.href && (
+                  <Button asChild className="font-heading text-base font-medium">
+                    <Link href={headerContact.jsonValue.value.href}>
+                      {headerContact.jsonValue.value.text}
+                    </Link>
+                  </Button>
+                )
+              )}
             </div>
           )}
           {/* Mobile Navigation */}
@@ -177,9 +201,19 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
                               }}
                               className="flex justify-center"
                             >
-                              <Button variant="ghost" asChild onClick={() => setIsOpen(false)}>
-                                <ContentSdkLink field={item.link?.jsonValue} prefetch={false} />
-                              </Button>
+                              {isPageEditing ? (
+                                <Button variant="ghost" asChild onClick={() => setIsOpen(false)}>
+                                  <ContentSdkLink field={item.link?.jsonValue} />
+                                </Button>
+                              ) : (
+                                item.link?.jsonValue?.value?.href && (
+                                  <Button variant="ghost" asChild onClick={() => setIsOpen(false)}>
+                                    <Link href={item.link.jsonValue.value.href}>
+                                      {item.link.jsonValue.value.text}
+                                    </Link>
+                                  </Button>
+                                )
+                              )}
                             </motion.div>
                           ))}
                         {headerContact?.jsonValue?.value && (
@@ -194,9 +228,19 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
                             }}
                             className="flex justify-center"
                           >
-                            <Button asChild onClick={() => setIsOpen(false)}>
-                              <ContentSdkLink field={headerContact.jsonValue} prefetch={false} />
-                            </Button>
+                            {isPageEditing ? (
+                              <Button asChild onClick={() => setIsOpen(false)}>
+                                <ContentSdkLink field={headerContact.jsonValue} />
+                              </Button>
+                            ) : (
+                              headerContact.jsonValue.value.href && (
+                                <Button asChild onClick={() => setIsOpen(false)}>
+                                  <Link href={headerContact.jsonValue.value.href}>
+                                    {headerContact.jsonValue.value.text}
+                                  </Link>
+                                </Button>
+                              )
+                            )}
                           </motion.div>
                         )}
                       </motion.nav>

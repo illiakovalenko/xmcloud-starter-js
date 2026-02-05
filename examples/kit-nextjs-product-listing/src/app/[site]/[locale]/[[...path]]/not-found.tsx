@@ -7,10 +7,14 @@ import scConfig from 'sitecore.config';
 import Layout from 'src/Layout';
 import Providers from 'src/Providers';
 import { NextIntlClientProvider } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
 
 export default async function NotFound() {
   const headersList = await headers();
   const { site, locale } = parseRewriteHeader(headersList);
+
+  // Set site and locale for dictionary fetching
+  setRequestLocale(`${site || scConfig.defaultSite}_${locale || scConfig.defaultLanguage}`);
 
   const page = await client.getErrorPage(ErrorPage.NotFound, {
     site: site || scConfig.defaultSite,

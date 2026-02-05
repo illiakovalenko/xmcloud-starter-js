@@ -22,15 +22,6 @@ export default defineCliConfig({
   componentMap: {
     paths: ['src/components'],
     // Exclude content-sdk auxillary components
-    exclude: [
-      'src/components/content-sdk/*',
-      'src/components/ui/*',
-      'src/components/lib/*',
-      'src/components/video/*',
-      'src/components/multi-promo/*',
-      'src/components/image-carousel/*',
-      'src/components/accordion-block/*',
-      'src/components/search-experience/search-components/**/*',
-    ],
+    exclude: ['src/components/content-sdk/*', 'src/components/ui/*', 'src/components/lib/*', 'src/components/video/*', 'src/components/multi-promo/*', 'src/components/image-carousel/*', 'src/components/accordion-block/*', 'src/components/image/ImageWrapper.dev.old.tsx'],
   },
 });

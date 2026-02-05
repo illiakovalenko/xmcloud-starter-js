@@ -35,6 +35,8 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     // Enable modern image formats
     formats: ['image/avif', 'image/webp'],
+    // Disable image optimization in development to avoid upstream timeouts
+    unoptimized: process.env.NODE_ENV === 'development',
   },
   
   // use this configuration to serve the sitemap.xml and robots.txt files from the API route handlers

@@ -68,12 +68,17 @@ const ProductListingCard = ({
           </div>
 
           <div className="space-y-2 pt-2">
-            {isPageEditing ||
-              (link?.value?.href && (
+            {isPageEditing ? (
+              <Button className="w-full" asChild>
+                <EditableLink field={link} />
+              </Button>
+            ) : (
+              link?.value?.href && (
                 <Button className="w-full" asChild>
-                  <EditableLink field={link} />
+                  <Link href={link.value.href}>{link.value.text}</Link>
                 </Button>
-              ))}
+              )
+            )}
             {product.url?.path && (
               <Button variant="outline" className="w-full bg-transparent" asChild>
                 <Link href={product.url.path}>{dictionary.PRODUCTLISTING_SeeFullSpecs}</Link>

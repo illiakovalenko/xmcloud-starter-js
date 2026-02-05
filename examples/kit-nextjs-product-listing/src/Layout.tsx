@@ -10,7 +10,6 @@ import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import { DesignLibraryApp } from '@sitecore-content-sdk/nextjs';
 import componentMap from '.sitecore/component-map';
-import scConfig from 'sitecore.config';
 
 const heading = localFont({
   src: [
@@ -86,7 +85,7 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
     <>
       <Scripts />
       <SitecoreStyles layoutData={layout} />
-      <Providers page={page} locale={scConfig.defaultLanguage}>
+      <Providers page={page}>
         {/* root placeholder for the app, which we add components to using route data */}
         <div className={`min-h-screen flex flex-col ${classNamesMain}`}>
           {page.mode.isDesignLibrary ? (

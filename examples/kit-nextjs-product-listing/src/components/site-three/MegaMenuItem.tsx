@@ -38,6 +38,8 @@ const DICTIONARY_KEYS = {
 };
 
 export const Default = (props: MegaMenuItemProps) => {
+  const { page } = props;
+  const isPageEditing = page?.mode?.isEditing;
   const t = useTranslations();
   const featuredProduct = props.fields?.FeaturedProduct;
   const menuId = `mega-menu-${props.params?.DynamicPlaceholderId || 'default'}`;
@@ -48,10 +50,21 @@ export const Default = (props: MegaMenuItemProps) => {
         className={`font-(family-name:--font-accent) font-medium ${props.params?.styles}`}
         data-class-change
       >
-        <ContentSdkLink
-          field={props.fields?.Link}
-          className="inline-block p-4 font-[inherit] whitespace-nowrap cursor-pointer"
-        />
+        {isPageEditing ? (
+          <ContentSdkLink
+            field={props.fields?.Link}
+            className="inline-block p-4 font-[inherit] whitespace-nowrap cursor-pointer"
+          />
+        ) : (
+          props.fields?.Link?.value?.href && (
+            <Link
+              href={props.fields.Link.value.href}
+              className="inline-block p-4 font-[inherit] whitespace-nowrap cursor-pointer"
+            >
+              {props.fields.Link.value.text}
+            </Link>
+          )
+        )}
       </li>
     );
   }
