@@ -4,9 +4,9 @@ import { cn } from 'lib/utils';
 
 export type SearchItemVariant = 'card' | 'list';
 
-type ItemListFrameProps = HTMLAttributes<HTMLDivElement>;
+type ItemListFrameProps = HTMLAttributes<HTMLDivElement> & { image?: React.ReactNode };
 
-export const ItemListFrame = ({ className, children, ...props }: ItemListFrameProps) => {
+export const ItemListFrame = ({ className, children, image, ...props }: ItemListFrameProps) => {
   return (
     <div
       className={cn(
@@ -15,16 +15,17 @@ export const ItemListFrame = ({ className, children, ...props }: ItemListFramePr
       )}
       {...props}
     >
-      <div className={cn('flex flex-col md:flex-row w-full h-full')}>
+      <div className="flex flex-col md:flex-row w-full h-full">
+        {image}
         <div className="p-6 md:flex-1">{children}</div>
       </div>
     </div>
   );
 };
 
-type ItemCardFrameProps = HTMLAttributes<HTMLDivElement>;
+type ItemCardFrameProps = HTMLAttributes<HTMLDivElement> & { image?: React.ReactNode };
 
-export const ItemCardFrame = ({ className, children, ...props }: ItemCardFrameProps) => {
+export const ItemCardFrame = ({ className, children, image, ...props }: ItemCardFrameProps) => {
   return (
     <div
       className={cn(
@@ -33,6 +34,7 @@ export const ItemCardFrame = ({ className, children, ...props }: ItemCardFramePr
       )}
       {...props}
     >
+      {image}
       <div className="p-6">{children}</div>
     </div>
   );
