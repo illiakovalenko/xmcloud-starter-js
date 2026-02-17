@@ -1,5 +1,5 @@
 'use client';
-import { HTMLAttributes, forwardRef, useState } from 'react';
+import { HTMLAttributes, useState } from 'react';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
@@ -15,36 +15,39 @@ type SearchItemImageProps = {
   height?: number;
 } & HTMLAttributes<HTMLDivElement>;
 
-export const SearchItemImage = forwardRef<HTMLDivElement, SearchItemImageProps>(
-  ({ className, alt, image, variant = 'card', width = 400, height = 250, ...props }, ref) => {
-    const [brokenImage, setBrokenImage] = useState<boolean>(false);
-    const isCard = variant === 'card';
+export const SearchItemImage = ({
+  className,
+  alt,
+  image,
+  variant = 'card',
+  width = 400,
+  height = 250,
+  ...props
+}: SearchItemImageProps) => {
+  const [brokenImage, setBrokenImage] = useState<boolean>(false);
+  const isCard = variant === 'card';
 
-    return (
-      image && (
-        <div
-          ref={ref}
-          className={cn('bg-gray-900 relative', isCard ? 'w-full' : 'h-full', className)}
-          style={isCard ? { height } : { width }}
-          {...props}
-        >
-          {!brokenImage ? (
-            <Image
-              fill
-              src={image.value}
-              alt={alt || 'Product image'}
-              onError={() => setBrokenImage(true)}
-              className="object-cover"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gray-100">
-              <FontAwesomeIcon icon={faImage} size="2xl" className="text-gray-300" />
-            </div>
-          )}
-        </div>
-      )
-    );
-  }
-);
-
-SearchItemImage.displayName = 'SearchItemImage';
+  return (
+    image && (
+      <div
+        className={cn('bg-gray-900 relative', isCard ? 'w-full' : 'h-full', className)}
+        style={isCard ? { height } : { width }}
+        {...props}
+      >
+        {!brokenImage ? (
+          <Image
+            fill
+            src={image.value}
+            alt={alt || 'Product image'}
+            onError={() => setBrokenImage(true)}
+            className="object-cover"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gray-100">
+            <FontAwesomeIcon icon={faImage} size="2xl" className="text-gray-300" />
+          </div>
+        )}
+      </div>
+    )
+  );
+};
