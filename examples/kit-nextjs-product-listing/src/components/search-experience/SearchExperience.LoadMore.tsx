@@ -104,11 +104,11 @@ export const LoadMore = (props: SearchExperienceProps) => {
             />
           )}
 
-          <div className={cn('grid gap-6 mb-8', gridColsClass(columns))}>
+          <div className={cn('grid gap-6 mb-8', gridColsClass(Number(columns)))}>
             {!isLoading &&
               results.map((result) => (
                 <SearchItem
-                  variant={columns === 1 ? 'list' : 'card'}
+                  variant={Number(columns) === 1 ? 'list' : 'card'}
                   key={result.sc_item_id}
                   data={result}
                   mapping={fieldsMapping}
@@ -119,7 +119,7 @@ export const LoadMore = (props: SearchExperienceProps) => {
             {(((isEditing || isPreview) && total === 0) || isLoading) &&
               Array.from({ length: pageSize }).map((_, index) => (
                 <SearchSkeletonItem
-                  variant={columns === 1 ? 'list' : 'card'}
+                  variant={Number(columns) === 1 ? 'list' : 'card'}
                   key={index}
                   mapping={fieldsMapping}
                 />

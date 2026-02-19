@@ -12,6 +12,7 @@ import { SearchItemImage } from './SearchItemImage';
 
 export type SearchItemFields = {
   summary?: Field<string>;
+  subTitle?: Field<string>;
   category?: Field<string>;
   title?: Field<string>;
   tags?: Field<string[] | string>;
