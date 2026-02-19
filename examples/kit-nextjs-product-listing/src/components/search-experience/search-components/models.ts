@@ -1,7 +1,7 @@
 import { ComponentParams, ComponentRendering } from '@sitecore-content-sdk/nextjs';
 
 export type SearchParams = ComponentParams & {
-  columns?: number;
+  columns?: string;
   pageSize?: number;
   styles?: string;
   GridParameters?: string;
@@ -27,6 +27,8 @@ export interface SearchFieldsMapping {
   type?: SearchDocumentKey;
   title?: SearchDocumentKey;
   link?: SearchDocumentKey;
+  images?: SearchDocumentKey;
+  tags?: SearchDocumentKey;
 }
 
 export interface SearchField {
