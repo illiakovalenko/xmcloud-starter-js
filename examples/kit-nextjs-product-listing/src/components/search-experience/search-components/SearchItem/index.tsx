@@ -6,15 +6,18 @@ import { SearchDocument, SearchFieldsMapping } from '../models';
 import { SearchItemTitle } from './SearchItemTitle';
 import { SearchItemSummary } from './SearchItemSummary';
 import { SearchItemLink } from './SearchItemLink';
-import { SearchItemSubTitle } from './SearchItemSubTitle';
 import { SearchItemCategory } from './SearchItemCategory';
+import { SearchItemTags } from './SearchItemTags';
+import { SearchItemImage } from './SearchItemImage';
 
 export type SearchItemFields = {
   summary?: Field<string>;
+  subTitle?: Field<string>;
   category?: Field<string>;
   title?: Field<string>;
-  subTitle?: Field<string>;
+  tags?: Field<string[] | string>;
   link?: Field<string>;
+  image?: Field<string>;
 };
 
 type SearchItemProps = {
@@ -27,10 +30,12 @@ type SearchItemProps = {
 const getField = (
   fields: { [key: string]: string },
   key: keyof SearchDocument
-): { value: string } | undefined => {
+): { value: string | string[] } | undefined => {
   if (!key) return undefined;
   const k = String(key);
-  if (typeof fields?.[k] !== 'string') return undefined;
+  if (typeof fields?.[k] !== 'string') {
+    return { value: fields[k] } as { value: string[] };
+  }
   return { value: fields[k] } as { value: string };
 };
 
@@ -38,31 +43,39 @@ export const SearchItem = ({ data, mapping, variant = 'card', onClick }: SearchI
   const isCard = variant === 'card';
 
   const fields = useMemo((): SearchItemFields => {
-    const title = mapping.title ? getField(data, mapping.title) : undefined;
+    const title = mapping.title ? (getField(data, mapping.title) as { value: string }) : undefined;
     return {
       title,
-      subTitle: getField(data, 'Price'),
-      summary: mapping.description ? getField(data, mapping.description) : undefined,
-      category: mapping.type ? getField(data, mapping.type) : undefined,
-      link: mapping.link ? getField(data, mapping.link) : undefined,
+      image: mapping.images ? (getField(data, mapping.images) as { value: string }) : undefined,
+      tags: mapping.tags
+        ? (getField(data, mapping.tags) as { value: string | string[] })
+        : undefined,
+      summary: mapping.description
+        ? (getField(data, mapping.description) as { value: string })
+        : undefined,
+      category: mapping.type ? (getField(data, mapping.type) as { value: string }) : undefined,
+      link: mapping.link ? (getField(data, mapping.link) as { value: string }) : undefined,
     };
   }, [data, mapping]);
 
+  const image = fields.image ? (
+    <SearchItemImage image={fields.image} variant={variant} />
+  ) : undefined;
   const components = (
     <>
       {fields.category && (
         <SearchItemCategory category={fields.category} className="line-clamp-2" />
       )}
       {fields.title && <SearchItemTitle text={fields.title} className="line-clamp-2" />}
-      {fields.subTitle && <SearchItemSubTitle text={fields.subTitle} className="line-clamp-2" />}
+      {fields.tags && <SearchItemTags tags={fields.tags} className="line-clamp-2" />}
       {fields.summary && <SearchItemSummary summary={fields.summary} className="line-clamp-3" />}
       {fields.link && <SearchItemLink link={fields.link} onClick={onClick} />}
     </>
   );
 
   return isCard ? (
-    <ItemCardFrame>{components}</ItemCardFrame>
+    <ItemCardFrame image={image}>{components}</ItemCardFrame>
   ) : (
-    <ItemListFrame>{components}</ItemListFrame>
+    <ItemListFrame image={image}>{components}</ItemListFrame>
   );
 };
