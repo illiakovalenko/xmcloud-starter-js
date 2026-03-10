@@ -27,12 +27,15 @@ import * as RichText from 'src/components/sxa/RichText';
 import * as Promo from 'src/components/sxa/Promo';
 import * as PartialDesignDynamicPlaceholder from 'src/components/sxa/PartialDesignDynamicPlaceholder';
 import * as PageContent from 'src/components/sxa/PageContent';
+import * as NavigationMenuToggleclient from 'src/components/sxa/NavigationMenuToggle.client';
+import * as NavigationListclient from 'src/components/sxa/NavigationList.client';
 import * as Navigation from 'src/components/sxa/Navigation';
 import * as LinkList from 'src/components/sxa/LinkList';
 import * as Image from 'src/components/sxa/Image';
 import * as ContentBlock from 'src/components/sxa/ContentBlock';
 import * as Container from 'src/components/sxa/Container';
 import * as ColumnSplitter from 'src/components/sxa/ColumnSplitter';
+import * as ButtonNavigationclient from 'src/components/sxa/ButtonNavigation.client';
 import * as SubscriptionBanner from 'src/components/subscription-banner/SubscriptionBanner';
 import * as SubmissionFormDefaultdev from 'src/components/submission-form/SubmissionFormDefault.dev';
 import * as SubmissionFormCentereddev from 'src/components/submission-form/SubmissionFormCentered.dev';
@@ -98,6 +101,7 @@ import * as ImageCarouselDefaultdev from 'src/components/image-carousel/ImageCar
 import * as ImageCarousel from 'src/components/image-carousel/ImageCarousel';
 import * as nextImageSrcdev from 'src/components/image/nextImageSrc.dev';
 import * as ImageWrapperdev from 'src/components/image/ImageWrapper.dev';
+import * as ImageWrapperclient from 'src/components/image/ImageWrapper.client';
 import * as ImageBlock from 'src/components/image/ImageBlock';
 import * as Icon from 'src/components/icon/Icon';
 import * as YoutubeIcondev from 'src/components/icon/svg/YoutubeIcon.dev';
@@ -198,12 +202,15 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['Promo', { ...Promo }],
   ['PartialDesignDynamicPlaceholder', { ...PartialDesignDynamicPlaceholder }],
   ['PageContent', { ...PageContent }],
-  ['Navigation', { ...Navigation, componentType: 'client' }],
+  ['NavigationMenuToggle', { ...NavigationMenuToggleclient }],
+  ['NavigationList', { ...NavigationListclient }],
+  ['Navigation', { ...Navigation }],
   ['LinkList', { ...LinkList, componentType: 'client' }],
   ['Image', { ...Image }],
   ['ContentBlock', { ...ContentBlock }],
   ['Container', { ...Container }],
   ['ColumnSplitter', { ...ColumnSplitter }],
+  ['ButtonNavigation', { ...ButtonNavigationclient }],
   ['SubscriptionBanner', { ...SubscriptionBanner, componentType: 'client' }],
   ['SubmissionFormDefault', { ...SubmissionFormDefaultdev }],
   ['SubmissionFormCentered', { ...SubmissionFormCentereddev }],
@@ -267,7 +274,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['ImageCarouselDefault', { ...ImageCarouselDefaultdev }],
   ['ImageCarousel', { ...ImageCarousel, componentType: 'client' }],
   ['nextImageSrc', { ...nextImageSrcdev }],
-  ['ImageWrapper', { ...ImageWrapperdev }],
+  ['ImageWrapper', { ...ImageWrapperdev, ...ImageWrapperclient }],
   ['ImageBlock', { ...ImageBlock }],
   ['Icon', { ...Icon, componentType: 'client' }],
   ['YoutubeIcon', { ...YoutubeIcondev }],

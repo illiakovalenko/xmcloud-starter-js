@@ -16,8 +16,10 @@ import * as TextBanner02dev from 'src/components/text-banner/TextBanner02.dev';
 import * as TextBanner01dev from 'src/components/text-banner/TextBanner01.dev';
 import * as TextBanner from 'src/components/text-banner/TextBanner';
 import * as TestimonialCarousel from 'src/components/testimonial-carousel/TestimonialCarousel';
-import * as Navigation from 'src/components/sxa/Navigation';
+import * as NavigationMenuToggleclient from 'src/components/sxa/NavigationMenuToggle.client';
+import * as NavigationListclient from 'src/components/sxa/NavigationList.client';
 import * as LinkList from 'src/components/sxa/LinkList';
+import * as ButtonNavigationclient from 'src/components/sxa/ButtonNavigation.client';
 import * as SubscriptionBanner from 'src/components/subscription-banner/SubscriptionBanner';
 import * as SubmissionFormDefaultdev from 'src/components/submission-form/SubmissionFormDefault.dev';
 import * as SubmissionFormCentereddev from 'src/components/submission-form/SubmissionFormCentered.dev';
@@ -68,6 +70,7 @@ import * as ImageCarouselFeaturedImageLeftdev from 'src/components/image-carouse
 import * as ImageCarouselEditModedev from 'src/components/image-carousel/ImageCarouselEditMode.dev';
 import * as ImageCarouselDefaultdev from 'src/components/image-carousel/ImageCarouselDefault.dev';
 import * as ImageCarousel from 'src/components/image-carousel/ImageCarousel';
+import * as ImageWrapperclient from 'src/components/image/ImageWrapper.client';
 import * as Icon from 'src/components/icon/Icon';
 import * as HeroImageRightdev from 'src/components/hero/HeroImageRight.dev';
 import * as HeroImageBottomInsetdev from 'src/components/hero/HeroImageBottomInset.dev';
@@ -116,8 +119,10 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['TextBanner01', { ...TextBanner01dev }],
   ['TextBanner', { ...TextBanner }],
   ['TestimonialCarousel', { ...TestimonialCarousel }],
-  ['Navigation', { ...Navigation }],
+  ['NavigationMenuToggle', { ...NavigationMenuToggleclient }],
+  ['NavigationList', { ...NavigationListclient }],
   ['LinkList', { ...LinkList }],
+  ['ButtonNavigation', { ...ButtonNavigationclient }],
   ['SubscriptionBanner', { ...SubscriptionBanner }],
   ['SubmissionFormDefault', { ...SubmissionFormDefaultdev }],
   ['SubmissionFormCentered', { ...SubmissionFormCentereddev }],
@@ -167,6 +172,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['ImageCarouselEditMode', { ...ImageCarouselEditModedev }],
   ['ImageCarouselDefault', { ...ImageCarouselDefaultdev }],
   ['ImageCarousel', { ...ImageCarousel }],
+  ['ImageWrapper', { ...ImageWrapperclient }],
   ['Icon', { ...Icon }],
   ['HeroImageRight', { ...HeroImageRightdev }],
   ['HeroImageBottomInset', { ...HeroImageBottomInsetdev }],
