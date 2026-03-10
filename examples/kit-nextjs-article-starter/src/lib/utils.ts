@@ -5,21 +5,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-/**
- * Get YouTube thumbnail URL based on video ID and desired dimensions
- *
- * Available thumbnail sizes:
- * - maxresdefault.jpg (1280x720)
- * - sddefault.jpg (640x480)
- * - hqdefault.jpg (480x360)
- * - mqdefault.jpg (320x180)
- * - default.jpg (120x90)
- *
- * @param videoId YouTube video ID
- * @param width Desired width in pixels
- * @param height Desired height in pixels (optional)
- * @returns URL to the most appropriate thumbnail size
- */
 export function getYouTubeThumbnail(videoId: string, width: number, height?: number): string {
   if (!videoId || typeof videoId !== 'string') {
     throw new Error('Invalid YouTube video ID');

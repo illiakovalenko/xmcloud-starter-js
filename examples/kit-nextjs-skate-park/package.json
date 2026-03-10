@@ -34,17 +34,19 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@sitecore-content-sdk/cli": "^1.0.0",
+    "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "@types/jest": "^30.0.0",
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^22.15.14",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
+    "axios": "^1.13.6",
     "cross-env": "^10.0.0",
     "eslint": "^9.33.0",
     "eslint-config-next": "15.5.0",
+    "fast-xml-parser": "^5.4.2",
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
     "npm-run-all2": "^8.0.4",
@@ -65,7 +67,11 @@
     "dev": "cross-env NODE_ENV=development npm-run-all --serial sitecore-tools:generate-map sitecore-tools:build --parallel next:dev sitecore-tools:generate-map:watch",
     "start": "cross-env-shell NODE_ENV=production npm-run-all --serial build next:start",
     "test": "jest",
+    "test:unit": "jest --testPathIgnorePatterns=geo",
+    "test:geo": "jest --testPathPatterns=geo",
     "test:watch": "jest --watch",
+    "test:unit:watch": "jest --watch --testPathIgnorePatterns=geo",
+    "test:geo:watch": "jest --watch --testPathPatterns=geo",
     "test:coverage": "jest --coverage"
   }
 }

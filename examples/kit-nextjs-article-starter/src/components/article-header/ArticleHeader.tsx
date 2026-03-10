@@ -26,6 +26,11 @@ import { useTranslations } from 'next-intl';
 import { dictionaryKeys } from '@/variables/dictionary';
 import { formatDateInUTC } from '@/utils/date-utils';
 import { Default as Icon } from '@/components/icon/Icon';
+import { StructuredData } from '@/components/structured-data/StructuredData';
+import {
+  generateArticleSchema,
+  generatePersonSchema,
+} from '@/lib/structured-data/schema';
 
 interface ArticleHeaderParams {
   [key: string]: any; // eslint-disable-line
@@ -242,12 +247,56 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
       },
     ];
 
+    // Generate Article schema structured data
+    const articleSchema = pageHeaderTitle?.jsonValue?.value
+      ? generateArticleSchema({
+          headline: pageHeaderTitle.jsonValue.value,
+          description: pageHeaderTitle.jsonValue.value,
+          image: imageRequired?.jsonValue?.value?.src
+            ? [imageRequired.jsonValue.value.src]
+            : undefined,
+          datePublished: pageDisplayDate?.jsonValue?.value
+            ? new Date(String(pageDisplayDate.jsonValue.value)).toISOString()
+            : undefined,
+          dateModified: pageDisplayDate?.jsonValue?.value
+            ? new Date(String(pageDisplayDate.jsonValue.value)).toISOString()
+            : undefined,
+          author: pageAuthor?.jsonValue
+            ? {
+                name: `${pageAuthor.jsonValue.fields?.personFirstName?.value || ''} ${
+                  pageAuthor.jsonValue.fields?.personLastName?.value || ''
+                }`.trim(),
+              }
+            : undefined,
+          url: typeof window !== 'undefined' ? window.location.href : undefined,
+        })
+      : null;
+
+    // Generate Person schema for author
+    const personSchema = pageAuthor?.jsonValue
+      ? generatePersonSchema({
+          name: `${pageAuthor.jsonValue.fields?.personFirstName?.value || ''} ${
+            pageAuthor.jsonValue.fields?.personLastName?.value || ''
+          }`.trim(),
+          jobTitle: pageAuthor.jsonValue.fields?.personJobTitle?.value,
+          image: pageAuthor.jsonValue.fields?.personProfileImage?.value?.src,
+        })
+      : null;
+
+    // Get ISO date string for time element
+    const publishedDateISO = pageDisplayDate?.jsonValue?.value
+      ? new Date(String(pageDisplayDate.jsonValue.value)).toISOString()
+      : undefined;
+
     return (
       <>
+        {articleSchema && <StructuredData id="article-schema" data={articleSchema} />}
+        {personSchema && <StructuredData id="author-person-schema" data={personSchema} />}
         <header
           className={cn('@container article-header relative mb-[86px] overflow-hidden')}
           ref={headerRef}
         >
+          <article itemScope={true} itemType="https://schema.org/Article">
           <div className="relative z-0 h-[auto] overflow-hidden bg-black">
             {/* Background Image with Parallax */}
             <div
@@ -328,12 +377,17 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
                       <span className="@md:inline-block hidden text-pretty">•</span>
                     )}
                     {pageDisplayDate?.jsonValue?.value && (
-                      <DateField
-                        tag="span"
-                        field={pageDisplayDate?.jsonValue}
-                        render={(date) => formatDateInUTC(String(date))}
+                      <time
+                        dateTime={publishedDateISO}
+                        itemProp="datePublished"
                         className="@md:inline-block block text-pretty"
-                      />
+                      >
+                        <DateField
+                          tag="span"
+                          field={pageDisplayDate?.jsonValue}
+                          render={(date) => formatDateInUTC(String(date))}
+                        />
+                      </time>
                     )}
                   </div>
                 )}
@@ -378,7 +432,7 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
                 </div>
 
                 {/* Featured Image */}
-                <div className="@lg:col-span-6 relative z-10 col-span-2 mx-auto flex aspect-[16/9] w-full max-w-[800px] justify-center overflow-hidden rounded-[24px]">
+                <figure className="@lg:col-span-6 relative z-10 col-span-2 mx-auto flex aspect-[16/9] w-full max-w-[800px] justify-center overflow-hidden rounded-[24px]">
                   <ImageWrapper
                     image={imageRequired?.jsonValue}
                     alt={pageHeaderTitle?.jsonValue?.value}
@@ -388,7 +442,7 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
                     sizes="(max-width: 768px) 100vw, 800px"
                     ref={imageRef}
                   />
-                </div>
+                </figure>
 
                 {/* Share Section - Desktop Only */}
                 <div className="@lg:col-span-3 @lg:justify-start @lg:pt-4 @lg:h-[250px] @lg:items-start @lg:flex hidden h-[auto] items-center justify-center gap-4 p-6">
@@ -402,6 +456,7 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
           </div>
           {/* Screen reader notification */}
           <div ref={copyNotificationRef} className="sr-only" aria-live="polite"></div>
+          </article>
         </header>
         <Toaster />
       </>

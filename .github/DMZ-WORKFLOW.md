@@ -1,5 +1,21 @@
 # DMZ Git Workflow - Complete Implementation Guide
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Branch Structure](#branch-structure)
+- [Workflow Architecture](#workflow-architecture)
+- [How It Prevents Duplicate Commits](#how-it-prevents-duplicate-commits)
+- [Developer Workflow](#developer-workflow)
+- [Common Issues and Solutions](#common-issues-and-solutions)
+- [Security Requirements](#security-requirements)
+- [Configuration](#configuration)
+- [Troubleshooting](#troubleshooting)
+- [Best Practices](#best-practices)
+- [Why This Workflow?](#why-this-workflow)
+- [Testing the Solution](#testing-the-solution)
+- [Support](#support)
+
 ## Overview
 
 This repository uses a DMZ git workflow to ensure the `main` branch is always clean, deployable, and never breaks. All changes go through a **two-tier validation system** before being merged to `main`.

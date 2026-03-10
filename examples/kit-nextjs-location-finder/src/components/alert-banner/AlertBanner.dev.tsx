@@ -42,7 +42,8 @@ export const Default: React.FC<AlertBannerProps> = (props) => {
 
   if (fields) {
     return (
-      <Alert className={cn('relative border-none', { hidden: isHidden })}>
+      <aside role="complementary" aria-label="Alert notification">
+        <Alert className={cn('relative border-none', { hidden: isHidden })}>
         <div className="mx-auto flex w-full max-w-screen-xl items-center justify-between gap-4 py-1 xl:px-8">
           <div className="space-y-1">
             <AlertTitle className="text-base font-semibold leading-none tracking-tight">
@@ -54,12 +55,18 @@ export const Default: React.FC<AlertBannerProps> = (props) => {
           </div>
           <div className="flex items-center gap-2">
             {link?.value?.href && <ButtonBase buttonLink={link} variant="default" />}
-            <Button variant="default" size="icon" onClick={() => setIsHidden(true)}>
-              <X className="h-4 w-4" />
+            <Button 
+              variant="default" 
+              size="icon" 
+              onClick={() => setIsHidden(true)}
+              aria-label="Dismiss alert"
+            >
+              <X className="h-4 w-4" aria-hidden="true" />
             </Button>
           </div>
         </div>
       </Alert>
+      </aside>
     );
   }
   return <NoDataFallback componentName="Alert Banner" />;

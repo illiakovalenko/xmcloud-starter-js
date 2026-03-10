@@ -1,5 +1,6 @@
 import React, { JSX } from 'react';
 import { Link as ContentSdkLink, Text, LinkField, TextField } from '@sitecore-content-sdk/nextjs';
+import { getDescriptiveLinkText } from '@/utils/link-text';
 
 type ResultsFieldLink = {
   field: {
@@ -41,10 +42,23 @@ const LinkListItem = (props: LinkListItemProps) => {
   if (props.index + 1 == props.total) {
     className += ' last';
   }
+
+  // Generate descriptive link text for SEO
+  const displayText = getDescriptiveLinkText(props.field);
+  const enhancedField = displayText && displayText !== props.field?.value?.text
+    ? {
+        ...props.field,
+        value: {
+          ...props.field?.value,
+          text: displayText,
+        },
+      }
+    : props.field;
+
   return (
     <li className={className}>
       <div className="field-link">
-        <ContentSdkLink field={props.field} />
+        <ContentSdkLink field={enhancedField} />
       </div>
     </li>
   );

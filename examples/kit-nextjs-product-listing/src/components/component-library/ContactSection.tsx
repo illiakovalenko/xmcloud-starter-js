@@ -222,9 +222,9 @@ export const Default = (props: ContactSectionProps): JSX.Element => {
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto">
         <div className="max-w-3xl">
-          <h6 className="font-semibold mb-4">
+          <p className="font-semibold mb-4">
             <ContentSdkText field={datasource.tagLine?.jsonValue} />
-          </h6>
+          </p>
           <h2 className="text-5xl font-bold mb-4">
             <ContentSdkText field={datasource.heading?.jsonValue} />
           </h2>
@@ -249,9 +249,9 @@ export const ContactSection1 = (props: ContactSectionProps): JSX.Element => {
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto">
         <div className="max-w-3xl mx-auto text-center">
-          <h6 className="font-semibold mb-4">
+          <p className="font-semibold mb-4">
             <ContentSdkText field={datasource.tagLine?.jsonValue} />
-          </h6>
+          </p>
           <h2 className="text-5xl font-bold mb-4">
             <ContentSdkText field={datasource.heading?.jsonValue} />
           </h2>
@@ -276,9 +276,9 @@ export const ContactSection2 = (props: ContactSectionProps): JSX.Element => {
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto">
         <div className="max-w-3xl">
-          <h6 className="font-semibold mb-4">
+          <p className="font-semibold mb-4">
             <ContentSdkText field={datasource.tagLine?.jsonValue} />
-          </h6>
+          </p>
           <h2 className="text-5xl font-bold mb-4">
             <ContentSdkText field={datasource.heading?.jsonValue} />
           </h2>
@@ -314,9 +314,9 @@ export const ContactSection3 = (props: ContactSectionProps): JSX.Element => {
       <div className="container mx-auto">
         <div className="grid md:grid-cols-5 gap-x-12 gap-y-20">
           <div className="max-w-3xl md:col-span-3">
-            <h6 className="font-semibold mb-4">
+            <p className="font-semibold mb-4">
               <ContentSdkText field={datasource.tagLine?.jsonValue} />
-            </h6>
+            </p>
             <h2 className="text-5xl font-bold mb-4">
               <ContentSdkText field={datasource.heading?.jsonValue} />
             </h2>
@@ -348,9 +348,9 @@ export const ContactSection4 = (props: ContactSectionProps): JSX.Element => {
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto">
         <div className="max-w-3xl">
-          <h6 className="font-semibold mb-4">
+          <p className="font-semibold mb-4">
             <ContentSdkText field={datasource.tagLine?.jsonValue} />
-          </h6>
+          </p>
           <h2 className="text-5xl font-bold mb-4">
             <ContentSdkText field={datasource.heading?.jsonValue} />
           </h2>
@@ -375,9 +375,9 @@ export const ContactSection5 = (props: ContactSectionProps): JSX.Element => {
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto">
         <div className="max-w-3xl mx-auto text-center">
-          <h6 className="font-semibold mb-4">
+          <p className="font-semibold mb-4">
             <ContentSdkText field={datasource.tagLine?.jsonValue} />
-          </h6>
+          </p>
           <h2 className="text-5xl font-bold mb-4">
             <ContentSdkText field={datasource.heading?.jsonValue} />
           </h2>
@@ -407,9 +407,9 @@ export const ContactSection6 = (props: ContactSectionProps): JSX.Element => {
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto">
         <div className="max-w-3xl">
-          <h6 className="font-semibold mb-4">
+          <p className="font-semibold mb-4">
             <ContentSdkText field={datasource.tagLine?.jsonValue} />
-          </h6>
+          </p>
           <h2 className="text-5xl font-bold mb-4">
             <ContentSdkText field={datasource.heading?.jsonValue} />
           </h2>

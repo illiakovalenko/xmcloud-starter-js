@@ -135,12 +135,21 @@ export function VideoModal({ isOpen, onClose, videoUrl }: VideoModalProps) {
                           controls: 1,
                           modestbranding: 1,
                           rel: 0,
+                          // Enable privacy-enhanced mode to reduce third-party cookies
+                          origin: typeof window !== 'undefined' ? window.location.origin : '',
                         },
+                        // Use privacy-enhanced YouTube domain (youtube-nocookie.com)
+                        // This reduces third-party cookie usage
+                        host: 'https://www.youtube-nocookie.com',
                       }}
                       className="h-full w-full"
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       onReady={(event: any) => {
                         event.target.playVideo();
+                      }}
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      onError={(error: any) => {
+                        console.error('YouTube video loading error:', error);
                       }}
                     />
                   ) : (

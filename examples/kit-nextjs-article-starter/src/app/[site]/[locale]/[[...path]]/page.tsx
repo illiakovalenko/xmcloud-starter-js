@@ -11,6 +11,8 @@ import components from '.sitecore/component-map';
 import Providers from 'src/Providers';
 import { NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
+import { StructuredData } from '@/components/structured-data/StructuredData';
+import { generateWebPageSchema } from '@/lib/structured-data/schema';
 
 // Configure dynamic rendering to avoid SSR issues with client-side hooks
 // This ensures all pages are rendered on-demand rather than pre-rendered at build time
@@ -29,6 +31,10 @@ type PageProps = {
 export default async function Page({ params, searchParams }: PageProps) {
   const { site, locale, path } = await params;
   const draft = await draftMode();
+  const headersList = await headers();
+  const host = headersList.get('host') || '';
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || (host ? `${protocol}://${host}` : '');
 
   // Set site and locale to be available in src/i18n/request.ts for fetching the dictionary
   setRequestLocale(`${site}_${locale}`);
@@ -58,9 +64,31 @@ export default async function Page({ params, searchParams }: PageProps) {
     components,
   );
 
+  const routeFields = page.layout.sitecore.route?.fields as RouteFields;
+  const pageTitle = routeFields?.Title?.value?.toString() || 'Page';
+  const pageDescription = routeFields?.ogDescription?.value?.toString();
+
+  const pathSegments = path && path.length > 0 ? path.join('/') : '';
+  const urlPath = pathSegments ? `/${pathSegments}` : '';
+  const fullUrl = baseUrl ? `${baseUrl}${urlPath}` : undefined;
+
+  const webPageSchema = generateWebPageSchema({
+    name: pageTitle,
+    description: pageDescription,
+    url: fullUrl,
+    inLanguage: locale.replace('_', '-'),
+    ...(baseUrl && {
+      isPartOf: {
+        name: 'Solterra & Co.',
+        url: baseUrl,
+      },
+    }),
+  });
+
   return (
     <NextIntlClientProvider>
       <Providers page={page} componentProps={componentProps}>
+        <StructuredData id="webpage-schema" data={webPageSchema} />
         <Layout page={page} />
       </Providers>
     </NextIntlClientProvider>
@@ -87,43 +115,95 @@ export const generateStaticParams = async () => {
   return [];
 };
 
-// Metadata fields for the page.
 export const generateMetadata = async ({ params }: PageProps) => {
   const headersList = await headers();
-  const host = headersList.get('host');
+  const host = headersList.get('host') || '';
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const url = `${protocol}://${host}`;
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || (host ? `${protocol}://${host}` : '');
 
   const { path, site, locale } = await params;
 
+  // Canonical URL: base URL + content path only (no site/locale segments)
+  const pathSegment = path?.length ? `/${path.join('/')}` : '';
+  const canonicalUrl = baseUrl ? `${baseUrl}${pathSegment}` : undefined;
+
   // The same call as for rendering the page. Should be cached by default react behavior
   const page = await client.getPage(path ?? [], { site, locale });
+
+  // Cast route fields once to avoid repeated type assertions
+  const routeFields = (page?.layout.sitecore.route?.fields ?? {}) as RouteFields;
+
+  // Extract metadata values with fallback chain
+  const metadataTitle =
+    routeFields?.metadataTitle?.value?.toString() ||
+    routeFields?.pageTitle?.value?.toString() ||
+    routeFields?.Title?.value?.toString() ||
+    'Page';
+
+  const metadataDescription =
+    routeFields?.metadataDescription?.value?.toString() ||
+    routeFields?.pageSummary?.value?.toString() ||
+    'Solterra & Co. - Editorial-style content for lifestyle brands';
+
+  const ogTitle =
+    routeFields?.ogTitle?.value?.toString() ||
+    metadataTitle;
+
+  const ogDescription =
+    routeFields?.ogDescription?.value?.toString() ||
+    metadataDescription;
+
+  // Ensure image URL is absolute (HTTPS preferred)
+  const imageSource =
+    routeFields?.ogImage?.value?.src ||
+    routeFields?.thumbnailImage?.value?.src;
+
+  const ogImageUrl = imageSource
+    ? imageSource.startsWith('http')
+      ? imageSource
+      : `${baseUrl}${imageSource.startsWith('/') ? '' : '/'}${imageSource}`
+    : undefined;
+
+  const pageUrl = canonicalUrl;
+
+  // Parse keywords from comma-separated string to array (for <meta name="keywords">)
+  const keywordsString = routeFields?.metadataKeywords?.value?.toString() || '';
+  const keywords = keywordsString
+    ? keywordsString.split(',').map((k: string) => k.trim())
+    : [];
+
   return {
-    title:
-      (
-        page?.layout.sitecore.route?.fields as RouteFields
-      )?.Title?.value?.toString() || 'Page',
-    description:
-      (
-        page?.layout.sitecore.route?.fields as RouteFields
-      )?.ogDescription?.value?.toString() ||
-      'Sitecore Next.js App Router Example',
+    title: metadataTitle,
+    description: metadataDescription,
+    ...(keywords.length > 0 && { keywords }),
+    ...(canonicalUrl && {
+      alternates: {
+        canonical: canonicalUrl,
+      },
+    }),
     openGraph: {
-      title:
-        (
-          page?.layout.sitecore.route?.fields as RouteFields
-        )?.ogTitle?.value?.toString() || 'Page',
-      description:
-        (
-          page?.layout.sitecore.route?.fields as RouteFields
-        )?.ogDescription?.value?.toString() ||
-        'Sitecore Next.js App Router Example',
-      url: url,
-      images:
-        (page?.layout.sitecore.route?.fields as RouteFields)?.ogImage?.value
-          ?.src ||
-        (page?.layout.sitecore.route?.fields as RouteFields)?.thumbnailImage
-          ?.value?.src,
+      title: ogTitle,
+      description: ogDescription,
+      url: pageUrl,
+      type: 'website',
+      siteName: site || 'Solterra & Co.',
+      locale: locale || 'en',
+      images: ogImageUrl
+        ? [
+            {
+              url: ogImageUrl,
+              width: 1200,
+              height: 630,
+              alt: ogTitle,
+            },
+          ]
+        : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: ogTitle,
+      description: ogDescription,
+      images: ogImageUrl ? [ogImageUrl] : undefined,
     },
   };
 };

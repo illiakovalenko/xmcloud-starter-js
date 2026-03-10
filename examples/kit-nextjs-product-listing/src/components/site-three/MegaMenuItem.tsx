@@ -108,9 +108,9 @@ export const Default = (props: MegaMenuItemProps) => {
                 />
               </div>
               <div className="absolute bottom-0 lg:bottom-8 left-0 p-4 text-center bg-background shadow-lg">
-                <h5 className="mb-4 text-sm">
+                <h3 className="mb-4 text-sm">
                   <ContentSdkText field={featuredProduct.fields.ProductName} />
-                </h5>
+                </h3>
                 <Link href={featuredProduct.url} className="btn btn-primary btn-sharp">
                   {t(DICTIONARY_KEYS.EXPLORE_BUTTON_LABEL) || 'Explore'}
                   {featuredProduct.fields.ProductName?.value}

@@ -120,6 +120,7 @@ export const Default = ({ params, fields }: NavigationProps) => {
           className="menu-mobile-navigate"
           checked={isMenuOpen}
           onChange={() => handleToggleMenu()}
+          aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
         />
         <div className="menu-humburger" />
         <div className="component-content">

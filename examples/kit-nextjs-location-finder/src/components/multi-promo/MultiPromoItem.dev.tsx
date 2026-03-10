@@ -17,14 +17,16 @@ export const Default: React.FC<MultiPromoItemProps> = (props) => {
   const { page } = props;
 
   return (
-    <>
+    <article className="multi-promo-item">
       {image && (
-        <ImageWrapper
-          image={image}
-          className="aspect-[131/121] w-full rounded-3xl object-cover"
-          wrapperClass="aspect-[131/121] w-full mb-7"
-          page={page}
-        />
+        <figure className="mb-7">
+          <ImageWrapper
+            image={image}
+            className="aspect-[131/121] w-full rounded-3xl object-cover"
+            wrapperClass="aspect-[131/121] w-full"
+            page={page}
+          />
+        </figure>
       )}
       {title && (
         <Text
@@ -42,6 +44,6 @@ export const Default: React.FC<MultiPromoItemProps> = (props) => {
           <Link field={link}></Link>
         </Button>
       )}
-    </>
+    </article>
   );
 };

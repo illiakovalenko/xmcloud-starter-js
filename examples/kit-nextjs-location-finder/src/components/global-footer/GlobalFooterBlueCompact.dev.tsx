@@ -22,6 +22,7 @@ export const GlobalFooterBlueCompact: React.FC<GlobalFooterProps> = (props) => {
       <footer
         className="@container bg-primary text-primary-foreground border-foreground relative w-full overflow-hidden border-b-2"
         ref={footerRef}
+        role="contentinfo"
       >
         {/* Background logo - semi-transparent */}
         <div

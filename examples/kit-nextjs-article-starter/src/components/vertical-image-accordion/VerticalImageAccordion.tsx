@@ -68,6 +68,7 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
                       className="rounded-default h-full w-full object-cover"
                       wrapperClass="h-full w-full"
                       aria-hidden="true"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                   )}
                 </div>
@@ -127,6 +128,7 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
                           }
                           variant="secondary"
                           className="font-heading mt-4 inline-flex w-fit items-center justify-center px-8 py-2.5 text-sm font-medium"
+                          contextTitle={item.title?.jsonValue?.value}
                           aria-label={`Learn more about ${item.title?.jsonValue?.value || ''}`}
                         />
                       )}
@@ -298,6 +300,7 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
                             }
                             variant="secondary"
                             className="font-heading mt-4 inline-flex w-fit items-center justify-center px-8 py-2.5 text-sm font-medium"
+                            contextTitle={item.title?.jsonValue?.value}
                             aria-label={`Learn more about ${item.title?.jsonValue?.value || ''}`}
                           />
                         )}

@@ -1,5 +1,17 @@
 # DMZ Workflow - Quick Reference Card
 
+## Table of Contents
+
+- [Daily Workflow](#-daily-workflow)
+- [Common Error: "Not based on latest main"](#-common-error-not-based-on-latest-main)
+- [Keeping Long-Running Branch Updated](#-keeping-long-running-branch-updated)
+- [After Your PR is Merged to DMZ](#-after-your-pr-is-merged-to-dmz)
+- [Common Mistakes](#-common-mistakes)
+- [Pre-PR Checklist](#-pre-pr-checklist)
+- [Emergency: PR Merged with Errors](#-emergency-pr-merged-with-errors)
+- [Full Documentation](#-full-documentation)
+- [Still Stuck?](#-still-stuck)
+
 ## 🚀 Daily Workflow
 
 ```bash

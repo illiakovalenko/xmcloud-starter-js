@@ -72,16 +72,18 @@ export const Default: React.FC<MultiPromoProps> = (props) => {
 
   if (fields) {
     return (
-      <div
+      <section
         className={cn('component multi-promo my-8 md:my-16', {
           [props?.params?.styles]: props?.params?.styles,
         })}
+        aria-labelledby={title?.jsonValue?.value ? 'multi-promo-heading' : undefined}
       >
         <div className="flex flex-col gap-4 group-[.is-inset]:px-4 sm:group-[.is-inset]:px-0 xl:flex-row xl:items-end xl:justify-between xl:gap-20">
           {title && (
             <div className="flex-grow md:basis-[60] lg:basis-[50]">
               <Text
                 tag="h2"
+                id="multi-promo-heading"
                 field={title?.jsonValue}
                 className="font-heading text-box-trim-both-baseline -ml-1 max-w-[20ch] text-pretty text-4xl font-normal leading-[1.1333] tracking-tighter antialiased sm:text-5xl md:max-w-[17.5ch] lg:text-6xl"
               />
@@ -134,7 +136,7 @@ export const Default: React.FC<MultiPromoProps> = (props) => {
             </div>
           </>
         )}
-      </div>
+      </section>
     );
   }
 

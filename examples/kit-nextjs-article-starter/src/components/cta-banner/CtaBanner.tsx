@@ -7,6 +7,7 @@ import { Field, LinkField, Text, Link } from '@sitecore-content-sdk/nextjs';
 import { ColorSchemeLimited as ColorScheme } from '@/enumerations/ColorSchemeLimited.enum';
 import { EnumValues } from '@/enumerations/generic.enum';
 import { ComponentProps } from '@/lib/component-props';
+import { getDescriptiveLinkText } from '@/utils/link-text';
 
 type CtaBannerParams = {
   params?: {
@@ -81,7 +82,21 @@ export const Default: React.FC<CtaBannerProps> = (props) => {
             {/* Render button with link */}
             {linkOptional && (
               <Button className={ctaButtonVariants({ colorScheme })} asChild>
-                <Link field={linkOptional} editable={isPageEditing} />
+                <Link
+                  field={
+                    // Enhance link with descriptive text for SEO
+                    !isPageEditing && linkOptional?.value?.text
+                      ? {
+                          ...linkOptional,
+                          value: {
+                            ...linkOptional.value,
+                            text: getDescriptiveLinkText(linkOptional, titleRequired?.value),
+                          },
+                        }
+                      : linkOptional
+                  }
+                  editable={isPageEditing}
+                />
               </Button>
             )}
           </AnimatedSection>

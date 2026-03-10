@@ -43,7 +43,7 @@ export const Default = (props: PromoProps): JSX.Element => {
         className={`component promo flex-1 shadow-lg pointer mb-5 lg:mb-0 ${props.params.styles}`}
         id={id ? id : undefined}
       >
-        <div className="flex flex-col items-start justify-end h-full">
+        <aside role="complementary" className="flex flex-col items-start justify-end h-full">
           <ContentSdkImage field={props.fields.PromoIcon} className="w-full h-auto object-cover" />
           <div className={`flex-1 relative pt-4 px-6 ${isEditing ? 'min-w-[300px] w-full' : ''}`}>
             {(props.fields.PromoText3?.value || isEditing) && (
@@ -77,7 +77,7 @@ export const Default = (props: PromoProps): JSX.Element => {
           >
             <ContentSdkLink field={props.fields.PromoLink} />
           </Button>
-        </div>
+        </aside>
       </div>
     );
   }
@@ -96,7 +96,7 @@ export const CenteredCard = (props: PromoProps): JSX.Element => {
         className={`component promo flex-1 w-full shadow-lg pointer mb-5 lg:mb-0 align-stretch ${props.params.styles}`}
         id={id ? id : undefined}
       >
-        <div className="flex flex-col items-start justify-end">
+        <aside role="complementary" className="flex flex-col items-start justify-end">
           <ContentSdkImage field={props.fields.PromoIcon} className="w-full h-auto object-cover" />
           <div
             className={`flex-1 relative pt-4 px-4 w-full justify-center text-center ${
@@ -126,7 +126,7 @@ export const CenteredCard = (props: PromoProps): JSX.Element => {
           >
             <ContentSdkLink field={props.fields.PromoLink} />
           </Button>
-        </div>
+        </aside>
       </div>
     );
   }

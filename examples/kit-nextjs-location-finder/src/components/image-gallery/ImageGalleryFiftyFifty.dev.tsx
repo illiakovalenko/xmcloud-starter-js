@@ -22,7 +22,7 @@ export const ImageGalleryFiftyFifty: React.FC<ImageGalleryProps> = (props) => {
   const isMdContainer = useContainerQuery(containerRef, 'md', 'max');
   if (fields) {
     return (
-      <div
+      <section
         ref={containerRef}
         className={cn(
           '@container relative min-h-[100vh] max-w-screen-xl transform-gpu overflow-hidden px-4 py-16',
@@ -31,6 +31,7 @@ export const ImageGalleryFiftyFifty: React.FC<ImageGalleryProps> = (props) => {
           }
         )}
         data-class-change
+        aria-label="Image gallery"
       >
         {/* Accessibility notice for motion preferences */}
         {prefersReducedMotion && (
@@ -56,7 +57,7 @@ export const ImageGalleryFiftyFifty: React.FC<ImageGalleryProps> = (props) => {
             </div>
 
             {/* Top right image - Car on city street */}
-            <div
+            <figure
               className={`@md:col-span-6 col-span-12  ${
                 isParallaxActive ? 'parallax-element' : ''
               }`}
@@ -72,10 +73,10 @@ export const ImageGalleryFiftyFifty: React.FC<ImageGalleryProps> = (props) => {
                   page={props.page}
                 />
               )}
-            </div>
+            </figure>
 
             {/* Bottom left image - Car by wall */}
-            <div
+            <figure
               className={`@md:col-span-6 @md:mt-12 col-span-12 mt-8 ${
                 isParallaxActive ? 'parallax-element' : ''
               }`}
@@ -91,14 +92,14 @@ export const ImageGalleryFiftyFifty: React.FC<ImageGalleryProps> = (props) => {
                   page={props.page}
                 />
               )}
-            </div>
+            </figure>
             {/* Empty space for asymmetry */}
             <div className="@md:block @md:col-span-6 hidden"></div>
             {/* Empty space for asymmetry */}
             <div className="@md:block @md:col-span-6 hidden"></div>
 
             {/* Bottom right image - Panoramic roof */}
-            <div
+            <figure
               className={`@md:col-span-6 @md:mt-24 col-span-12 mt-8 ${
                 isParallaxActive ? 'parallax-element' : ''
               }`}
@@ -113,7 +114,7 @@ export const ImageGalleryFiftyFifty: React.FC<ImageGalleryProps> = (props) => {
                   page={props.page}
                 />
               )}
-            </div>
+            </figure>
             {/* Empty space for asymmetry */}
             <div className="@md:block @md:col-span-6 hidden"></div>
 
@@ -121,7 +122,7 @@ export const ImageGalleryFiftyFifty: React.FC<ImageGalleryProps> = (props) => {
             <div className="@md:block @md:col-span-6 hidden"></div>
             {/* Bottom right image - Interior detail */}
 
-            <div
+            <figure
               className={`@md:col-span-6 @md:mt-16 col-span-12 mt-8 ${
                 isParallaxActive ? 'parallax-element' : ''
               }`}
@@ -135,10 +136,10 @@ export const ImageGalleryFiftyFifty: React.FC<ImageGalleryProps> = (props) => {
                   page={props.page}
                 />
               )}
-            </div>
+            </figure>
           </div>
         </div>
-      </div>
+      </section>
     );
   }
   return <NoDataFallback componentName="ImageGalleryFiftyFifty" />;

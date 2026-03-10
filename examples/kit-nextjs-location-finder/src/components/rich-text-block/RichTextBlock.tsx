@@ -23,14 +23,12 @@ export const Default: React.FC<RichTextBlockProps> = (props) => {
   const id = props.params.RenderingIdentifier;
   if (fields) {
     return (
-      <>
-        <div
-          className={cn('component rich-text', props.params.styles?.trimEnd())}
-          id={id ? id : undefined}
-        >
-          <div className="component-content">{text}</div>
-        </div>
-      </>
+      <article
+        className={cn('component rich-text', props.params.styles?.trimEnd())}
+        id={id ? id : undefined}
+      >
+        <div className="component-content">{text}</div>
+      </article>
     );
   }
   return <NoDataFallback componentName="Rich Text Block" />;

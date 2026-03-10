@@ -87,11 +87,14 @@ export const Default: React.FC<ArticleListingProps> = ({
   const featuredArticles = articles.slice(0, 2);
   const regularArticles = articles.slice(2);
 
+  // Generate unique ID for section heading if title exists
+  const sectionId = 'article-listing-section';
+  
   return (
-    <div
+    <section
       data-component="ArticleListing"
       className="@container"
-      aria-label="Article listing section"
+      {...(titleOptional?.value && { 'aria-labelledby': sectionId })}
     >
       <div className={cn('w-full', params?.styles)}>
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -101,6 +104,7 @@ export const Default: React.FC<ArticleListingProps> = ({
                 <div className="@md:mb-0 mb-4">
                   <Text
                     tag="h2"
+                    id={sectionId}
                     field={titleOptional}
                     className="font-heading @md:text-6xl text-primary text-4xl font-normal leading-[1.20] tracking-tighter"
                   />
@@ -132,6 +136,7 @@ export const Default: React.FC<ArticleListingProps> = ({
                     }
                     isPageEditing={isPageEditing}
                     className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                    contextTitle={titleOptional?.value}
                   />
                 </div>
               )}
@@ -141,7 +146,7 @@ export const Default: React.FC<ArticleListingProps> = ({
           {/* Featured articles - 2 column layout */}
           <div className="@md:grid-cols-2 mb-[28px] grid gap-8">
             {featuredArticles.map((article, index) => (
-              <div key={index} className="@md:mb-0 group/article mb-6">
+              <article key={index} className="@md:mb-0 group/article mb-6">
                 {isPageEditing ? (
                   <div className="rounded-default @md:mb-0 relative mb-4 aspect-[3/2] w-full overflow-hidden">
                     <Image
@@ -163,6 +168,7 @@ export const Default: React.FC<ArticleListingProps> = ({
                       src={article.image}
                       alt={article.title}
                       fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover transition-transform duration-300 group-hover/article:scale-105"
                     />
                   </div>
@@ -215,14 +221,14 @@ export const Default: React.FC<ArticleListingProps> = ({
                     </div>
                   </div>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
 
           {/* Regular articles - 3 column compact layout */}
           <div className="@sm:grid-cols-2 @lg:grid-cols-3 grid gap-8">
             {regularArticles.map((article, index) => (
-              <div
+              <article
                 key={index}
                 className="@md:p-8 rounded-default hover:bg-tertiary-hover focus:ring-accent group/article flex h-full flex-col p-4 transition-colors focus:outline-none focus:ring-2"
               >
@@ -271,11 +277,11 @@ export const Default: React.FC<ArticleListingProps> = ({
                     <p className="text-accent-foreground text-sm">{article.readTime}</p>
                   </div>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };

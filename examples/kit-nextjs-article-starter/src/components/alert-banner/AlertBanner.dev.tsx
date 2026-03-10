@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ButtonBase } from '@/components/button-component/ButtonComponent';
+import { EditableButton } from '@/components/button-component/ButtonComponent';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -53,7 +53,9 @@ export const Default: React.FC<AlertBannerProps> = (props) => {
             </AlertDescription>
           </div>
           <div className="flex items-center gap-2">
-            {link?.value?.href && <ButtonBase buttonLink={link} variant="default" />}
+            {link?.value?.href && (
+              <EditableButton buttonLink={link} variant="default" contextTitle={title?.value} />
+            )}
             <Button variant="default" size="icon" onClick={() => setIsHidden(true)}>
               <X className="h-4 w-4" />
             </Button>

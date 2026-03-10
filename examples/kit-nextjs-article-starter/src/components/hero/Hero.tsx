@@ -98,6 +98,7 @@ export const Default: React.FC<HeroProps> = ({ fields, params, page }) => {
                         colorScheme === 'primary' ? 'text-primary bg-white hover:bg-gray-100' : ''
                       }
                       isPageEditing={isPageEditing}
+                      contextTitle={titleRequired?.value}
                     />
                   </div>
                 )}

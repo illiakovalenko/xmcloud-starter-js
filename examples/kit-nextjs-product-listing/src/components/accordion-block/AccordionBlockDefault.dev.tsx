@@ -16,7 +16,7 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
   ];
   if (fields) {
     return (
-      <div
+      <section
         data-component="AccordionBlock"
         className={cn(
           '@container @md:py-16 @lg:py-20 border-b-2 border-t-2 py-10 [.border-b-2+&]:border-t-0',
@@ -25,6 +25,7 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
           }
         )}
         data-class-change
+        aria-label="Accordion content"
       >
         <div
           className="@xl:px-0 mx-auto grid max-w-screen-xl gap-6 px-0 [&:not(.px-6_&):not(.px-8_&):not(.px-10_&)]:px-6"
@@ -53,7 +54,7 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
               </Accordion>
             </div>
             {(isPageEditing || description?.jsonValue?.value || link?.jsonValue?.value?.href) && (
-              <div className="bg-primary @sm:flex-row @sm:text-start @md:flex-col @md:text-center @lg:flex-row @lg:text-start mt-6 flex flex-col flex-nowrap items-center gap-4 p-7 text-center">
+              <aside className="bg-primary @sm:flex-row @sm:text-start @md:flex-col @md:text-center @lg:flex-row @lg:text-start mt-6 flex flex-col flex-nowrap items-center gap-4 p-7 text-center" aria-label="Additional information">
                 <Text
                   tag="p"
                   className="text-primary-foreground font-heading text-lg font-light"
@@ -66,11 +67,11 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
                     isPageEditing={isPageEditing}
                   />
                 )}
-              </div>
+              </aside>
             )}
           </div>
         </div>
-      </div>
+      </section>
     );
   }
 

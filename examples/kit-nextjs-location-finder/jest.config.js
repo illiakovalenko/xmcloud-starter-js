@@ -9,6 +9,7 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jest-environment-jsdom',
+  testTimeout: 15000,
   moduleNameMapper: {
     // Handle module aliases (should match paths in tsconfig.json)
     '^@/(.*)$': '<rootDir>/src/$1',
@@ -35,8 +36,8 @@ const customJestConfig = {
     '^.+\\.module\\.(css|sass|scss)$',
   ],
   testMatch: [
-    '<rootDir>/src/_tests_/**/*.test.{ts,tsx}',
-    '<rootDir>/src/**/*.test.{ts,tsx}',
+    '<rootDir>/src/_tests_/**/*.test.{js,ts,tsx}',
+    '<rootDir>/src/**/*.test.{js,ts,tsx}',
   ],
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',

@@ -1,6 +1,20 @@
 # Project Context
 
-### Repository Overview
+## Table of Contents
+
+- [Repository Overview](#repository-overview)
+- [Technology Stack](#technology-stack)
+- [Development Principles](#development-principles)
+- [Constraints and Guidelines](#constraints-and-guidelines)
+- [Code Style](#code-style)
+- [General Coding Principles](#general-coding-principles)
+- [JavaScript/TypeScript Rules](#javascripttypescript-rules)
+- [Sitecore XM Cloud Rules](#sitecore-xm-cloud-rules)
+- [Next.js Development Patterns](#nextjs-development-patterns)
+- [Testing Patterns](#testing-patterns)
+- [Safety Rules](#safety-rules)
+
+## Repository Overview
 
 This is the **XM Cloud Front End Application Starter Kits** repository containing multiple Next.js starter applications and SPA examples for Sitecore XM Cloud development.
 
@@ -24,7 +38,7 @@ Each starter demonstrates:
 - Modular component architecture with variants
 - Localization support for English (en) and Canadian English (en-CA)
 
-### Technology Stack
+## Technology Stack
 
 **Core Technologies:**
 - **Next.js 14+** - React framework with App Router and Pages Router support
@@ -45,7 +59,7 @@ Each starter demonstrates:
 - **Node.js LTS** - JavaScript runtime environment
 - **npm** - Package management across all starter applications
 
-### Development Principles
+## Development Principles
 
 **Multi-Starter Architecture:**
 - Each example is a standalone application
@@ -59,7 +73,7 @@ Each starter demonstrates:
 - Support for both connected and disconnected development modes
 - Proper handling of content authoring scenarios
 
-### Constraints and Guidelines
+## Constraints and Guidelines
 
 **File Organization:**
 - Each starter maintains its own `src/` directory structure
@@ -146,7 +160,6 @@ npm run dev
 **Readability:**
 - Use descriptive variable and function names
 - Keep functions small and focused (single responsibility)
-- Add JSDoc comments for complex business logic
 - Prefer self-documenting code over extensive comments
 - Use consistent naming patterns across all starters
 
@@ -514,12 +527,6 @@ requiredEnvVars.forEach(envVar => {
 
 ### Documentation
 
-**JSDoc Comments:**
-- All new functions, interfaces, classes must have JSDoc style comments
-- Include @param tags for all parameters with types and descriptions
-- Include @returns tag for return values with type and description
-- Use descriptive comments that explain the purpose and behavior
-
 **Import Patterns:**
 - Use `type` imports for TypeScript types: `import type React from 'react'`
 - Import Sitecore components: `import { Text, RichText, Image, useSitecore } from '@sitecore-content-sdk/nextjs'`
@@ -539,21 +546,6 @@ import { ComponentProps } from '@/lib/component-props';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
 import { ButtonBase } from '@/components/button-component/ButtonComponent';
-
-/**
- * Hero component for displaying prominent content on XM Cloud pages
- * @param {HeroProps} props - Component props from XM Cloud datasource
- * @returns {JSX.Element} The rendered hero component with variants support
- */
-export const HeroDefault: React.FC<HeroProps> = (props) => {
-  const { fields, isPageEditing } = props;
-  
-  if (!fields?.data?.datasource) {
-    return <NoDataFallback componentName="Hero" />;
-  }
-  
-  // Component implementation
-};
 ```
 
 ## Sitecore XM Cloud Rules

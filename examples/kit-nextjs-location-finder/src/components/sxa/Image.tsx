@@ -37,11 +37,20 @@ export const Banner = (props: ImageProps): JSX.Element => {
   const backgroundStyle = (props?.fields?.Image?.value?.src && {
     backgroundImage: `url('${props.fields.Image.value.src}')`,
   }) as CSSProperties;
+
+  const altText = String(
+    props.fields?.ImageCaption?.value ||
+    props.fields?.Image?.value?.alt ||
+    props.fields?.Image?.value?.title ||
+    'Hero banner image'
+  );
+
   const modifyImageProps = {
     ...props.fields.Image,
     value: {
       ...props.fields.Image.value,
       style: { objectFit: 'cover', width: '100%', height: '100%' },
+      alt: altText,
     },
   };
 
@@ -61,8 +70,27 @@ export const Default = (props: ImageProps): JSX.Element => {
   const { isEditing } = props.page.mode;
 
   if (props.fields) {
-    const Image = () => <ContentSdkImage field={props.fields.Image} />;
+    const altText = String(
+      props.fields?.ImageCaption?.value ||
+      props.fields?.Image?.value?.alt ||
+      props.fields?.Image?.value?.title ||
+      'Image'
+    );
+
+    const imageWithAlt = {
+      ...props.fields.Image,
+      value: {
+        ...props.fields.Image.value,
+        alt: altText,
+      },
+    };
+
+    const Image = () => <ContentSdkImage field={imageWithAlt} />;
     const id = props.params.RenderingIdentifier;
+
+    const linkAriaLabel = props.fields.TargetUrl?.value?.title || 
+                          props.fields.ImageCaption?.value?.toString() || 
+                          'View details';
 
     return (
       <div className={`component image ${props.params.styles}`} id={id ? id : undefined}>
@@ -70,7 +98,7 @@ export const Default = (props: ImageProps): JSX.Element => {
           {isEditing || !props.fields.TargetUrl?.value?.href ? (
             <Image />
           ) : (
-            <ContentSdkLink field={props.fields.TargetUrl}>
+            <ContentSdkLink field={props.fields.TargetUrl} aria-label={linkAriaLabel}>
               <Image />
             </ContentSdkLink>
           )}

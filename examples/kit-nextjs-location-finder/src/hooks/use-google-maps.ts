@@ -15,11 +15,6 @@ declare global {
   }
 }
 
-/**
- * Custom hook to load Google Maps API only once across all components
- * @param apiKey - Google Maps API key
- * @returns Object with isLoaded and error states
- */
 export const useGoogleMaps = (apiKey: string) => {
   const [isLoaded, setIsLoaded] = useState(isGoogleMapsLoaded);
   const [error, setError] = useState<Error | null>(null);

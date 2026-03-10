@@ -38,7 +38,10 @@ export function VideoPlayer({
 
   const handlePlay = () => {
     onPlay();
-    playerRef.current?.internalPlayer.playVideo();
+    // If player already mounted (e.g. resuming), play; otherwise autoplay will start when iframe loads
+    if (playerRef.current?.internalPlayer) {
+      playerRef.current.internalPlayer.playVideo();
+    }
   };
 
   return (
@@ -51,22 +54,34 @@ export function VideoPlayer({
           />
         </button>
       )}
-      <YouTube
-        videoId={videoId}
-        opts={{
-          width: '100%',
-          height: '100%',
-          playerVars: {
-            playsinline: 0,
-            autoplay: isPlaying ? 1 : 0,
-            controls: 1,
-            modestbranding: 1,
-            rel: 0,
-          },
-        }}
-        className={`h-full w-full ${isPlaying ? 'block' : 'hidden'}`}
-        ref={playerRef}
-      />
+      {/* Only mount YouTube iframe after user clicks play to avoid third-party cookie warnings */}
+      {isPlaying && videoId && (
+        <YouTube
+          videoId={videoId}
+          opts={{
+            width: '100%',
+            height: '100%',
+            playerVars: {
+              playsinline: 0,
+              autoplay: 1,
+              controls: 1,
+              modestbranding: 1,
+              rel: 0,
+              // Enable privacy-enhanced mode to reduce third-party cookies
+              origin: typeof window !== 'undefined' ? window.location.origin : '',
+            },
+            // Use privacy-enhanced YouTube domain (youtube-nocookie.com)
+            // This reduces third-party cookie usage
+            host: 'https://www.youtube-nocookie.com',
+          }}
+          className="h-full w-full"
+          ref={playerRef}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          onError={(error: any) => {
+            console.error('YouTube video loading error:', error);
+          }}
+        />
+      )}
     </div>
   );
 }

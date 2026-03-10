@@ -29,6 +29,11 @@ type PageProps = {
 export default async function Page({ params, searchParams }: PageProps) {
   const { site, locale, path } = await params;
   const draft = await draftMode();
+  const headersList = await headers();
+  const host = headersList.get('host') || '';
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || (host ? `${protocol}://${host}` : '') || '';
 
   // Set site and locale to be available in src/i18n/request.ts for fetching the dictionary
   setRequestLocale(`${site}_${locale}`);
@@ -57,7 +62,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   return (
     <NextIntlClientProvider>
       <Providers page={page} componentProps={componentProps}>
-        <Layout page={page} />
+        <Layout page={page} baseUrl={baseUrl || undefined} />
       </Providers>
     </NextIntlClientProvider>
   );
@@ -80,37 +85,94 @@ export const generateStaticParams = async () => {
   return [];
 };
 
-// Metadata fields for the page.
 export const generateMetadata = async ({ params }: PageProps) => {
   const headersList = await headers();
-  const host = headersList.get('host');
+  const host = headersList.get('host') || '';
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const url = `${protocol}://${host}`;
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || (host ? `${protocol}://${host}` : '');
+
   const { path, site, locale } = await params;
+
+  // Canonical URL: base URL + content path only (no site/locale segments)
+  const pathSegment = path?.length ? `/${path.join('/')}` : '';
+  const canonicalUrl = baseUrl ? `${baseUrl}${pathSegment}` : undefined;
 
   // The same call as for rendering the page. Should be cached by default react behavior
   const page = await client.getPage(path ?? [], { site, locale });
+
   // Cast route fields once to the expected RouteFields shape to avoid accessing unknown {}
   const routeFields = (page?.layout.sitecore.route?.fields ?? {}) as RouteFields;
 
-  const metadataTitle = routeFields?.metadataTitle?.value?.toString();
-  const pageTitle = routeFields?.pageTitle?.value?.toString();
-  const ogDescription = routeFields?.ogDescription?.value?.toString();
-  const description = routeFields?.metadataDescription?.value?.toString();
-  const ogTitle = routeFields?.ogTitle?.value?.toString();
-  const ogImageSrc = routeFields?.ogImage?.value?.src;
+  // Extract metadata values with fallback chain
+  const metadataTitle =
+    routeFields?.metadataTitle?.value?.toString() ||
+    routeFields?.pageTitle?.value?.toString() ||
+    'Page';
+
+  const metadataDescription =
+    routeFields?.metadataDescription?.value?.toString() ||
+    routeFields?.pageSummary?.value?.toString() ||
+    'SYNC - Premium audio gear for professionals';
+
+  const ogTitle =
+    routeFields?.ogTitle?.value?.toString() ||
+    metadataTitle;
+
+  const ogDescription =
+    routeFields?.ogDescription?.value?.toString() ||
+    metadataDescription;
+
+  // Ensure image URL is absolute (HTTPS preferred)
+  const imageSource =
+    routeFields?.ogImage?.value?.src ||
+    routeFields?.thumbnailImage?.value?.src;
+
+  const ogImageUrl = imageSource
+    ? imageSource.startsWith('http')
+      ? imageSource
+      : `${baseUrl}${imageSource.startsWith('/') ? '' : '/'}${imageSource}`
+    : undefined;
+
+  const pageUrl = canonicalUrl;
+
+  // Parse keywords from comma-separated string to array (for <meta name="keywords">)
+  const keywordsString = routeFields?.metadataKeywords?.value?.toString() || '';
+  const keywords = keywordsString
+    ? keywordsString.split(',').map((k: string) => k.trim())
+    : [];
 
   return {
-    title: metadataTitle || pageTitle || 'Page',
-    description: ogDescription || description || 'SYNC',
+    title: metadataTitle,
+    description: metadataDescription,
+    ...(keywords.length > 0 && { keywords }),
+    ...(canonicalUrl && {
+      alternates: {
+        canonical: canonicalUrl,
+      },
+    }),
     openGraph: {
-      title: ogTitle || 'Page',
+      title: ogTitle,
+      description: ogDescription,
+      url: pageUrl,
       type: 'website',
-      description: ogDescription || description || 'SYNC',
-      url: url,
-      images:
-        ogImageSrc ||
-        'https://edge.sitecorecloud.io/sitecoresaa60dc-chahcontentabf6-maina179-91b6/media/Feature/JSS-Experience-Accelerator/Basic-Site/banner-image.jpg?h=2001&iar=0&w=3000',
+      siteName: site || 'SYNC',
+      locale: locale || 'en',
+      images: ogImageUrl
+        ? [
+            {
+              url: ogImageUrl,
+              width: 1200,
+              height: 630,
+              alt: ogTitle,
+            },
+          ]
+        : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: ogTitle,
+      description: ogDescription,
+      images: ogImageUrl ? [ogImageUrl] : undefined,
     },
   };
 };

@@ -189,9 +189,9 @@ const FeatureBox = React.forwardRef<HTMLDivElement, FeatureBoxProps>((props, ref
             height={600}
             className="aspect-3/2 w-full object-cover mb-4"
           />
-          <h6 className="font-semibold mb-4">
+          <p className="font-semibold mb-4">
             <ContentSdkText field={props.feature.featureTagLine?.jsonValue} />
-          </h6>
+          </p>
           <h3 className="text-4xl font-bold mb-6">
             <ContentSdkText field={props.feature.featureHeading?.jsonValue} />
           </h3>
@@ -285,9 +285,9 @@ const FeatureBox = React.forwardRef<HTMLDivElement, FeatureBoxProps>((props, ref
             />
           </div>
           <div className="flex flex-col basis-full p-4">
-            <h6 className="font-semibold text-xs mb-2">
+            <p className="font-semibold text-xs mb-2">
               <ContentSdkText field={props.feature.featureTagLine?.jsonValue} />
-            </h6>
+            </p>
             <h3 className="text-xl font-medium mb-4">
               <ContentSdkText field={props.feature.featureHeading?.jsonValue} />
             </h3>
@@ -320,9 +320,9 @@ const FeatureBox = React.forwardRef<HTMLDivElement, FeatureBoxProps>((props, ref
             />
           </div>
           <div className="flex flex-col basis-full p-4">
-            <h6 className="font-semibold text-xs mb-2">
+            <p className="font-semibold text-xs mb-2">
               <ContentSdkText field={props.feature.featureTagLine?.jsonValue} />
-            </h6>
+            </p>
             <h3 className="text-xl font-medium mb-4">
               <ContentSdkText field={props.feature.featureHeading?.jsonValue} />
             </h3>
@@ -416,9 +416,9 @@ export const Default = (props: FeatureSectionProps): JSX.Element => {
       <div className="container mx-auto">
         <div className="grid md:grid-cols-2 items-center gap-x-20 gap-y-12">
           <div>
-            <h6 className="font-semibold mb-4">
+            <p className="font-semibold mb-4">
               <ContentSdkText field={datasource.tagLine?.jsonValue} />
-            </h6>
+            </p>
             <h2 className="text-5xl font-bold mb-6">
               <ContentSdkText field={datasource.heading?.jsonValue} />
             </h2>
@@ -465,9 +465,9 @@ export const FeaturesSection1 = (props: FeatureSectionProps): JSX.Element => {
       <div className="container mx-auto">
         <div className="grid md:grid-cols-2 items-center gap-x-20 gap-y-12">
           <div>
-            <h6 className="font-semibold mb-4">
+            <p className="font-semibold mb-4">
               <ContentSdkText field={datasource.tagLine?.jsonValue} />
-            </h6>
+            </p>
             <h2 className="text-5xl font-bold mb-6">
               <ContentSdkText field={datasource.heading?.jsonValue} />
             </h2>
@@ -514,9 +514,9 @@ export const FeaturesSection2 = (props: FeatureSectionProps): JSX.Element => {
       <div className="container mx-auto">
         <div className="grid md:grid-cols-2 items-center gap-x-20 gap-y-12">
           <div>
-            <h6 className="font-semibold mb-4">
+            <p className="font-semibold mb-4">
               <ContentSdkText field={datasource.tagLine?.jsonValue} />
-            </h6>
+            </p>
             <h2 className="text-5xl font-bold mb-6">
               <ContentSdkText field={datasource.heading?.jsonValue} />
             </h2>
@@ -563,9 +563,9 @@ export const FeaturesSection3 = (props: FeatureSectionProps): JSX.Element => {
       <div className="container mx-auto">
         <div className="grid md:grid-cols-2 gap-x-20 gap-y-4">
           <div>
-            <h6 className="font-semibold mb-4">
+            <p className="font-semibold mb-4">
               <ContentSdkText field={datasource.tagLine?.jsonValue} />
-            </h6>
+            </p>
             <h2 className="text-5xl font-bold">
               <ContentSdkText field={datasource.heading?.jsonValue} />
             </h2>
@@ -612,9 +612,9 @@ export const FeaturesSection4 = (props: FeatureSectionProps): JSX.Element => {
       <div className="container mx-auto">
         <div className="grid md:grid-cols-2 gap-x-20 gap-y-4">
           <div>
-            <h6 className="font-semibold mb-4">
+            <p className="font-semibold mb-4">
               <ContentSdkText field={datasource.tagLine?.jsonValue} />
-            </h6>
+            </p>
             <h2 className="text-5xl font-bold">
               <ContentSdkText field={datasource.heading?.jsonValue} />
             </h2>
@@ -650,9 +650,9 @@ export const FeaturesSection5 = (props: FeatureSectionProps): JSX.Element => {
       <div className="container mx-auto">
         <div className="grid md:grid-cols-2 gap-x-20 gap-y-4">
           <div>
-            <h6 className="font-semibold mb-4">
+            <p className="font-semibold mb-4">
               <ContentSdkText field={datasource.tagLine?.jsonValue} />
-            </h6>
+            </p>
             <h2 className="text-5xl font-bold">
               <ContentSdkText field={datasource.heading?.jsonValue} />
             </h2>
@@ -688,9 +688,9 @@ export const FeaturesSection6 = (props: FeatureSectionProps): JSX.Element => {
       <div className="container mx-auto">
         <div className="grid md:grid-cols-2 gap-x-20 gap-y-4">
           <div>
-            <h6 className="font-semibold mb-4">
+            <p className="font-semibold mb-4">
               <ContentSdkText field={datasource.tagLine?.jsonValue} />
-            </h6>
+            </p>
             <h2 className="text-5xl font-bold mb-6">
               <ContentSdkText field={datasource.heading?.jsonValue} />
             </h2>
@@ -823,9 +823,9 @@ export const FeaturesSection11 = (props: FeatureSectionProps): JSX.Element => {
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto">
         <div className="max-w-3xl mx-auto text-center">
-          <h6 className="font-semibold mb-4">
+          <p className="font-semibold mb-4">
             <ContentSdkText field={datasource.tagLine?.jsonValue} />
-          </h6>
+          </p>
           <h2 className="text-5xl font-bold mb-6">
             <ContentSdkText field={datasource.heading?.jsonValue} />
           </h2>
@@ -871,9 +871,9 @@ export const FeaturesSection12 = (props: FeatureSectionProps): JSX.Element => {
       <div className="container mx-auto">
         <div className="grid md:grid-cols-2 gap-x-20 gap-y-12">
           <div>
-            <h6 className="font-semibold mb-4">
+            <p className="font-semibold mb-4">
               <ContentSdkText field={datasource.tagLine?.jsonValue} />
-            </h6>
+            </p>
             <h2 className="text-5xl font-bold mb-6">
               <ContentSdkText field={datasource.heading?.jsonValue} />
             </h2>
@@ -935,9 +935,9 @@ export const FeaturesSection13 = (props: FeatureSectionProps): JSX.Element => {
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto">
         <div className="max-w-3xl mx-auto text-center">
-          <h6 className="font-semibold mb-4">
+          <p className="font-semibold mb-4">
             <ContentSdkText field={datasource.tagLine?.jsonValue} />
-          </h6>
+          </p>
           <h2 className="text-5xl font-bold mb-6">
             <ContentSdkText field={datasource.heading?.jsonValue} />
           </h2>
@@ -1012,9 +1012,9 @@ export const FeaturesSection14 = (props: FeatureSectionProps): JSX.Element => {
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto">
         <div className="max-w-3xl mx-auto text-center">
-          <h6 className="font-semibold mb-4">
+          <p className="font-semibold mb-4">
             <ContentSdkText field={datasource.tagLine?.jsonValue} />
-          </h6>
+          </p>
           <h2 className="text-5xl font-bold mb-6">
             <ContentSdkText field={datasource.heading?.jsonValue} />
           </h2>
@@ -1051,9 +1051,9 @@ export const FeaturesSection15 = (props: FeatureSectionProps): JSX.Element => {
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto">
         <div className="max-w-3xl mx-auto text-center">
-          <h6 className="font-semibold mb-4">
+          <p className="font-semibold mb-4">
             <ContentSdkText field={datasource.tagLine?.jsonValue} />
-          </h6>
+          </p>
           <h2 className="text-5xl font-bold mb-6">
             <ContentSdkText field={datasource.heading?.jsonValue} />
           </h2>
@@ -1097,9 +1097,9 @@ export const FeaturesSection16 = (props: FeatureSectionProps): JSX.Element => {
               className="absolute inset-0 w-full h-full object-cover brightness-50 z-10"
             />
             <div className="relative h-full flex flex-col justify-center max-w-2xl mx-auto text-white text-center z-20">
-              <h6 className="font-semibold mb-4">
+              <p className="font-semibold mb-4">
                 <ContentSdkText field={datasource.tagLine?.jsonValue} />
-              </h6>
+              </p>
               <h2 className="text-5xl font-bold mb-6">
                 <ContentSdkText field={datasource.heading?.jsonValue} />
               </h2>
@@ -1136,9 +1136,9 @@ export const FeaturesSection17 = (props: FeatureSectionProps): JSX.Element => {
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto">
         <div className="max-w-3xl">
-          <h6 className="font-semibold mb-4">
+          <p className="font-semibold mb-4">
             <ContentSdkText field={datasource.tagLine?.jsonValue} />
-          </h6>
+          </p>
           <h2 className="text-5xl font-bold mb-6">
             <ContentSdkText field={datasource.heading?.jsonValue} />
           </h2>
@@ -1159,9 +1159,9 @@ export const FeaturesSection17 = (props: FeatureSectionProps): JSX.Element => {
                 key={feature.id}
                 className="md:border-b-0 md:last:border-b md:data-[state=active]:border-b-inherit md:border-e md:data-[state=active]:border-e-transparent"
               >
-                <h6 className="text-xl font-bold">
+                <p className="text-xl font-bold">
                   <ContentSdkText field={feature.featureTagLine?.jsonValue} />
-                </h6>
+                </p>
               </TabsTrigger>
             ))}
           </TabsList>
@@ -1202,9 +1202,9 @@ export const FeaturesSection18 = (props: FeatureSectionProps): JSX.Element => {
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto">
         <div className="max-w-3xl">
-          <h6 className="font-semibold mb-4">
+          <p className="font-semibold mb-4">
             <ContentSdkText field={datasource.tagLine?.jsonValue} />
-          </h6>
+          </p>
           <h2 className="text-5xl font-bold mb-6">
             <ContentSdkText field={datasource.heading?.jsonValue} />
           </h2>
@@ -1218,9 +1218,9 @@ export const FeaturesSection18 = (props: FeatureSectionProps): JSX.Element => {
           <TabsList>
             {datasource.children.results.map((feature) => (
               <TabsTrigger value={feature.id} key={feature.id}>
-                <h6 className="text-xl font-bold">
+                <p className="text-xl font-bold">
                   <ContentSdkText field={feature.featureTagLine?.jsonValue} />
-                </h6>
+                </p>
               </TabsTrigger>
             ))}
           </TabsList>
@@ -1270,9 +1270,9 @@ export const FeaturesSection19 = (props: FeatureSectionProps): JSX.Element => {
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto">
         <div className="max-w-3xl">
-          <h6 className="font-semibold mb-4">
+          <p className="font-semibold mb-4">
             <ContentSdkText field={datasource.tagLine?.jsonValue} />
-          </h6>
+          </p>
           <h2 className="text-5xl font-bold mb-6">
             <ContentSdkText field={datasource.heading?.jsonValue} />
           </h2>
@@ -1301,9 +1301,9 @@ export const FeaturesSection19 = (props: FeatureSectionProps): JSX.Element => {
                     height={24}
                     className="shrink-0 md:mb-auto"
                   />
-                  <h6 className="text-2xl font-bold mx-auto md:mx-0 md:[writing-mode:vertical-rl] md:rotate-180">
+                  <p className="text-2xl font-bold mx-auto md:mx-0 md:[writing-mode:vertical-rl] md:rotate-180">
                     <ContentSdkText field={feature.featureTagLine?.jsonValue} />
-                  </h6>
+                  </p>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="w-full px-10 py-12">
@@ -1374,9 +1374,9 @@ export const FeaturesSection21 = (props: FeatureSectionProps): JSX.Element => {
     >
       <div className="container mx-auto">
         <div className={`fade-section fade-up ${isVisibleText ? 'is-visible' : ''}`} ref={textRef}>
-          <h6 className="text-xs font-semibold tracking-widest uppercase mb-4">
+          <p className="text-xs font-semibold tracking-widest uppercase mb-4">
             <ContentSdkText field={datasource.tagLine?.jsonValue} />
-          </h6>
+          </p>
           <h2 className="text-5xl font-medium">
             <ContentSdkText field={datasource.heading?.jsonValue} />
           </h2>
@@ -1464,9 +1464,9 @@ export const FeaturesSection22 = (props: FeatureSectionProps): JSX.Element => {
               ref={firstRef}
             >
               <div className="flex flex-col p-4">
-                <h6 className="font-semibold text-xs mb-auto">
+                <p className="font-semibold text-xs mb-auto">
                   <ContentSdkText field={first.featureTagLine?.jsonValue} />
-                </h6>
+                </p>
                 <h3 className="text-3xl font-medium mb-6 mt-4">
                   <ContentSdkText field={first.featureHeading?.jsonValue} />
                 </h3>
@@ -1526,9 +1526,9 @@ export const FeaturesSection23 = (props: FeatureSectionProps): JSX.Element => {
             className={`fade-section fade-up ${isVisibleText ? 'is-visible' : ''}`}
             ref={textRef}
           >
-            <h6 className="text-xs font-semibold tracking-widest uppercase mb-4">
+            <p className="text-xs font-semibold tracking-widest uppercase mb-4">
               <ContentSdkText field={datasource.tagLine?.jsonValue} />
-            </h6>
+            </p>
             <h2 className="text-5xl font-medium mb-6">
               <ContentSdkText field={datasource.heading?.jsonValue} />
             </h2>
@@ -1591,9 +1591,9 @@ export const FeaturesSection24 = (props: FeatureSectionProps): JSX.Element => {
             className={`fade-section fade-up ${isVisibleText ? 'is-visible' : ''}`}
             ref={textRef}
           >
-            <h6 className="text-xs font-semibold tracking-widest uppercase mb-4">
+            <p className="text-xs font-semibold tracking-widest uppercase mb-4">
               <ContentSdkText field={datasource.tagLine?.jsonValue} />
-            </h6>
+            </p>
             <h2 className="text-5xl font-medium mb-6">
               <ContentSdkText field={datasource.heading?.jsonValue} />
             </h2>
@@ -1644,9 +1644,9 @@ export const FeaturesSection25 = (props: FeatureSectionProps): JSX.Element => {
       <div className="container mx-auto bg-[#FFF8F3]">
         <div className="grid lg:grid-cols-3 gap-x-20 gap-y-4 px-16 py-12">
           <div className="max-w-[20rem]">
-            <h6 className="font-semibold mb-4">
+            <p className="font-semibold mb-4">
               <ContentSdkText field={datasource.tagLine?.jsonValue} />
-            </h6>
+            </p>
             <h2 className="text-3xl font-semibold">
               <ContentSdkText field={datasource.heading?.jsonValue} />
             </h2>
@@ -1667,9 +1667,9 @@ export const FeaturesSection25 = (props: FeatureSectionProps): JSX.Element => {
               {datasource.children.results.map((feature) => (
                 <li className={`flex flex-col items-center gap-4`} key={feature.id}>
                   <ContentSdkImage field={feature.featureIcon?.jsonValue} width={30} height={30} />
-                  <h6 className="text-sm font-semibold text-center">
+                  <h3 className="text-sm font-semibold text-center">
                     <ContentSdkText field={feature.featureHeading.jsonValue} />
-                  </h6>
+                  </h3>
                 </li>
               ))}
             </ul>

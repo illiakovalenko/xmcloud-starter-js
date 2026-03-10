@@ -81,8 +81,8 @@ export const Default = ({ params, fields }: LinkListProps) => {
   };
 
   return (
-    <div className={styles} id={id}>
+    <aside className={styles} id={id}>
       <div className="component-content">{renderContent()}</div>
-    </div>
+    </aside>
   );
 };

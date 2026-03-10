@@ -10,6 +10,24 @@ import { useInView } from 'framer-motion';
 import NextImage, { ImageProps } from 'next/image';
 import placeholderImageLoader from '@/utils/placeholderImageLoader';
 
+/**
+ * Returns true if the URL is from a host allowed by Next.js remotePatterns (see next.config).
+ * These hosts can be optimized by the Next.js Image Optimization API.
+ */
+function isAllowedRemoteImageHost(url: string): boolean {
+  try {
+    const hostname = new URL(url).hostname.toLowerCase();
+    return (
+      /^edge/.test(hostname) ||
+      /^xmc-/.test(hostname) ||
+      hostname.endsWith('.sitecore-staging.cloud') ||
+      hostname.endsWith('.sitecorecloud.io')
+    );
+  } catch {
+    return false;
+  }
+}
+
 export type ImageWrapperProps = {
   image?: ImageField;
   className?: string;
@@ -22,11 +40,6 @@ export type ImageWrapperProps = {
   [key: string]: any;
 };
 
-/**
- * Client-side image wrapper with Sitecore editing support, lazy loading, and optimization options.
- * @param {ImageWrapperProps} props - Image field, class names, and pass-through props
- * @returns {JSX.Element} Rendered image (ContentSdk Image in edit/preview, NextImage otherwise)
- */
 export const ImageWrapperClient: React.FC<ImageWrapperProps> = (props) => {
   const { image, className, wrapperClass, sizes, ...rest } = props;
   const { page } = useSitecore();
@@ -51,15 +64,15 @@ export const ImageWrapperClient: React.FC<ImageWrapperProps> = (props) => {
 
   const imageSrc = image?.value?.src ? image?.value?.src : '';
   const isSvg = imageSrc.includes('.svg');
-
-  // if  unoptimized || svg || external
-  // Check if image is from external domain (not current hostname)
-  // Only check window.location after hydration is complete to avoid hydration mismatch
-  const isUnoptimized =
-    unoptimized ||
-    isSvg ||
-    (imageSrc.startsWith('https://') &&
-      (isClient ? !imageSrc.includes(window.location.hostname) : false));
+  // Only disable optimization for: context override, SVG, or external URLs not in remotePatterns.
+  // Sitecore/XM Cloud URLs (edge*, xmc-*, *.sitecore-staging.cloud, *.sitecorecloud.io) are
+  // allowed in next.config and should be optimized to fix Lighthouse "Improve image delivery".
+  const isExternalNotAllowed =
+    imageSrc.startsWith('https://') &&
+    isClient &&
+    !imageSrc.includes(window.location.hostname) &&
+    !isAllowedRemoteImageHost(imageSrc);
+  const isUnoptimized = unoptimized || isSvg || isExternalNotAllowed;
 
   const isPicsumImage = imageSrc.includes('picsum.photos');
 
@@ -74,7 +87,14 @@ export const ImageWrapperClient: React.FC<ImageWrapperProps> = (props) => {
           className={className}
           unoptimized={isUnoptimized}
           priority={inView ? true : false}
-          sizes={isSvg ? sizes : undefined}
+          // Always use sizes for responsive images (except SVG which doesn't need it)
+          // If sizes not provided, use a sensible default for full-width images
+          sizes={
+            isSvg
+              ? undefined
+              : sizes ||
+                '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 1200px'
+          }
           blurDataURL={image?.value?.src}
           placeholder="blur"
           //if image is an svg and no width is provide, set a default to avoid error, this will be overwritten by css

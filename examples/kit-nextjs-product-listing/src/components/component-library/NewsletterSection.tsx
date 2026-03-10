@@ -58,9 +58,9 @@ const NewsletterSectionTemplate = (props: NewsletterSectionTemplateProps) => {
           } ${props.centered ? 'mx-auto items-center text-center' : ''} `}
         >
           <div>
-            <h6 className="font-semibold mb-4">
+            <p className="font-semibold mb-4">
               <ContentSdkText field={props.fields.Tagline} />
-            </h6>
+            </p>
             <h1 className={`${props.withColumns ? 'text-5xl' : 'text-6xl'} font-bold mb-6`}>
               <ContentSdkText field={props.fields.Heading} />
             </h1>

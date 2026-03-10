@@ -40,6 +40,7 @@ import * as SubscriptionBanner from 'src/components/subscription-banner/Subscrip
 import * as SubmissionFormDefaultdev from 'src/components/submission-form/SubmissionFormDefault.dev';
 import * as SubmissionFormCentereddev from 'src/components/submission-form/SubmissionFormCentered.dev';
 import * as SubmissionForm from 'src/components/submission-form/SubmissionForm';
+import * as StructuredData from 'src/components/structured-data/StructuredData';
 import * as SlideCarouseldev from 'src/components/slide-carousel/SlideCarousel.dev';
 import * as SiteMetadata from 'src/components/site-metadata/SiteMetadata';
 import * as SecondaryNavigation from 'src/components/secondary-navigation/SecondaryNavigation';
@@ -214,6 +215,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['SubmissionFormDefault', { ...SubmissionFormDefaultdev }],
   ['SubmissionFormCentered', { ...SubmissionFormCentereddev }],
   ['SubmissionForm', { ...SubmissionForm, componentType: 'client' }],
+  ['StructuredData', { ...StructuredData }],
   ['SlideCarousel', { ...SlideCarouseldev }],
   ['SiteMetadata', { ...SiteMetadata }],
   ['SecondaryNavigation', { ...SecondaryNavigation, componentType: 'client' }],

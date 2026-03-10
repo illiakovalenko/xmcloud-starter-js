@@ -90,7 +90,7 @@ export const GlobalHeaderDefault: React.FC<GlobalHeaderProps> = (props) => {
             </div>
           </div>
           {/* Desktop Navigation */}
-          <div className="@lg:flex @lg:flex-1 hidden" ref={navRef}>
+          <nav className="@lg:flex @lg:flex-1 hidden" ref={navRef} aria-label="Main navigation">
             <NavigationMenu className="w-full">
               <div className="relative w-full">
                 <AnimatedHoverNav
@@ -130,7 +130,7 @@ export const GlobalHeaderDefault: React.FC<GlobalHeaderProps> = (props) => {
                 </AnimatedHoverNav>
               </div>
             </NavigationMenu>
-          </div>
+          </nav>
           {/* Desktop CTA */}
           {headerContact?.jsonValue?.value && (
             <div className="@lg:flex @lg:items-center @lg:justify-end hidden">
@@ -150,7 +150,7 @@ export const GlobalHeaderDefault: React.FC<GlobalHeaderProps> = (props) => {
             </div>
           )}
           {/* Mobile Navigation */}
-          <div className="@lg:hidden flex flex-1 justify-end">
+          <nav className="@lg:hidden flex flex-1 justify-end" aria-label="Mobile navigation">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <AnimatePresence>
                 {isOpen && (
@@ -160,11 +160,12 @@ export const GlobalHeaderDefault: React.FC<GlobalHeaderProps> = (props) => {
                     exit={{ opacity: 0 }}
                     className="bg-background/30 fixed inset-0 z-40 backdrop-blur-sm"
                     onClick={() => setIsOpen(false)}
+                    aria-hidden="true"
                   />
                 )}
               </AnimatePresence>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="hover:bg-transparent [&_svg]:size-8">
+                <Button variant="ghost" size="icon" className="hover:bg-transparent [&_svg]:size-8" aria-label="Toggle navigation menu">
                   <Menu />
                   <span className="sr-only">Toggle menu</span>
                 </Button>
@@ -190,6 +191,7 @@ export const GlobalHeaderDefault: React.FC<GlobalHeaderProps> = (props) => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         className="flex flex-col space-y-4"
+                        aria-label="Mobile navigation menu"
                       >
                         {primaryNavigationLinks?.targetItems &&
                           primaryNavigationLinks.targetItems.length > 0 &&
@@ -252,7 +254,7 @@ export const GlobalHeaderDefault: React.FC<GlobalHeaderProps> = (props) => {
                 </motion.div>
               </SheetContent>
             </Sheet>
-          </div>
+          </nav>
         </div>
       </motion.header>
     </AnimatePresence>

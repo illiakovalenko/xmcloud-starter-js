@@ -32,14 +32,14 @@ export const Default = ({
   const id = params.RenderingIdentifier;
 
   return (
-    <div className={`component row-splitter ${params.styles}`} id={id}>
+    <section className={`component row-splitter ${params.styles}`} id={id}>
       {enabledPlaceholders.map((ph, index) => {
         const num = Number(ph) as RowNumber;
         const placeholderKey = `row-${num}-{*}`;
         const rowStyles = `${params[`Styles${num}`] ?? ""}`.trimEnd();
 
         return (
-          <div key={index} className={`container-fluid ${rowStyles}`.trimEnd()}>
+          <section key={index} className={`container-fluid ${rowStyles}`.trimEnd()}>
             <div>
               <div className="row">
                 <AppPlaceholder
@@ -50,9 +50,9 @@ export const Default = ({
                 />
               </div>
             </div>
-          </div>
+          </section>
         );
       })}
-    </div>
+    </section>
   );
 };

@@ -15,6 +15,8 @@ import {
   AccordionTrigger,
 } from 'shadcd/components/ui/accordion';
 import ContentSdkRichText from '@/components/content-sdk-rich-text/ContentSdkRichText';
+import { generateFAQPageSchema } from '@/lib/structured-data/schema';
+import { StructuredData } from '@/components/structured-data/StructuredData';
 
 interface Fields {
   data: {
@@ -152,8 +154,19 @@ const QuestionItem = (props: QuestionItemProps) => {
 export const Default = (props: FAQProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
 
+  // Generate JSON-LD structured data for FAQPage
+  const faqSchema = useMemo(() => {
+    const faqs: Array<{ question: string; answer: string }> = datasource.children.results.map((q) => ({
+      question: String(q.question?.jsonValue?.value || ''),
+      answer: String(q.answer?.jsonValue?.value || ''),
+    }));
+    return generateFAQPageSchema(faqs);
+  }, [datasource.children.results]);
+
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
+      {/* JSON-LD structured data for FAQPage */}
+      {faqSchema && <StructuredData id="faq-schema-default" data={faqSchema} />}
       <div className="container mx-auto">
         <div className="max-w-3xl mx-auto">
           <div className="text-center">
@@ -194,8 +207,19 @@ export const FAQ1 = (props: FAQProps): JSX.Element => {
   const expandAll = () => setOpenItems(itemIds);
   const collapseAll = () => setOpenItems([]);
 
+  // Generate JSON-LD structured data for FAQPage
+  const faqSchema = useMemo(() => {
+    const faqs: Array<{ question: string; answer: string }> = datasource.children.results.map((q) => ({
+      question: String(q.question?.jsonValue?.value || ''),
+      answer: String(q.answer?.jsonValue?.value || ''),
+    }));
+    return generateFAQPageSchema(faqs);
+  }, [datasource.children.results]);
+
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
+      {/* JSON-LD structured data for FAQPage */}
+      {faqSchema && <StructuredData id="faq-schema-1" data={faqSchema} />}
       <div className="container mx-auto">
         <div>
           <h2 className="text-3xl font-semibold mb-6">
@@ -248,8 +272,19 @@ export const FAQ1 = (props: FAQProps): JSX.Element => {
 export const FAQ2 = (props: FAQProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
 
+  // Generate JSON-LD structured data for FAQPage
+  const faqSchema = useMemo(() => {
+    const faqs: Array<{ question: string; answer: string }> = datasource.children.results.map((q) => ({
+      question: String(q.question?.jsonValue?.value || ''),
+      answer: String(q.answer?.jsonValue?.value || ''),
+    }));
+    return generateFAQPageSchema(faqs);
+  }, [datasource.children.results]);
+
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
+      {/* JSON-LD structured data for FAQPage */}
+      {faqSchema && <StructuredData id="faq-schema-2" data={faqSchema} />}
       <div className="container mx-auto">
         <div className="grid gap-x-20 gap-y-12 md:grid-cols-2">
           <div>
@@ -279,8 +314,19 @@ export const FAQ2 = (props: FAQProps): JSX.Element => {
 export const FAQ3 = (props: FAQProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
 
+  // Generate JSON-LD structured data for FAQPage
+  const faqSchema = useMemo(() => {
+    const faqs: Array<{ question: string; answer: string }> = datasource.children.results.map((q) => ({
+      question: String(q.question?.jsonValue?.value || ''),
+      answer: String(q.answer?.jsonValue?.value || ''),
+    }));
+    return generateFAQPageSchema(faqs);
+  }, [datasource.children.results]);
+
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
+      {/* JSON-LD structured data for FAQPage */}
+      {faqSchema && <StructuredData id="faq-schema-3" data={faqSchema} />}
       <div className="container mx-auto">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-5xl font-bold mb-6">
@@ -325,8 +371,19 @@ export const FAQ3 = (props: FAQProps): JSX.Element => {
 export const FAQ4 = (props: FAQProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
 
+  // Generate JSON-LD structured data for FAQPage
+  const faqSchema = useMemo(() => {
+    const faqs: Array<{ question: string; answer: string }> = datasource.children.results.map((q) => ({
+      question: String(q.question?.jsonValue?.value || ''),
+      answer: String(q.answer?.jsonValue?.value || ''),
+    }));
+    return generateFAQPageSchema(faqs);
+  }, [datasource.children.results]);
+
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
+      {/* JSON-LD structured data for FAQPage */}
+      {faqSchema && <StructuredData id="faq-schema-4" data={faqSchema} />}
       <div className="container mx-auto">
         <div className="max-w-3xl mx-auto">
           <div className="text-center">
@@ -362,8 +419,19 @@ export const FAQ4 = (props: FAQProps): JSX.Element => {
 export const FAQ5 = (props: FAQProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
 
+  // Generate JSON-LD structured data for FAQPage
+  const faqSchema = useMemo(() => {
+    const faqs: Array<{ question: string; answer: string }> = datasource.children.results.map((q) => ({
+      question: String(q.question?.jsonValue?.value || ''),
+      answer: String(q.answer?.jsonValue?.value || ''),
+    }));
+    return generateFAQPageSchema(faqs);
+  }, [datasource.children.results]);
+
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
+      {/* JSON-LD structured data for FAQPage */}
+      {faqSchema && <StructuredData id="faq-schema-5" data={faqSchema} />}
       <div className="container mx-auto">
         <div className="grid gap-x-20 gap-y-12 md:grid-cols-2">
           <div>
@@ -393,8 +461,19 @@ export const FAQ5 = (props: FAQProps): JSX.Element => {
 export const FAQ6 = (props: FAQProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
 
+  // Generate JSON-LD structured data for FAQPage
+  const faqSchema = useMemo(() => {
+    const faqs: Array<{ question: string; answer: string }> = datasource.children.results.map((q) => ({
+      question: String(q.question?.jsonValue?.value || ''),
+      answer: String(q.answer?.jsonValue?.value || ''),
+    }));
+    return generateFAQPageSchema(faqs);
+  }, [datasource.children.results]);
+
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
+      {/* JSON-LD structured data for FAQPage */}
+      {faqSchema && <StructuredData id="faq-schema-6" data={faqSchema} />}
       <div className="container mx-auto">
         <div className="max-w-3xl">
           <h2 className="text-5xl font-bold mb-6">
@@ -428,8 +507,19 @@ export const FAQ6 = (props: FAQProps): JSX.Element => {
 export const FAQ7 = (props: FAQProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
 
+  // Generate JSON-LD structured data for FAQPage
+  const faqSchema = useMemo(() => {
+    const faqs: Array<{ question: string; answer: string }> = datasource.children.results.map((q) => ({
+      question: String(q.question?.jsonValue?.value || ''),
+      answer: String(q.answer?.jsonValue?.value || ''),
+    }));
+    return generateFAQPageSchema(faqs);
+  }, [datasource.children.results]);
+
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
+      {/* JSON-LD structured data for FAQPage */}
+      {faqSchema && <StructuredData id="faq-schema-7" data={faqSchema} />}
       <div className="container mx-auto">
         <div className="max-w-3xl">
           <h2 className="text-5xl font-bold mb-6">
@@ -463,8 +553,19 @@ export const FAQ7 = (props: FAQProps): JSX.Element => {
 export const FAQ8 = (props: FAQProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
 
+  // Generate JSON-LD structured data for FAQPage
+  const faqSchema = useMemo(() => {
+    const faqs: Array<{ question: string; answer: string }> = datasource.children.results.map((q) => ({
+      question: String(q.question?.jsonValue?.value || ''),
+      answer: String(q.answer?.jsonValue?.value || ''),
+    }));
+    return generateFAQPageSchema(faqs);
+  }, [datasource.children.results]);
+
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
+      {/* JSON-LD structured data for FAQPage */}
+      {faqSchema && <StructuredData id="faq-schema-8" data={faqSchema} />}
       <div className="container mx-auto">
         <div className="max-w-3xl">
           <h2 className="text-5xl font-bold mb-6">

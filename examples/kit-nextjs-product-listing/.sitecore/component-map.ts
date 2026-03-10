@@ -42,6 +42,7 @@ import * as SubmissionFormDefaultdev from 'src/components/submission-form/Submis
 import * as SubmissionFormCentereddev from 'src/components/submission-form/SubmissionFormCentered.dev';
 import * as SubmissionForm from 'src/components/submission-form/SubmissionForm';
 import * as submissionformprops from 'src/components/submission-form/submission-form.props';
+import * as StructuredData from 'src/components/structured-data/StructuredData';
 import * as SlideCarouseldev from 'src/components/slide-carousel/SlideCarousel.dev';
 import * as slidecarouselprops from 'src/components/slide-carousel/slide-carousel.props';
 import * as Video from 'src/components/site-three/Video';
@@ -285,6 +286,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['SubmissionFormCentered', { ...SubmissionFormCentereddev }],
   ['SubmissionForm', { ...SubmissionForm }],
   ['submission-form', { ...submissionformprops }],
+  ['StructuredData', { ...StructuredData }],
   ['SlideCarousel', { ...SlideCarouseldev }],
   ['slide-carousel', { ...slidecarouselprops }],
   ['Video', { ...Video }],

@@ -128,9 +128,9 @@ export const Default = (props: ProductComparisonProps) => {
                         className="aspect-square w-full h-full object-contain max-w-2xs mx-auto"
                       />
                     </div>
-                    <h5 className="text-xl lg:text-2xl mt-8 mb-3">
+                    <h3 className="text-xl lg:text-2xl mt-8 mb-3">
                       <ContentSdkText field={product.name} />
-                    </h5>
+                    </h3>
                     <p className="text-xl lg:text-2xl">
                       <ContentSdkText field={product.price} />
                     </p>

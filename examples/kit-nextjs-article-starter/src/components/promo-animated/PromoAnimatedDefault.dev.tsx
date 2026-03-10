@@ -102,13 +102,18 @@ export const PromoAnimatedDefault: React.FC<PromoAnimatedProps> = (props) => {
                 isPageEditing={isPageEditing}
               >
                 {primaryLink && (
-                  <Button buttonLink={primaryLink} isPageEditing={isPageEditing}></Button>
+                  <Button
+                    buttonLink={primaryLink}
+                    isPageEditing={isPageEditing}
+                    contextTitle={title?.value}
+                  ></Button>
                 )}
                 {secondaryLink && (
                   <Button
                     variant="secondary"
                     buttonLink={secondaryLink}
                     isPageEditing={isPageEditing}
+                    contextTitle={title?.value}
                   ></Button>
                 )}
               </AnimatedSection>

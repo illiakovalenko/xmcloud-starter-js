@@ -37,7 +37,7 @@ const Container = ({
   }
 
   return (
-    <div className={`component container-default ${styles}`} id={id}>
+    <section className={`component container-default ${styles}`} id={id}>
       <div className="component-content" style={backgroundStyle}>
         <div className="row">
           <AppPlaceholder
@@ -48,7 +48,7 @@ const Container = ({
           />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

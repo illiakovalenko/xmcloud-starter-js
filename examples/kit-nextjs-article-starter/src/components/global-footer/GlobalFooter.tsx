@@ -23,7 +23,8 @@ export const Default: React.FC<GlobalFooterProps> = (props) => {
 
   if (fields) {
     return (
-      <footer className="@container bg-primary text-white">
+      <>
+        <footer className="@container bg-primary text-white">
         <div className="@md:grid-cols-2 @lg:grid-cols-12 @lg:gap-8 @xl:px-8 mx-auto grid w-full max-w-screen-xl grid-cols-1 gap-8 px-4  py-12">
           {/* Logo section */}
           <div className="@lg:col-span-2">
@@ -77,6 +78,7 @@ export const Default: React.FC<GlobalFooterProps> = (props) => {
           </div>
         </div>
       </footer>
+      </>
     );
   }
   return <NoDataFallback componentName="Global Footer" />;

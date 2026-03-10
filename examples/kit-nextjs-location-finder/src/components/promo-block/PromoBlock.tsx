@@ -85,7 +85,7 @@ const PromoBlock = (props: PromoBlockProps): JSX.Element => {
     variation !== Variation.DEFAULT ? variationTwoClassesVariation : defaultClassesVariation;
   if (fields) {
     return (
-      <div
+      <article
         className={cn('component promo-block grid  columns-1 gap-6 align-middle sm:columns-12', [
           `row-span-${variantChoice.row}`,
         ])}
@@ -109,10 +109,10 @@ const PromoBlock = (props: PromoBlockProps): JSX.Element => {
             )}
           </Flex>
         </Flex>
-        <div className={variantChoice.container}>
+        <figure className={variantChoice.container}>
           <ImageWrapper image={image} className={variantChoice.image} page={props.page} />
-        </div>
-      </div>
+        </figure>
+      </article>
     );
   }
   return <NoDataFallback componentName="Promo Block" />;

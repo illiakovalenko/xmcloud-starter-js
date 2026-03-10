@@ -10,6 +10,8 @@ import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import { DesignLibraryApp } from '@sitecore-content-sdk/nextjs';
 import componentMap from '.sitecore/component-map';
+import { generateOrganizationSchema, generateWebSiteSchema } from 'src/lib/structured-data/schema';
+import { StructuredData } from 'src/components/structured-data/StructuredData';
 
 const heading = localFont({
   src: [
@@ -57,6 +59,7 @@ import SitecoreStyles from 'components/content-sdk/SitecoreStyles';
 
 interface LayoutProps {
   page: Page;
+  baseUrl?: string;
 }
 
 export interface RouteFields {
@@ -72,7 +75,7 @@ export interface RouteFields {
   thumbnailImage?: ImageField;
 }
 
-const Layout = ({ page }: LayoutProps): JSX.Element => {
+const Layout = ({ page, baseUrl: baseUrlProp }: LayoutProps): JSX.Element => {
   const { layout } = page;
   const { route } = layout.sitecore;
   const { isEditing } = page.mode;
@@ -81,9 +84,24 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
   const mainClassPageEditing = isEditing ? 'editing-mode' : 'prod-mode';
   const classNamesMain = `${mainClassPageEditing} ${mainClassPartialDesignEditing} ${accent.variable} ${body.variable} ${heading.variable} main-layout`;
 
+  // Generate JSON-LD structured data for Organization and WebSite (use request-derived baseUrl when provided)
+  const baseUrl = baseUrlProp ?? process.env.NEXT_PUBLIC_SITE_URL ?? '';
+  const organizationSchema = generateOrganizationSchema({
+    name: 'SYNC',
+    ...(baseUrl && { url: baseUrl }),
+  });
+
+  const websiteSchema = generateWebSiteSchema({
+    name: 'SYNC',
+    url: baseUrl,
+  });
+
   return (
     <>
       <Scripts />
+      {/* JSON-LD structured data for Organization and WebSite */}
+      <StructuredData id="organization-schema" data={organizationSchema} />
+      <StructuredData id="website-schema" data={websiteSchema} />
       <SitecoreStyles layoutData={layout} />
       <Providers page={page}>
         {/* root placeholder for the app, which we add components to using route data */}
@@ -102,7 +120,7 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
               <header
                 className={`sticky ${isEditing ? 'lg:relative' : 'lg:fixed'} top-0 left-0 right-0 -mb-[38px] lg:mb-0 z-50`}
               >
-                <div id="header">
+                <nav id="header" aria-label="Main navigation">
                   {route && (
                     <AppPlaceholder
                       page={page}
@@ -111,10 +129,10 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
                       rendering={route}
                     />
                   )}
-                </div>
+                </nav>
               </header>
               <main>
-                <div id="content">
+                <section id="content" aria-label="Main content">
                   {route && (
                     <AppPlaceholder
                       page={page}
@@ -123,7 +141,7 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
                       rendering={route}
                     />
                   )}
-                </div>
+                </section>
               </main>
               <footer>
                 <div id="footer">

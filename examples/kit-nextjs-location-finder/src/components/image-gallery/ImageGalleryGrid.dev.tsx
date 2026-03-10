@@ -25,7 +25,7 @@ export const ImageGalleryGrid: React.FC<ImageGalleryProps> = (props) => {
 
   if (fields) {
     return (
-      <div
+      <section
         ref={containerRef}
         className={cn(
           '@container relative min-h-[100vh] max-w-screen-xl transform-gpu overflow-hidden px-4 py-16',
@@ -34,6 +34,7 @@ export const ImageGalleryGrid: React.FC<ImageGalleryProps> = (props) => {
           }
         )}
         data-class-change
+        aria-label="Image gallery"
       >
         {/* Accessibility notice for motion preferences */}
         {prefersReducedMotion && (
@@ -61,7 +62,7 @@ export const ImageGalleryGrid: React.FC<ImageGalleryProps> = (props) => {
           {/* 2x2 Grid layout */}
           <div className="@md:grid-cols-2 @md:gap-6 grid grid-cols-1 gap-4">
             {/* Top left - Car on city street */}
-            <div
+            <figure
               className={`${isParallaxActive ? 'parallax-element' : ''}`}
               data-speed={isMdContainer ? '0.2' : '0.2'}
             >
@@ -73,10 +74,10 @@ export const ImageGalleryGrid: React.FC<ImageGalleryProps> = (props) => {
                   page={props.page}
                 />
               )}
-            </div>
+            </figure>
 
             {/* Top right - Car by wall */}
-            <div
+            <figure
               className={`${isParallaxActive ? 'parallax-element' : ''}`}
               data-speed={isMdContainer ? '0.1' : '-0.01'}
             >
@@ -88,10 +89,10 @@ export const ImageGalleryGrid: React.FC<ImageGalleryProps> = (props) => {
                   page={props.page}
                 />
               )}
-            </div>
+            </figure>
 
             {/* Bottom left - Interior detail */}
-            <div
+            <figure
               className={`${isParallaxActive ? 'parallax-element' : ''}`}
               data-speed={isMdContainer ? '0.05' : '0.08'}
             >
@@ -103,10 +104,10 @@ export const ImageGalleryGrid: React.FC<ImageGalleryProps> = (props) => {
                   page={props.page}
                 />
               )}
-            </div>
+            </figure>
 
             {/* Bottom right - Interior detail */}
-            <div
+            <figure
               className={`${isParallaxActive ? 'parallax-element' : ''}`}
               data-speed={isMdContainer ? '0.0' : '-0.01'}
             >
@@ -118,10 +119,10 @@ export const ImageGalleryGrid: React.FC<ImageGalleryProps> = (props) => {
                   page={props.page}
                 />
               )}
-            </div>
+            </figure>
           </div>
         </div>
-      </div>
+      </section>
     );
   }
   return <NoDataFallback componentName="ImageGalleryGrid" />;

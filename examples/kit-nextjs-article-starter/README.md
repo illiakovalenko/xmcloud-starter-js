@@ -1,19 +1,32 @@
 # Solterra & Co. - Demo Site (NextJS) - kit-nextjs-article-starter
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Developer Expectations](#developer-expectations)
+- [Preconditions](#preconditions)
+- [Build and run site locally](#build-and-run-site-locally)
+- [Add Editing host to XM Cloud](#add-editing-host-to-xm-cloud)
+- [Documentation](#documentation)
+
 ## Overview
+
 Solterra & Co. is a polished, editorial-style template great for lifestyle brands, with a homepage, subpage, navigation, and footer. This demo site is built to showcase XM Cloud capabilities using the Content SDK.
 
-## Developer Expectations:
+## Developer Expectations
+
 * Tailwind-based styling (Shadcn)
 * Personalized homepage via URL parameters
 * Modular components for reuse
 * Localization support for English (en) and Canadian English (en-CA)
 
 ## Preconditions
+
 1. You have deployed your XM Cloud environment already. If not follow this link: [Deploy a Project and Environment](https://doc.sitecore.com/xmc/en/developers/xm-cloud/deploy-a-project-and-environment.html)
 
 ## Build and run site locally
-1. Clone the repository (if not yet done) 
+
+1. Clone the repository (if not yet done)
     ```git clone https://github.com/Sitecore/xmcloud-starter-js```
 2. Starting from the root of the repository navigate to site app folder
     ```cd examples\kit-nextjs-article-starter\```
@@ -23,13 +36,14 @@ Solterra & Co. is a polished, editorial-style template great for lifestyle brand
 
 6. Install dependencies:
    from ```kit-nextjs-article-starter``` run ```npm install```
-7. Run the site locally: 
+7. Run the site locally:
     ```npm run dev```
 8. Access the site:
 Visit http://localhost:3000 in your browser.
 
 ## Add Editing host to XM Cloud
-If you have not enabled the split deployment feature your edting hosts are automatically created based on the xmcloud.build.json if enabled is set to true. The following steps are not required. Only if you have enabled the split deployment feature, continue with the next steps.
+
+If you have not enabled the split deployment feature your editing hosts are automatically created based on the xmcloud.build.json if enabled is set to true. The following steps are not required. Only if you have enabled the split deployment feature, continue with the next steps.
 
 1. Go to Sitecore Cloud Portal https://portal.sitecorecloud.io
 2. Open XM Cloud Deploy
@@ -45,9 +59,10 @@ If you have not enabled the split deployment feature your edting hosts are autom
 12. Set the Auto deploy option (recommended)
 13. No custom environment variables are required
 14. Click "Save"
-15. On the new new editing host click the ... and hit "Build and deploy"
+15. On the new editing host click the ... and hit "Build and deploy"
 
 Additional Info: You do not have to create rendering host items in XM Cloud as those are created automatically for you when creating a rendering host. Mapping of sites using site templates to editing hosts is also done automatically.
 
+## Documentation
 
 [Documentation](https://doc.sitecore.com/xmc/en/developers/content-sdk/sitecore-content-sdk-for-xm-cloud.html)

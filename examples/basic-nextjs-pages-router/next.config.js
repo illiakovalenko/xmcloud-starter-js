@@ -55,10 +55,29 @@ const nextConfig = {
         source: '/robots.txt',
         destination: '/api/robots',
       },
+      {
+        source: '/llms.txt',
+        destination: '/api/llms-txt',
+      },
       // sitemap route
       {
-        source: '/sitemap:id([\\w-]{0,}).xml',
-        destination: '/api/sitemap'
+        source: '/sitemap.xml',
+        destination: '/api/sitemap',
+      },
+      // Numbered sitemap index pages (e.g. /sitemap-0.xml, /sitemap-1.xml)
+      {
+        source: '/sitemap-:id(\\d+).xml',
+        destination: '/api/sitemap',
+      },
+      // ai.txt route for AI crawlers
+      {
+        source: '/.well-known/ai.txt',
+        destination: '/api/well-known/ai-txt',
+      },
+      // LLM-optimized sitemap for AI crawler ingestion
+      {
+        source: '/sitemap-llm.xml',
+        destination: '/api/sitemap-llm',
       },
       // feaas api route
       {

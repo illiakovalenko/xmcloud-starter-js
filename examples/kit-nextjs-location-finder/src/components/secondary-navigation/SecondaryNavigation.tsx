@@ -103,7 +103,7 @@ export const Default: React.FC<SecondaryNavigationProps> = (props) => {
 
   if (fields) {
     return (
-      <>
+      <nav aria-label="Secondary navigation">
         <Content className="hidden sm:block" />
 
         {/* Mobile Dropdown */}
@@ -114,17 +114,22 @@ export const Default: React.FC<SecondaryNavigationProps> = (props) => {
               { ['rounded-bl-none rounded-br-none']: isOpen }
             )}
             onClick={() => setIsOpen(!isOpen)}
+            aria-expanded={isOpen}
+            aria-controls="secondary-nav-menu"
           >
-            {/* <RxText></RxText> */}
-            <ChevronDownIcon className={cn('transition-all', { ['rotate-180']: isOpen })} />
+            <span className="sr-only">Toggle secondary navigation</span>
+            <ChevronDownIcon className={cn('transition-all', { ['rotate-180']: isOpen })} aria-hidden="true" />
           </button>
           {isOpen && (
-            <div className="border-accent-6 absolute top-full flex w-full flex-col rounded-bl-md rounded-br-md border border-t-0 bg-[color:var(--color-background)]">
+            <div 
+              id="secondary-nav-menu"
+              className="border-accent-6 absolute top-full flex w-full flex-col rounded-bl-md rounded-br-md border border-t-0 bg-[color:var(--color-background)]"
+            >
               <Content />
             </div>
           )}
         </div>
-      </>
+      </nav>
     );
   }
   return <NoDataFallback componentName="Secondary Navigation" />;

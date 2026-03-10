@@ -290,6 +290,60 @@ jobs:
             fi
           done
 
+      - name: Run GEO endpoint tests (with server)
+        id: run-geo-tests
+        env:
+          SITECORE_EDGE_URL: ${{ secrets.SITECORE_EDGE_URL }}
+          SITECORE_EDGE_CONTEXT_ID: ${{ secrets.SITECORE_EDGE_CONTEXT_ID }}
+          NEXT_PUBLIC_SITECORE_EDGE_CONTEXT_ID: ${{ secrets.NEXT_PUBLIC_SITECORE_EDGE_CONTEXT_ID }}
+          NEXT_PUBLIC_DEFAULT_SITE_NAME: ${{ vars.NEXT_PUBLIC_DEFAULT_SITE_NAME || 'basic' }}
+        run: |
+          echo "Running GEO endpoint tests (site must be running)..."
+
+          for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
+            if [ -d "examples/$starter" ]; then
+              echo "GEO tests for $starter..."
+              cd "examples/$starter"
+
+              if grep -q '"test:geo"' package.json 2>/dev/null; then
+                # Start production server in background (build already done)
+                npm run start &
+                SERVER_PID=$!
+
+                # Wait for server to be ready (max 60s)
+                echo "Waiting for server on http://localhost:3000..."
+                for i in $(seq 1 30); do
+                  if curl -sf -o /dev/null http://localhost:3000 2>/dev/null; then
+                    echo "Server ready."
+                    break
+                  fi
+                  if [ "$i" -eq 30 ]; then
+                    echo "❌ Server did not become ready in time"
+                    kill $SERVER_PID 2>/dev/null || true
+                    exit 1
+                  fi
+                  sleep 2
+                done
+
+                if GEO_BASE_URL=http://localhost:3000 npm run test:geo; then
+                  echo "✅ GEO tests passed for $starter"
+                else
+                  echo "❌ GEO tests failed for $starter"
+                  kill $SERVER_PID 2>/dev/null || true
+                  cd ../..
+                  exit 1
+                fi
+
+                kill $SERVER_PID 2>/dev/null || true
+                sleep 2
+              else
+                echo "⏭️ No test:geo script for $starter, skipping"
+              fi
+
+              cd ../..
+            fi
+          done
+
       - name: Run tests for changed starters
         run: |
           echo "Running tests for changed starters..."

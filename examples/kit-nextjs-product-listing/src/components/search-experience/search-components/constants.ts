@@ -1,18 +1,7 @@
-/**
- * The default debounce time for the search experience
- */
 export const DEBOUNCE_TIME = 400;
 
-/**
- * The default page size for the search experience
- */
 export const DEFAULT_PAGE_SIZE = 6;
 
-/**
- * Returns the grid class for the number of columns
- * @param value - The number of columns to return the grid class for
- * @returns The grid class for the number of columns
- */
 export const gridColsClass = (value = 3): string => {
   const cols = Number(value) || 3;
   const map: Record<number, string> = {

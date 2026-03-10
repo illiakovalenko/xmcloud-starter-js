@@ -8,11 +8,6 @@ import { Link } from '@sitecore-content-sdk/nextjs';
 import { cn } from '@/lib/utils';
 import { EnumValues } from '@/enumerations/generic.enum';
 import { ComponentProps } from '@/lib/component-props';
-/**
- * Card
- * @param props The UI data coming from the parent component
- * @returns
- */
 
 type CardFields = {
   heading: Field<string>; // Sitecore editable text field

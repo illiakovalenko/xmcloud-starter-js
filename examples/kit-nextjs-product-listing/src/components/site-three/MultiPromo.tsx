@@ -38,8 +38,15 @@ type PromoItemProps = SimplePromoFields & {
   isHorizontal?: boolean;
 };
 
+/** Returns true if the link has a valid href (not a placeholder like # or http://#). */
+function hasValidLink(link: { value?: { href?: string } } | undefined): boolean {
+  const href = link?.value?.href;
+  return !!(href && href !== '#' && !href.startsWith('http://#'));
+}
+
 const PromoItem = ({ isHorizontal, ...promo }: PromoItemProps) => {
   const { image, heading, description, link } = promo ?? {};
+  const linkValue = link?.jsonValue;
 
   return (
     <div className={`grid gap-8 ${isHorizontal ? 'lg:grid-cols-[1fr_2fr]' : ''}`}>
@@ -48,13 +55,25 @@ const PromoItem = ({ isHorizontal, ...promo }: PromoItemProps) => {
         className="w-full h-full aspect-square object-cover shadow-2xl"
       />
       <div>
-        <h4 className="text-xl lg:text-2xl mb-2 uppercase">
+        <h3 className="text-xl lg:text-2xl mb-2 uppercase">
           <ContentSdkText field={heading?.jsonValue} />
-        </h4>
+        </h3>
         <p className="lg:text-lg mb-2">
           <ContentSdkText field={description?.jsonValue} />
         </p>
-        <ContentSdkLink field={link?.jsonValue} className="btn btn-ghost" />
+        {hasValidLink(linkValue) ? (
+          <ContentSdkLink
+            field={linkValue}
+            className="btn btn-ghost"
+            aria-label={
+              heading?.jsonValue?.value
+                ? `Learn more about ${heading.jsonValue.value}`
+                : undefined
+            }
+          />
+        ) : (
+          <span className="btn btn-ghost inline-block">{linkValue?.value?.text || ''}</span>
+        )}
       </div>
     </div>
   );

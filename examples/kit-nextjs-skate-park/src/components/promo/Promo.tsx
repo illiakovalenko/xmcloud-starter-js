@@ -8,6 +8,8 @@ import {
   LinkField,
 } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
+import StructuredData from 'components/structured-data/StructuredData';
+import { buildProductJsonLd } from 'src/lib/structured-data/schema';
 
 interface Fields {
   PromoIcon: ImageField;
@@ -29,9 +31,14 @@ const PromoContent = (props: PromoContentProps): JSX.Element => {
   const { styles, RenderingIdentifier: id } = params;
 
   const Wrapper = ({ children }: { children: JSX.Element }): JSX.Element => (
-    <div className={`component promo ${styles}`} id={id}>
+    <article
+      className={`component promo ${styles}`}
+      id={id}
+      itemScope
+      itemType="https://schema.org/Product"
+    >
       <div className="component-content">{children}</div>
-    </div>
+    </article>
   );
 
   if (!fields) {
@@ -45,10 +52,23 @@ const PromoContent = (props: PromoContentProps): JSX.Element => {
   return (
     <Wrapper>
       <>
-        <div className="field-promoicon">
+        <figure className="field-promoicon" itemProp="image">
           <ContentSdkImage field={fields.PromoIcon} />
+        </figure>
+        <div className="promo-text" itemProp="description">
+          {renderText(fields)}
         </div>
-        <div className="promo-text">{renderText(fields)}</div>
+        <StructuredData
+          id={`jsonld-product-${id ?? 'promo'}`}
+          data={buildProductJsonLd({
+            name:
+              fields.PromoLink?.value?.title ||
+              (fields.PromoText?.value ? String(fields.PromoText.value) : undefined),
+            descriptionHtml: fields.PromoText?.value ? String(fields.PromoText.value) : undefined,
+            url: fields.PromoLink?.value?.href,
+            image: (fields.PromoIcon as unknown as { value?: { src?: string } })?.value?.src,
+          })}
+        />
       </>
     </Wrapper>
   );

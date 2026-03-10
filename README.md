@@ -4,12 +4,29 @@ This repository contains multiple Next.js Starter Kits, and the SPA Starters mon
 
 [Deploying XM Cloud](https://doc.sitecore.com/xmc/en/developers/xm-cloud/deploying-xm-cloud.html)
 
+## Table of Contents
+
+- [Repository Overview](#repository-overview)
+- [How to Run a Next.js Starter Locally](#how-to-run-a-nextjs-starter-locally)
+- [How to Add an Editing Host to XM Cloud](#how-to-add-an-editing-host-to-xm-cloud)
+- [GitHub Template](#github-template)
+  - [Prerequisites](#prerequisites)
+  - [Getting Started Guide](#getting-started-guide)
+  - [Running the Next.js Starter Kit](#running-the-nextjs-starter-kit)
+  - [SPA Starters Monorepo and Angular SPA](#spa-starters-monorepo-and-angular-spa)
+- [Development Workflow](#development-workflow)
+- [SEO & AI Crawler Access](#seo--ai-crawler-access)
+- [AI-Assisted Development](#ai-assisted-development)
+- [FAQ](#faq)
+
+## Repository Overview
+
 Here's a quick overview of the major folders and their purpose:
 
   - `/examples`:
   Contains starter front-end applications. Each subfolder is a working app
-    * basic-nextjs: [README](https://github.com/Sitecore/xmcloud-starter-js/tree/main/examples/basic-nextjs/README.md) 
-    * basic-spa: [README](https://github.com/Sitecore/xmcloud-starter-js/tree/main/examples/basic-spa/README.md) 
+    * basic-nextjs: [README](https://github.com/Sitecore/xmcloud-starter-js/tree/main/examples/basic-nextjs/README.md)
+    * basic-spa: [README](https://github.com/Sitecore/xmcloud-starter-js/tree/main/examples/basic-spa/README.md)
     * kit-nextjs-article-starter: [README](https://github.com/Sitecore/xmcloud-starter-js/tree/main/examples/kit-nextjs-article-starter/README.md)
     * kit-nextjs-location-finder: [README](https://github.com/Sitecore/xmcloud-starter-js/blob/main/examples/kit-nextjs-location-finder/README.md)
     * kit-nextjs-product-listing: [README](https://github.com/Sitecore/xmcloud-starter-js/blob/main/examples/kit-nextjs-product-listing/README.md)
@@ -18,13 +35,13 @@ Here's a quick overview of the major folders and their purpose:
   - `/local-containers`:
   Contains Docker-related files for local development environments.
 
-  - `/authoring`: 
+  - `/authoring`:
     The authoring folder is where Sitecore content items are defined and stored for deployment. These items include:
     * Templates: located under /items — defines the structure of content items used in the application..
     * Powershell, Modules, etc. Organized by namespace under items/items, useful for modular development and deployment.
     * Modules: Each module has its own .module.json file (e.g., nextjs-starter.module.json) to define what items it includes and where they should be deployed in the Sitecore content tree.
 
-  - `xmcloud.build.json`: 
+  - `xmcloud.build.json`:
     This is the primary configuration file for building and deploying rendering hosts in your XM Cloud environment.
 
     Key Sections:
@@ -44,6 +61,40 @@ Here's a quick overview of the major folders and their purpose:
 
       * authoringPath: Path to the folder containing Sitecore item definitions (default is ./authoring).
 
+## How to Run a Next.js Starter Locally
+
+Use the **path for your chosen starter** (e.g. `examples/kit-nextjs-article-starter`). The steps are the same for all Next.js starters.
+
+1. **Get environment variables**  
+   Log into the [Sitecore XM Cloud Deploy Portal](https://portal.sitecorecloud.io), open your Environment → **Developer Settings**. Ensure **Preview** is enabled, then copy the sample `.env` contents from **Local Development**.
+
+2. **Create `.env.local`**  
+   In your starter folder (e.g. `examples/kit-nextjs-article-starter`), copy `.env.remote.example` to `.env.local` and paste the contents. Set at least: `SITECORE_EDGE_CONTEXT_ID`, `NEXT_PUBLIC_DEFAULT_SITE_NAME`, `NEXT_PUBLIC_SITECORE_EDGE_CONTEXT_ID`, `SITECORE_EDITING_SECRET`. See [Environment variables in XM Cloud](https://doc.sitecore.com/xmc/en/developers/xm-cloud/get-the-environment-variables-for-a-site.html).
+
+3. **Install and run**
+   ```bash
+   cd examples/<your-starter>   # e.g. kit-nextjs-article-starter
+   npm install
+   npm run dev
+   ```
+4. Open **http://localhost:3000** and verify the site loads.
+
+> **Note:** For kit-specific details (editing host name, preconditions), see that starter’s [README](examples/kit-nextjs-article-starter/README.md#overview).
+
+## How to Add an Editing Host to XM Cloud
+
+If **split deployment** is **not** enabled, editing hosts are created automatically from `xmcloud.build.json` when `enabled` is `true`. You can skip this section.
+
+If split deployment **is** enabled:
+
+1. Go to [Sitecore Cloud Portal](https://portal.sitecorecloud.io) → XM Cloud Deploy.
+2. Select your project → **Editing Hosts** → **Add editing host**.
+3. Use the **editing host name** from `xmcloud.build.json` for that starter (e.g. `kit-nextjs-article-starter`, `nextjsstarter`).
+4. Confirm: link to authoring, source provider, GitHub account, repository, branch. Enable **Auto deploy** if desired.
+5. Save, then use **…** → **Build and deploy** on the new editing host.
+
+Rendering host items are created automatically when you create a rendering host; you do not create them manually. Site-to-editing-host mapping is also automatic.
+
 ## GitHub Template
 
 This Github repository is a template that can be used to create your own repository. To get started, click the `Use this template` button at the top of the repository.
@@ -59,7 +110,7 @@ For developers new to XM Cloud you can follow the Getting Started Guide on the [
 
 ### Running the Next.js Starter Kit
 
->  **Note:** Please refer to the `README.md` of the specific example starter you’re working with for detailed setup instructions.
+> **Note:** Please refer to the `README.md` of the specific example starter you're working with for detailed setup instructions.
 > The following outlines the general steps to run the app locally:
 - Log into the Sitecore XM Cloud Deploy Portal, locate your Environment and select the `Developer Settings` tab.
 - Ensure that the `Preview` toggle is enabled.
@@ -115,6 +166,17 @@ This repository uses a **DMZ git workflow** to ensure the `main` branch is alway
 
 🔒 **[Branch Protection Setup Guide](.github/BRANCH-PROTECTION-SETUP.md)** - Configure GitHub branch protection rules to enforce the workflow.
 
+## SEO & AI Crawler Access
+
+This repository is configured to allow AI crawlers and search engines to index your content for maximum discoverability. All starter applications include:
+
+- **AI Crawler Support**: Explicit allowances for GPTBot (OpenAI), ClaudeBot (Anthropic), PerplexityBot, and other AI crawlers
+- **Search Engine Support**: Proper configuration for Googlebot, Bingbot, and other major search engines
+- **Dynamic Sitemap**: Automatically generated sitemap.xml linked in robots.txt
+- **Error Page Handling**: 404 pages include noindex meta tags to prevent indexing of error pages
+
+📖 **[Read the AI Crawler Access Guide](docs/AI_CRAWLER_ACCESS.md)** for detailed configuration instructions, hosting provider setup (Vercel, Azure, Netlify), and how to restrict access if needed.
+
 ## AI-Assisted Development
 
 This repository includes comprehensive AI guidance files to help maintain consistent code quality and follow Sitecore XM Cloud best practices across all starter applications:
@@ -126,3 +188,21 @@ This repository includes comprehensive AI guidance files to help maintain consis
 - **LLM Guidance** (`LLMs.txt`) - Concise guidance for various AI assistants covering architecture principles and safety rules
 
 These files ensure consistent development patterns whether you're using Claude Code, Cursor AI, Windsurf IDE, GitHub Copilot, or other AI coding assistants. See the [Contributing Guide](CONTRIBUTING.md#ai-assisted-development) for details on using AI assistance with this project.
+
+## FAQ
+
+### Do I need to create rendering host items in XM Cloud?
+
+No. Rendering host items are created automatically when you create a rendering host. Site-to-editing-host mapping is also automatic.
+
+### Which branch do I create my PR against?
+
+Create your PR against **`dmz`**, not `main`. Branch from the latest `main`. See [Development Workflow](#development-workflow) and [DMZ Workflow Guide](.github/DMZ-WORKFLOW.md).
+
+### Where do I get environment variables for local development?
+
+In XM Cloud Deploy Portal → your Environment → **Developer Settings** → **Local Development**, copy the sample `.env` and use it in your starter’s `.env.local`. See [How to Run a Next.js Starter Locally](#how-to-run-a-nextjs-starter-locally).
+
+### When do I need to add an editing host manually?
+
+Only if you have **split deployment** enabled. Otherwise, editing hosts are created from `xmcloud.build.json` when the starter is enabled. See [How to Add an Editing Host to XM Cloud](#how-to-add-an-editing-host-to-xm-cloud).

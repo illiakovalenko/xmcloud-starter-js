@@ -25,7 +25,7 @@ export const GlobalFooterDefault: React.FC<GlobalFooterProps> = (props) => {
         ref={footerRef}
       >
         {/* Main footer content */}
-        <div className="border-foreground border-b-2 px-4 py-16">
+        <section className="border-foreground border-b-2 px-4 py-16" aria-label="Footer main content">
           <div className="@xl:px-8 relative z-10 mx-auto max-w-screen-2xl">
             <div className="@lg:grid-cols-[2fr,1fr] grid grid-cols-1 items-end justify-end gap-8">
               {/* Left section with heading */}
@@ -36,15 +36,17 @@ export const GlobalFooterDefault: React.FC<GlobalFooterProps> = (props) => {
                   className="font-heading mb-8 text-pretty text-5xl font-light antialiased"
                 />
                 {/* Navigation links */}
-                <FooterNavigationColumn
-                  items={footerNavLinks?.results}
-                  isPageEditing={isPageEditing}
-                  parentRef={footerRef}
-                />
+                <nav aria-label="Footer navigation">
+                  <FooterNavigationColumn
+                    items={footerNavLinks?.results}
+                    isPageEditing={isPageEditing}
+                    parentRef={footerRef}
+                  />
+                </nav>
               </div>
 
               {/* Right section with subscription form */}
-              <div className="@md:max-w-[400px] ms-auto flex w-full flex-col gap-4">
+              <aside className="@md:max-w-[400px] ms-auto flex w-full flex-col gap-4" aria-label="Newsletter subscription">
                 <Text
                   className="font-body mb-4 text-xl font-medium"
                   field={emailSubscriptionTitle?.jsonValue}
@@ -68,10 +70,10 @@ export const GlobalFooterDefault: React.FC<GlobalFooterProps> = (props) => {
                     }}
                   />
                 </div>
-              </div>
+              </aside>
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Background logo - semi-transparent */}
         <div className="-z-1 pointer-events-none absolute inset-0 opacity-90" aria-hidden="true">
@@ -83,34 +85,36 @@ export const GlobalFooterDefault: React.FC<GlobalFooterProps> = (props) => {
         </div>
 
         {/* Bottom footer with social icons and copyright */}
-        <div className="@md:min-h-[430px] relative z-0 mx-auto mt-8 flex max-w-screen-2xl flex-col justify-end px-4 py-8">
+        <section className="@md:min-h-[430px] relative z-0 mx-auto mt-8 flex max-w-screen-2xl flex-col justify-end px-4 py-8" aria-label="Footer bottom">
           <div className="@sm:flex-row flex flex-col items-center justify-between">
             {/* Social media icons */}
-            <AnimatedHoverNav
-              parentRef={footerRef}
-              mobileBreakpoint={null}
-              indicatorClassName="h-0-5 bg-secondary rounded-default bottom-0"
-            >
-              <ul className="@sm:mb-0 mb-0 flex list-none gap-6">
-                {socialLinks?.results?.map((socialLink, index) => (
-                  <li key={index}>
-                    <EditableButton
-                      buttonLink={socialLink?.link?.jsonValue}
-                      className={cn('relative hover:bg-transparent')}
-                      variant="ghost"
-                      size={isPageEditing ? 'default' : 'icon'}
-                      isPageEditing={isPageEditing}
-                      icon={socialLink?.socialIcon?.jsonValue}
-                      asIconLink={true}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </AnimatedHoverNav>
+            <nav aria-label="Social media links">
+              <AnimatedHoverNav
+                parentRef={footerRef}
+                mobileBreakpoint={null}
+                indicatorClassName="h-0-5 bg-secondary rounded-default bottom-0"
+              >
+                <ul className="@sm:mb-0 mb-0 flex list-none gap-6">
+                  {socialLinks?.results?.map((socialLink, index) => (
+                    <li key={index}>
+                      <EditableButton
+                        buttonLink={socialLink?.link?.jsonValue}
+                        className={cn('relative hover:bg-transparent')}
+                        variant="ghost"
+                        size={isPageEditing ? 'default' : 'icon'}
+                        isPageEditing={isPageEditing}
+                        icon={socialLink?.socialIcon?.jsonValue}
+                        asIconLink={true}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </AnimatedHoverNav>
+            </nav>
             {/* Copyright text */}
             <Text field={footerCopyright?.jsonValue} encode={false} />
           </div>
-        </div>
+        </section>
       </footer>
     );
   }

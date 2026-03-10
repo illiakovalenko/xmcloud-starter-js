@@ -17,7 +17,9 @@ export const Default = ({ params, fields }: RichTextProps): JSX.Element => {
     <div className={`component rich-text ${styles}`} id={RenderingIdentifier}>
       <div className="component-content">
         {fields ? (
-          <ContentSdkRichText field={fields.Text} />
+          <section>
+            <ContentSdkRichText field={fields.Text} />
+          </section>
         ) : (
           <span className="is-empty-hint">Rich text</span>
         )}

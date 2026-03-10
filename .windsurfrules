@@ -137,31 +137,6 @@ import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
 import { ButtonBase } from '@/components/button-component/ButtonComponent';
 ```
 
-### Documentation Standards
-
-**JSDoc Comments:**
-- All new functions, interfaces, classes must have JSDoc style comments
-- Include @param tags for all parameters with types and descriptions
-- Include @returns tag for return values with type and description
-- Use descriptive comments that explain the purpose and behavior
-
-```typescript
-/**
- * Hero component for displaying prominent content on XM Cloud pages
- * @param {HeroProps} props - Component props from XM Cloud datasource
- * @returns {JSX.Element} The rendered hero component with variants support
- */
-export const HeroDefault: React.FC<HeroProps> = (props) => {
-  const { fields, isPageEditing } = props;
-  
-  if (!fields?.data?.datasource) {
-    return <NoDataFallback componentName="Hero" />;
-  }
-  
-  // Component implementation
-};
-```
-
 ---
 
 ## Folder Structure
@@ -248,7 +223,6 @@ examples/[starter-name]/
 **Readability:**
 - Use descriptive variable and function names
 - Keep functions small and focused (single responsibility)
-- Add JSDoc comments for complex business logic
 - Prefer self-documenting code over extensive comments
 - Use consistent naming patterns across all starters
 
